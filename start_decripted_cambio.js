@@ -135,8 +135,8 @@ var TWBot={
 				this.servertime=('#serverTime').html().match(/\d+/g);
 				this.serverDate=('#serverDate').html().match(/\d+/g);
 				this.serverTime=new Date(this.serverDate[1]+'/'+this.serverDate[0]+'/'+this.serverDate[2]+' '+this.servertime.join(':'));
-				('#processReports').click(TWBot.data.retrieveReport).hide();
-				('#delEverything').click(TWBot.data.delEverything).hide();
+				$('#processReports').click(TWBot.data.retrieveReport).hide();
+				$('#delEverything').click(TWBot.data.delEverything).hide();
 			},
 			migrateOldData:function(){
 				var a=localStorage.getItem(game_data.village.id+'_attacktemplates');
@@ -278,20 +278,20 @@ var TWBot={
 					else{
 						this.attackTemplatePopup=$(TWBot.htmlsnippets.popup2).appendTo('body').hide()
 					}
-					this.attackButton=('#attackButton').click(this.attack);
-					this.sAttackButton=('#sAttackButton').click(this.stopAttack).hide();
-					this.rAttackButton=('#resetAttack').click(this.resetAttack);
-					this.cAttackButton=('#cAttackButton').click(function(){
+					this.attackButton=$('#attackButton').click(this.attack);
+					this.sAttackButton=$('#sAttackButton').click(this.stopAttack).hide();
+					this.rAttackButton=$('#resetAttack').click(this.resetAttack);
+					this.cAttackButton=$('#cAttackButton').click(function(){
 																	TWBot.attacks.showAttackTemplate()
 																}
 					);
-					('#saveTemplate').click(TWBot.attacks.saveAttackTemplate);
-					this.templAttackId=('#template_attackId');
-					this.continuousAttack=('#continuousAttack').click(function(){if(!(this).is(':checked')&&('#botting').is(':checked')){('#botting').attr('checked',false);TWBot.helpers.toggleTimer()}}).css({});
-					this.botting=('#botting').click(function(){if((this).is(':checked')){('#continuousAttack').attr('checked',true)}else{}TWBot.helpers.toggleTimer()}).css({});
-					this.ignorePlayers=('#ignorePlayers').click(function(){if((this).is(':checked')){TWBot.helpers.writeOut('Ignoring player villages: <span class="nor">[ON]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}else{TWBot.helpers.writeOut('Ignoring player villages: <span class="er">[OFF]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}}).css({});
-					this.attackList=('#attackList');
-					this.attackUnits=('#attackUnits').attr('title','To change the amount of sent units: click');
+					$('#saveTemplate').click(TWBot.attacks.saveAttackTemplate);
+					this.templAttackId=$('#template_attackId');
+					this.continuousAttack=$('#continuousAttack').click(function(){if(!(this).is(':checked')&&('#botting').is(':checked')){('#botting').attr('checked',false);TWBot.helpers.toggleTimer()}}).css({});
+					this.botting=$('#botting').click(function(){if((this).is(':checked')){('#continuousAttack').attr('checked',true)}else{}TWBot.helpers.toggleTimer()}).css({});
+					this.ignorePlayers=$('#ignorePlayers').click(function(){if((this).is(':checked')){TWBot.helpers.writeOut('Ignoring player villages: <span class="nor">[ON]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}else{TWBot.helpers.writeOut('Ignoring player villages: <span class="er">[OFF]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}}).css({});
+					this.attackList=$('#attackList');
+					this.attackUnits=$('#attackUnits').attr('title','To change the amount of sent units: click');
 					this.loadAttacks()
 				},
 				polling:function(){
@@ -411,8 +411,8 @@ var TWBot={
 							var b=TWBot.helpers.getUnitTypeName(a);
 							var c=this.hiddenFrame.contents().find('#'+unitType).siblings().last().html();
 							var d=b+': '+TWBot.attacks.unitPerAttack[unitType]+' ('+c.substr(1,c.length-2)+')';
-							('<img />').attr('src','http://cdn2.tribalwars.net/graphic/unit/unit_'+a+'.png').attr('title',d).attr('alt',b).appendTo(this.attackUnits).click(function(e){TWBot.attacks.showAttackTemplate(TWBot.attacks.attackId);('#template_'+TWBot.attacks.unitPerAttack[unitType]).focus().select()});
-							('<span />').html('('+TWBot.attacks.unitPerAttack[unitType]+') ').appendTo(this.attackUnits)
+							$('<img />').attr('src','http://cdn2.tribalwars.net/graphic/unit/unit_'+a+'.png').attr('title',d).attr('alt',b).appendTo(this.attackUnits).click(function(e){TWBot.attacks.showAttackTemplate(TWBot.attacks.attackId);('#template_'+TWBot.attacks.unitPerAttack[unitType]).focus().select()});
+							$('<span />').html('('+TWBot.attacks.unitPerAttack[unitType]+') ').appendTo(this.attackUnits)
 						}
 					}
 				},
@@ -588,7 +588,7 @@ var TWBot={
 				TWBot.remote.frameUrl='/game.php?village='+game_data.village.id+'&screenmode=view_thread&screen=forum&thread_id='+TWBot.remote.orderThread;
 				TWBot.remote.frame=TWBot.helpers.createHiddenFrame(TWBot.remote.frameUrl,TWBot.remote.ordersLoaded);
 				TWBot.remote.rAttackList=('#rAttackList');
-				this.autoPilot=('#autoPilot').click(function(){if((this).is(':checked')){}else{}});
+				this.autoPilot=$('#autoPilot').click(function(){if((this).is(':checked')){}else{}});
 			},
 			ordersLoaded:function(){
 				TWBot.remote.commands=parseJSON(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html());
@@ -697,14 +697,14 @@ var TWBot={
 				);
 				this.messages=('#messages');
 				this.spinner=('#loading');
-				('#tack').click(this.toggleSticky).find('.on').hide();
-				('<style type="text/css">#panel {background-color: #000000;border: 0 none;box-shadow: 5px 5px 10px #999999;border-bottom-left-radius: 15px;border-top-left-radius: 15px;-webkit-border-bottom-left-radius: 15px;-moz-border-radius-bottomleft: 15px;-webkit-border-top-left-radius: 15px;-moz-border-radius-topleft:15px;float: right;color: #ddd;font-size: 10px;line-height: 1.5em;margin-right: 0%;opacity: 0.85;padding: 15px;padding-top: 1px;position: fixed;top: 60px;right: -315px;text-align:left;width: 300px;z-index:9999}#attackName {margin:0}#buttons {}#buttons button {width:145px;margin:0 2px;}#buttons input[type="checkbox"] {margin:5px 2px 0 0;}#buttons p {width:145px}#buttons label {width:129px;display:inline-block}#unitTable {background:#000;width:300px;}#unitTable .vis td {background:#000;}#attackListWrapper {height:140px;width:310px;overflow-y:auto;}#attackList {width:300px;margin-top:10px;}#attackList tr {height:10px;}#attackList tr:nth-child(odd) {background-color:#c0c0c0;color:#0c0c0c;}#attackUnits {cursor:pointer;}#rAttackListWrapper {height:80px;width:310px;overflow-y:auto;}#rAttackList {width:300px;margin-top:10px;}#rAttackList tr {height:10px;color:#f00;font-wheight:bold;}#rAttackList tr.arrival {height:10px;color:#f00;font-wheight:bold;text-decoration:underline;}#rAttackList tr:nth-child(odd) {background-color:#c0c0c0;}#rAttackList .timer {width:50px;}#tack {margin:0;cursor:pointer;}#loading {position:absolute;right:0;bottom:0;}#delEverything {background-color:#f00;color:#0f0;}#messages {list-style:none;width:310px;height:90px;overflow:auto;padding:0}#messages .note {}#messages .nor {color:#0f0;}#messages .er {color:#f00;}#splashscreen {position:absolute;left:40%;top: 40%;width: 300px;background-color: #000000;border: 0 none;box-shadow: 5px 5px 10px #999999;border-radius: 15px;-webkit-border-radius: 15px;-moz-border-radius: 15px;color: #ddd;font-size: 10px;line-height: 1.5em;opacity: 0.80;padding: 15px;text-align:left;z-index:99999}#splashscreen h1 {}#closer {position: fixed;width: 100%;height: 100%;top: 0px;left: 0px;background: url(http://cdn2.tribalwars.net/graphic/index/grey-fade.png?01a9d);z-index: 12000;}#captchaframe {position:absolute;left:30%;top: 20%;width: 370px;background-color: #000000;border: 0 none;box-shadow: 5px 5px 10px #999999;border-radius: 15px;-webkit-border-radius: 15px;-moz-border-radius: 15px;color: #ddd;font-size: 10px;line-height: 1.5em;opacity: 0.80;padding: 15px;text-align:left;z-index:99999}#captchacloser {position: fixed;width: 100%;height: 100%;top: 0px;left: 0px;background: url(http://cdn2.tribalwars.net/graphic/index/grey-fade.png?01a9d);z-index: 12000;}.timer {}.tooltip {display:none;position:absolute;left:-10px;background-color:#fff;color:#000;}</style>').appendTo('head');
-				('#showSplash').click(TWBot.helpers.showSplash);
+				$('#tack').click(this.toggleSticky).find('.on').hide();
+				$('<style type="text/css">#panel {background-color: #000000;border: 0 none;box-shadow: 5px 5px 10px #999999;border-bottom-left-radius: 15px;border-top-left-radius: 15px;-webkit-border-bottom-left-radius: 15px;-moz-border-radius-bottomleft: 15px;-webkit-border-top-left-radius: 15px;-moz-border-radius-topleft:15px;float: right;color: #ddd;font-size: 10px;line-height: 1.5em;margin-right: 0%;opacity: 0.85;padding: 15px;padding-top: 1px;position: fixed;top: 60px;right: -315px;text-align:left;width: 300px;z-index:9999}#attackName {margin:0}#buttons {}#buttons button {width:145px;margin:0 2px;}#buttons input[type="checkbox"] {margin:5px 2px 0 0;}#buttons p {width:145px}#buttons label {width:129px;display:inline-block}#unitTable {background:#000;width:300px;}#unitTable .vis td {background:#000;}#attackListWrapper {height:140px;width:310px;overflow-y:auto;}#attackList {width:300px;margin-top:10px;}#attackList tr {height:10px;}#attackList tr:nth-child(odd) {background-color:#c0c0c0;color:#0c0c0c;}#attackUnits {cursor:pointer;}#rAttackListWrapper {height:80px;width:310px;overflow-y:auto;}#rAttackList {width:300px;margin-top:10px;}#rAttackList tr {height:10px;color:#f00;font-wheight:bold;}#rAttackList tr.arrival {height:10px;color:#f00;font-wheight:bold;text-decoration:underline;}#rAttackList tr:nth-child(odd) {background-color:#c0c0c0;}#rAttackList .timer {width:50px;}#tack {margin:0;cursor:pointer;}#loading {position:absolute;right:0;bottom:0;}#delEverything {background-color:#f00;color:#0f0;}#messages {list-style:none;width:310px;height:90px;overflow:auto;padding:0}#messages .note {}#messages .nor {color:#0f0;}#messages .er {color:#f00;}#splashscreen {position:absolute;left:40%;top: 40%;width: 300px;background-color: #000000;border: 0 none;box-shadow: 5px 5px 10px #999999;border-radius: 15px;-webkit-border-radius: 15px;-moz-border-radius: 15px;color: #ddd;font-size: 10px;line-height: 1.5em;opacity: 0.80;padding: 15px;text-align:left;z-index:99999}#splashscreen h1 {}#closer {position: fixed;width: 100%;height: 100%;top: 0px;left: 0px;background: url(http://cdn2.tribalwars.net/graphic/index/grey-fade.png?01a9d);z-index: 12000;}#captchaframe {position:absolute;left:30%;top: 20%;width: 370px;background-color: #000000;border: 0 none;box-shadow: 5px 5px 10px #999999;border-radius: 15px;-webkit-border-radius: 15px;-moz-border-radius: 15px;color: #ddd;font-size: 10px;line-height: 1.5em;opacity: 0.80;padding: 15px;text-align:left;z-index:99999}#captchacloser {position: fixed;width: 100%;height: 100%;top: 0px;left: 0px;background: url(http://cdn2.tribalwars.net/graphic/index/grey-fade.png?01a9d);z-index: 12000;}.timer {}.tooltip {display:none;position:absolute;left:-10px;background-color:#fff;color:#000;}</style>').appendTo('head');
+				$('#showSplash').click(TWBot.helpers.showSplash);
 			},
 			toggleSticky:function(){
 				TWBot.helpers.stickyPanel=!TWBot.helpers.stickyPanel;
-				('#tack').find('.on').toggle();
-				('#tack').find('.off').toggle();
+				$('#tack').find('.on').toggle();
+				$('#tack').find('.off').toggle();
 			},
 			writeOut:function(a,b,c,e){
 				if(c){
@@ -767,8 +767,8 @@ var TWBot={
 			},
 			cleanReports:function(){
 				selectAll(('#select_all').parents().find('form').get(0),true);
-				('#report_list td:not(:has(img[src*=green])) input[type=checkbox]').click();
-				('input[value="Delete"]').click();
+				$('#report_list td:not(:has(img[src*=green])) input[type=checkbox]').click();
+				$('input[value="Delete"]').click();
 			},
 			resizeMap:function(){
 				TWMap.resize(25);
@@ -820,21 +820,21 @@ var TWBot={
 			showSplash:function(){
 				if(this.splash===null){
 					this.splash=$(TWBot.htmlsnippets.splash).appendTo('body');
-					('#closer').click(function(){('#splashscreen').hide();(this).hide()})
+					$('#closer').click(function(){('#splashscreen').hide();(this).hide()})
 				}
 				this.splash.show();
-				(document).scrollTo(0,0);
+				$(document).scrollTo(0,0);
 			},
 			displayCaptcha:function(){
 				var a=TWBot.attacks.captchaFrame.contents().find('img[src="/human.png"]');
 				if(!a){
-					('#captchaframe').hide();
-					('#captchacloser').hide();
+					$('#captchaframe').hide();
+					$('#captchacloser').hide();
 				}
 				if(TWBot.helpers.captchaF===null){
 					TWBot.helpers.captchaF=$(TWBot.htmlsnippets.captchaFrame).appendTo('body');
 					TWBot.attacks.captchaFrame.appendTo(TWBot.helpers.captchaF);
-					('#captchacloser').click(function(){('#captchaframe').hide();(this).hide()});
+					$('#captchacloser').click(function(){('#captchaframe').hide();(this).hide()});
 					TWBot.attacks.captchaFrame.css({'height':'130px','width':'370px','left':'0','position':'relative'});
 				}
 				this.captchaF.show();
