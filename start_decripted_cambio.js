@@ -132,8 +132,8 @@ var TWBot={
 					this.store('data_unitTypes',this.unitTypes,true);
 					this.store('data_unitBySpeeds',this.unitsBySpeed.join(' '));
 				}
-				this.servertime=('#serverTime').html().match(/\d+/g);
-				this.serverDate=('#serverDate').html().match(/\d+/g);
+				this.servertime=$('#serverTime').html().match(/\d+/g);
+				this.serverDate=$('#serverDate').html().match(/\d+/g);
 				this.serverTime=new Date(this.serverDate[1]+'/'+this.serverDate[0]+'/'+this.serverDate[2]+' '+this.servertime.join(':'));
 				$('#processReports').click(TWBot.data.retrieveReport).hide();
 				$('#delEverything').click(TWBot.data.delEverything).hide();
