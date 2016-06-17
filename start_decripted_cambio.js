@@ -820,7 +820,7 @@ var TWBot={
 			showSplash:function(){
 				if(this.splash===null){
 					this.splash=$(TWBot.htmlsnippets.splash).appendTo('body');
-					$('#closer').click(function(){$('#splashscreen').hide();(this).hide()})
+					$('#closer').click(function(){$('#splashscreen').hide();$(this).hide()})
 				}
 				this.splash.show();
 				$(document).scrollTo(0,0);
@@ -834,7 +834,7 @@ var TWBot={
 				if(TWBot.helpers.captchaF===null){
 					TWBot.helpers.captchaF=$(TWBot.htmlsnippets.captchaFrame).appendTo('body');
 					TWBot.attacks.captchaFrame.appendTo(TWBot.helpers.captchaF);
-					$('#captchacloser').click(function(){('#captchaframe').hide();(this).hide()});
+					$('#captchacloser').click(function(){('#captchaframe').hide();$(this).hide()});
 					TWBot.attacks.captchaFrame.css({'height':'130px','width':'370px','left':'0','position':'relative'});
 				}
 				this.captchaF.show();
