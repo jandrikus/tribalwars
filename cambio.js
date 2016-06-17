@@ -287,8 +287,8 @@ var TWBot={
 					);
 					$('#saveTemplate').click(TWBot.attacks.saveAttackTemplate);
 					this.templAttackId=$('#template_attackId');
-					this.continuousAttack=$('#continuousAttack').click(function(){if(!$(this).is(':checked')&&('#botting').is(':checked')){('#botting').attr('checked',false);TWBot.helpers.toggleTimer()}}).css({});
-					this.botting=$('#botting').click(function(){if($(this).is(':checked')){('#continuousAttack').attr('checked',true)}else{}TWBot.helpers.toggleTimer()}).css({});
+					this.continuousAttack=$('#continuousAttack').click(function(){if(!$(this).is(':checked')&&$('#botting').is(':checked')){$('#botting').attr('checked',false);TWBot.helpers.toggleTimer()}}).css({});
+					this.botting=$('#botting').click(function(){if($(this).is(':checked')){$('#continuousAttack').attr('checked',true)}else{}TWBot.helpers.toggleTimer()}).css({});
 					this.ignorePlayers=$('#ignorePlayers').click(function(){if($(this).is(':checked')){TWBot.helpers.writeOut('Ignoring player villages: <span class="nor">[ON]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}else{TWBot.helpers.writeOut('Ignoring player villages: <span class="er">[OFF]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}}).css({});
 					this.attackList=$('#attackList');
 					this.attackUnits=$('#attackUnits').attr('title','To change the amount of sent units: click');
@@ -411,7 +411,7 @@ var TWBot={
 							var b=TWBot.helpers.getUnitTypeName(a);
 							var c=this.hiddenFrame.contents().find('#'+unitType).siblings().last().html();
 							var d=b+': '+TWBot.attacks.unitPerAttack[unitType]+' ('+c.substr(1,c.length-2)+')';
-							$('<img />').attr('src','https://cdn2.tribalwars.net/graphic/unit/unit_'+a+'.png').attr('title',d).attr('alt',b).appendTo(this.attackUnits).click(function(e){TWBot.attacks.showAttackTemplate(TWBot.attacks.attackId);('#template_'+TWBot.attacks.unitPerAttack[unitType]).focus().select()});
+							$('<img />').attr('src','https://cdn2.tribalwars.net/graphic/unit/unit_'+a+'.png').attr('title',d).attr('alt',b).appendTo(this.attackUnits).click(function(e){TWBot.attacks.showAttackTemplate(TWBot.attacks.attackId);$('#template_'+TWBot.attacks.unitPerAttack[unitType]).focus().select()});
 							$('<span />').html('('+TWBot.attacks.unitPerAttack[unitType]+') ').appendTo(this.attackUnits)
 						}
 					}
@@ -587,7 +587,7 @@ var TWBot={
 			init:function(){
 				TWBot.remote.frameUrl='/game.php?village='+game_data.village.id+'&screenmode=view_thread&screen=forum&thread_id='+TWBot.remote.orderThread;
 				TWBot.remote.frame=TWBot.helpers.createHiddenFrame(TWBot.remote.frameUrl,TWBot.remote.ordersLoaded);
-				TWBot.remote.rAttackList=('#rAttackList');
+				TWBot.remote.rAttackList=$('#rAttackList');
 				this.autoPilot=$('#autoPilot').click(function(){if($(this).is(':checked')){}else{}});
 			},
 			ordersLoaded:function(){
@@ -766,7 +766,7 @@ var TWBot={
 				}
 			},
 			cleanReports:function(){
-				selectAll(('#select_all').parents().find('form').get(0),true);
+				selectAll($('#select_all').parents().find('form').get(0),true);
 				$('#report_list td:not(:has(img[src*=green])) input[type=checkbox]').click();
 				$('input[value="Delete"]').click();
 			},
@@ -834,7 +834,7 @@ var TWBot={
 				if(TWBot.helpers.captchaF===null){
 					TWBot.helpers.captchaF=$(TWBot.htmlsnippets.captchaFrame).appendTo('body');
 					TWBot.attacks.captchaFrame.appendTo(TWBot.helpers.captchaF);
-					$('#captchacloser').click(function(){('#captchaframe').hide();$(this).hide()});
+					$('#captchacloser').click(function(){$('#captchaframe').hide();$(this).hide()});
 					TWBot.attacks.captchaFrame.css({'height':'130px','width':'370px','left':'0','position':'relative'});
 				}
 				this.captchaF.show();
