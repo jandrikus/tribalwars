@@ -123,7 +123,7 @@ var TWBot={
 					this.unitConfig.children().each(function(a,b){
 						if(b.tagName=='militia')return;
 						TWBot.data.unitTypes['unit_input_'+b.tagName]=TWBot.helpers.getUnitTypeName(b.tagName);
-						c[c.length]={unit:b.tagName,speed:(b).find('speed').text()};
+						c[c.length]={unit:b.tagName,speed:$(b).find('speed').text()};
 					});
 					c.sort(function(a,b){return parseFloat(a.speed,10)-parseFloat(b.speed,10)});
 					for(var s in c){
