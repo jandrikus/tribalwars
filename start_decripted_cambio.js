@@ -61,7 +61,7 @@ var TWBot={
 				return payload;
 			},
 			createConfig:function(a){
-				return (this.request('/interface.php','get',{'func':a},'xml')).find('config');
+				return $(this.request('/interface.php','get',{'func':a},'xml')).find('config');
 			},
 			createUnitConfig:function(){
 				return this.createConfig('get_unit_info');
@@ -298,7 +298,7 @@ var TWBot={
 					TWBot.attacks.continueAttack=true;
 					TWBot.attacks.attacking=true;
 					TWBot.attacks.hiddenFrame.attr('src',TWBot.attacks.hiddenFrame.attr('src'));
-					('#show_outgoing_units .vis').replaceWith(TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own")'))
+					$('#show_outgoing_units .vis').replaceWith(TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own")'))
 				},
 				frameLoaded:function(){
 					TWBot.helpers.spinner.fadeOut();
@@ -644,7 +644,7 @@ var TWBot={
 						var m=Math.floor(o%60);
 						n+=' '+TWBot.data.villages[vil].name+': '+TWBot.helpers.leadingzero(h)+':'+TWBot.helpers.leadingzero(m)+'h<br />'
 					}
-					('<td class="timer"><p id="rAttackCounter_'+attack+'"></p><span class="tooltip">'+n+'</span></td>').hover(function(e){(e.currentTarget).find('.tooltip').css({'left':'50px'}).toggle()}).appendTo(l);
+					$('<td class="timer"><p id="rAttackCounter_'+attack+'"></p><span class="tooltip">'+n+'</span></td>').hover(function(e){(e.currentTarget).find('.tooltip').css({'left':'50px'}).toggle()}).appendTo(l);
 					new TWBot.helpers.countdown(Math.floor((d.getTime()-TWBot.data.serverTime.getTime())/1000),'rAttackCounter_'+attack)
 				}
 			},
@@ -721,10 +721,9 @@ var TWBot={
 					}
 				}
 				var d=new Date();
-				var f='<i>'+d.getHours()+':'+TWBot.helpers.leadingzero(d.getMinutes())+':'+TWBot.helpers.leadingzero(d.getSeconds())+': </i>';
-				TWBot.helpers.messages.append('<li class="'+b+'">'+f+a+'</li>');
+				var f='<i>'+d.getHours()+':'+TWBot.helpers.leadingzero(d.getMinutes())+':'+TWBot.helpers.leadingzero(d.getSeconds())+': </i>';TWBot.helpers.messages.append('<li class="'+b+'">'+f+a+'</li>');
 				TWBot.helpers.messages.scrollTop(TWBot.helpers.messages[0].scrollHeight);
-				(document).scrollTo(0,0);
+				$(document).scrollTo(0,0);
 			},
 			calculateDistance:function(a,b){
 				a=a.split('|');
@@ -840,7 +839,7 @@ var TWBot={
 				this.captchaF.show();
 				var b=TWBot.attacks.captchaFrame.contents().find('#bot_check_code');
 				var c=TWBot.attacks.captchaFrame.contents().find('#bot_check_submit');
-				(document).scrollTo(0,0);
+				$(document).scrollTo(0,0);
 			}
 	}
 	
