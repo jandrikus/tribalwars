@@ -357,27 +357,27 @@ var TWBot={
 				},
 				createAttack:function(){
 					var a='_'+new Date().getTime();
-					('#template_position').val(0);
+					$('#template_position').val(0);
 					this.saveAttack(a);
 					this.populateAttackList()
 				},
 				showAttackTemplate:function(a){
 					if(a){
 						this.templAttackId.val(a);
-						('#template_name').val(this.attackTemplates[a].name);
-						('#template_coords').val(this.attackTemplates[a].coords);
+						$('#template_name').val(this.attackTemplates[a].name);
+						$('#template_coords').val(this.attackTemplates[a].coords);
 						for(unitType in TWBot.data.unitTypes){
-							('#template_'+unitType).val(this.attackTemplates[a].unitsPerAttack[unitType])
+							$('#template_'+unitType).val(this.attackTemplates[a].unitsPerAttack[unitType])
 						}
-						('#template_position').val(this.attackTemplates[a].position)
+						$('#template_position').val(this.attackTemplates[a].position)
 					}
 					else{
 						this.templAttackId.val('');
-						('#template_name').val('');
-						('#template_coords').val('');
-						('#template_position').val(0);
+						$('#template_name').val('');
+						$('#template_coords').val('');
+						$('#template_position').val(0);
 						for(unitType in TWBot.data.unitTypes){
-							('#template_'+unitType).val(0)
+							$('#template_'+unitType).val(0)
 						}
 					}
 					this.attackTemplatePopup.show()
@@ -419,9 +419,9 @@ var TWBot={
 				saveAttack:function(a){
 					var b={};
 					for(unitType in TWBot.data.unitTypes){
-						b[unitType]=('#template_'+unitType).val()
+						b[unitType]=$('#template_'+unitType).val()
 					}
-					var c={name:('#template_name').val().trim(),unitsPerAttack:b,coords:('#template_coords').val().trim(),position:('#template_position').val()};
+					var c={name:$('#template_name').val().trim(),unitsPerAttack:b,coords:$('#template_coords').val().trim(),position:$('#template_position').val()};
 					TWBot.attacks.attackTemplates[a]=c;
 					TWBot.data.store('attacks_attacktemplates',this.attackTemplates,true)
 				},
@@ -430,13 +430,13 @@ var TWBot={
 						for(a in this.attackTemplates)break;
 						if(!a){
 							this.showAttackTemplate();
-							('#template_position').val(0);
+							$('#template_position').val(0);
 							return
 						}
 					}
 					this.attackId=a;
 					var b=this.attackTemplates[a];
-					('#attackName').html(b.name);
+					$('#attackName').html(b.name);
 					for(unitType in TWBot.data.unitTypes){
 						this.unitPerAttack[unitType]=b.unitsPerAttack[unitType]
 					}
@@ -444,8 +444,8 @@ var TWBot={
 					this.villagearr=this.villages.split(" ");
 					this.targets=this.villagearr.length;
 					this.showAttack();
-					('#attackedVillages').val(this.getPosition()+1);
-					('#amount_of_attackedVillages').html(this.targets);
+					$('#attackedVillages').val(this.getPosition()+1);
+					$('#amount_of_attackedVillages').html(this.targets);
 					return b
 				},
 				removeAttack:function(a){
@@ -573,7 +573,7 @@ var TWBot={
 				resetAttack:function(a){
 					if(!a)TWBot.helpers.writeOut("Resetting to first Coords.",TWBot.helpers.MESSAGETYPE_NOTE);
 					TWBot.attacks.attackTemplates[TWBot.attacks.attackId].position=0;
-					('#attackedVillages').val(TWBot.attacks.getPosition()+1);
+					$('#attackedVillages').val(TWBot.attacks.getPosition()+1);
 					TWBot.data.store('attacks_attacktemplates',TWBot.attacks.attackTemplates,true);
 				}
 	},
@@ -650,11 +650,11 @@ var TWBot={
 			},
 			createRemoteAttack:function(a){
 				TWBot.attacks.showAttackTemplate();
-				('#template_name').val(a.name);
-				('#template_coords').val(a.coords);
-				('#template_position').val(0);
+				$('#template_name').val(a.name);
+				$('#template_coords').val(a.coords);
+				$('#template_position').val(0);
 				for(unitType in a.unitsPerAttack){
-					('#template_'+unitType).val(a.unitsPerAttack[unitType]);
+					$('#template_'+unitType).val(a.unitsPerAttack[unitType]);
 				}
 			},
 			remoteAttack:function(a){
