@@ -54,7 +54,7 @@ var TWBot={
 			request:function(d,f,g,h){
 				var i=null,
 				payload=null;
-				ajax({'url':d,'data':g,'dataType':h,'type':String(f||'get').toUpperCase(),'async':false,'error':function(a,b,e){i='Ajaxerror: '+b},'success':function(a,b,c){payload=a}});
+				$.ajax({'url':d,'data':g,'dataType':h,'type':String(f||'get').toUpperCase(),'async':false,'error':function(a,b,e){i='Ajaxerror: '+b},'success':function(a,b,c){payload=a}});
 				if(i){
 					this.helpers.writeOut(i,TWBot.helpers.MESSAGETYPE_ERROR,true,3000);
 				}
@@ -191,7 +191,7 @@ var TWBot={
 				var d=TWBot.data.villageInfoHiddenFrame.contents().find("#production_table tr td:nth-child(1)");
 				d.find('a').each(function(a,e){
 									var b={};
-									var c=(e).attr('href').substr(18).split('&')[0];
+									var c=$(e).attr('href').substr(18).split('&')[0];
 									if(TWBot.data.villages[c]!=null&&TWBot.data.villages[c].id!=null){
 										b=TWBot.data.villages[c]
 									}
