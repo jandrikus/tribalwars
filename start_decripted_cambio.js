@@ -820,7 +820,7 @@ var TWBot={
 			showSplash:function(){
 				if(this.splash===null){
 					this.splash=$(TWBot.htmlsnippets.splash).appendTo('body');
-					$('#closer').click(function(){('#splashscreen').hide();(this).hide()})
+					$('#closer').click(function(){$('#splashscreen').hide();(this).hide()})
 				}
 				this.splash.show();
 				$(document).scrollTo(0,0);
