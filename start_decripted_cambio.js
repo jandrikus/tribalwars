@@ -670,6 +670,7 @@ var TWBot={
 			messages:null,
 			spinner:null,
 			splash:null,
+			panell:null,
 			stickyPanel:false,
 			panelInTransit:false,
 			panelOut:false,
