@@ -222,7 +222,7 @@ var TWBot={
 					var c=0;
 					b.find('input[type=checkbox]:not(.selectAll)').each(function(a,e){
 																			c=parseInt(e.name.substr(3));
-																			TWBot.data.reportsInfoFrameUrl='/game.php?village='+game_data.village.id+'&screen=report&rnd='+Math.random();
+																			TWBot.data.reportsInfoFrameUrl='/game.php?village='+game_data.village.id+'&view='+c+'&screen=report&rnd='+Math.random();
 																			TWBot.helpers.writeOut('Processed report with id ['+c+']',TWBot.helpers.MESSAGETYPE_NOTE);
 																			TWBot.data.reportsInfoFrame.attr('src',TWBot.data.reportsInfoFrameUrl);
 																			console.log(c);return
