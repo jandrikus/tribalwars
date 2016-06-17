@@ -721,8 +721,9 @@ var TWBot={
 					}
 				}
 				var d=new Date();
-				var f='<i>'+d.getHours()+':'+TWBot.helpers.leadingzero(d.getMinutes())+':'+TWBot.helpers.leadingzero(d.getSeconds())+': </i>';TWBot.helpers.messages.append('<li class="'+b+'">'+f+a+'</li>');
-				TWBot.helpers.messages.scrollTop(TWBot.helpers.messages[0].scrollHeight);
+				var f='<i>'+d.getHours()+':'+TWBot.helpers.leadingzero(d.getMinutes())+':'+TWBot.helpers.leadingzero(d.getSeconds())+': </i>';
+				$TWBot.helpers.messages.append('<li class="'+b+'">'+f+a+'</li>');
+				$TWBot.helpers.messages.scrollTop(TWBot.helpers.messages[0].scrollHeight);
 				$(document).scrollTo(0,0);
 			},
 			calculateDistance:function(a,b){
