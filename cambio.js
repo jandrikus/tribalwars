@@ -287,9 +287,9 @@ var TWBot={
 					);
 					$('#saveTemplate').click(TWBot.attacks.saveAttackTemplate);
 					this.templAttackId=$('#template_attackId');
-					this.continuousAttack=$('#continuousAttack').click(function(){if(!(this).is(':checked')&&('#botting').is(':checked')){('#botting').attr('checked',false);TWBot.helpers.toggleTimer()}}).css({});
-					this.botting=$('#botting').click(function(){if((this).is(':checked')){('#continuousAttack').attr('checked',true)}else{}TWBot.helpers.toggleTimer()}).css({});
-					this.ignorePlayers=$('#ignorePlayers').click(function(){if((this).is(':checked')){TWBot.helpers.writeOut('Ignoring player villages: <span class="nor">[ON]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}else{TWBot.helpers.writeOut('Ignoring player villages: <span class="er">[OFF]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}}).css({});
+					this.continuousAttack=$('#continuousAttack').click(function(){if(!$(this).is(':checked')&&('#botting').is(':checked')){('#botting').attr('checked',false);TWBot.helpers.toggleTimer()}}).css({});
+					this.botting=$('#botting').click(function(){if($(this).is(':checked')){('#continuousAttack').attr('checked',true)}else{}TWBot.helpers.toggleTimer()}).css({});
+					this.ignorePlayers=$('#ignorePlayers').click(function(){if($(this).is(':checked')){TWBot.helpers.writeOut('Ignoring player villages: <span class="nor">[ON]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}else{TWBot.helpers.writeOut('Ignoring player villages: <span class="er">[OFF]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}}).css({});
 					this.attackList=$('#attackList');
 					this.attackUnits=$('#attackUnits').attr('title','To change the amount of sent units: click');
 					this.loadAttacks()
@@ -588,7 +588,7 @@ var TWBot={
 				TWBot.remote.frameUrl='/game.php?village='+game_data.village.id+'&screenmode=view_thread&screen=forum&thread_id='+TWBot.remote.orderThread;
 				TWBot.remote.frame=TWBot.helpers.createHiddenFrame(TWBot.remote.frameUrl,TWBot.remote.ordersLoaded);
 				TWBot.remote.rAttackList=('#rAttackList');
-				this.autoPilot=$('#autoPilot').click(function(){if((this).is(':checked')){}else{}});
+				this.autoPilot=$('#autoPilot').click(function(){if($(this).is(':checked')){}else{}});
 			},
 			ordersLoaded:function(){
 				TWBot.remote.commands=$parseJSON(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html());
