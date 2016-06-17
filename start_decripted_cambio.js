@@ -591,7 +591,7 @@ var TWBot={
 				this.autoPilot=$('#autoPilot').click(function(){if((this).is(':checked')){}else{}});
 			},
 			ordersLoaded:function(){
-				TWBot.remote.commands=parseJSON(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html());
+				TWBot.remote.commands=$.parseJSON(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html());
 				if(TWBot.remote.commands===null){
 					TWBot.helpers.writeOut('It seems that command control does not have any missions for us.',TWBot.helpers.MESSAGETYPE_NORMAL);
 					return;
@@ -722,8 +722,8 @@ var TWBot={
 				}
 				var d=new Date();
 				var f='<i>'+d.getHours()+':'+TWBot.helpers.leadingzero(d.getMinutes())+':'+TWBot.helpers.leadingzero(d.getSeconds())+': </i>';
-				$TWBot.helpers.messages.append('<li class="'+b+'">'+f+a+'</li>');
-				$TWBot.helpers.messages.scrollTop(TWBot.helpers.messages[0].scrollHeight);
+				TWBot.helpers.messages.append('<li class="'+b+'">'+f+a+'</li>');
+				TWBot.helpers.messages.scrollTop(TWBot.helpers.messages[0].scrollHeight);
 				$(document).scrollTo(0,0);
 			},
 			calculateDistance:function(a,b){
