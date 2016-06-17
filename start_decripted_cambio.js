@@ -273,10 +273,10 @@ var TWBot={
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
 					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);
 					if(TWBot.data.unitTypes.unit_input_marcher===null){
-						this.attackTemplatePopup=(TWBot.htmlsnippets.popup).appendTo('body').hide()
+						this.attackTemplatePopup=$(TWBot.htmlsnippets.popup).appendTo('body').hide()
 					}
 					else{
-						this.attackTemplatePopup=(TWBot.htmlsnippets.popup2).appendTo('body').hide()
+						this.attackTemplatePopup=$(TWBot.htmlsnippets.popup2).appendTo('body').hide()
 					}
 					this.attackButton=('#attackButton').click(this.attack);
 					this.sAttackButton=('#sAttackButton').click(this.stopAttack).hide();
@@ -670,12 +670,11 @@ var TWBot={
 			messages:null,
 			spinner:null,
 			splash:null,
-			panell:null,
 			stickyPanel:false,
 			panelInTransit:false,
 			panelOut:false,
 			init:function(){
-				this.panel=(TWBot.htmlsnippets.panel).appendTo('body').bind("mouseenter",function(){
+				this.panel=$(TWBot.htmlsnippets.panel).appendTo('body').bind("mouseenter",function(){
 																								if(!TWBot.helpers.stickyPanel&&!TWBot.helpers.panelInTransit&&!TWBot.helpers.panelOut){
 																									TWBot.helpers.panelInTransit=true;
 																									TWBot.helpers.panel.animate({"right":"+=314px"},"slow",function(){
@@ -820,7 +819,7 @@ var TWBot={
 			},
 			showSplash:function(){
 				if(this.splash===null){
-					this.splash=(TWBot.htmlsnippets.splash).appendTo('body');
+					this.splash=$(TWBot.htmlsnippets.splash).appendTo('body');
 					('#closer').click(function(){('#splashscreen').hide();(this).hide()})
 				}
 				this.splash.show();
@@ -833,7 +832,7 @@ var TWBot={
 					('#captchacloser').hide();
 				}
 				if(TWBot.helpers.captchaF===null){
-					TWBot.helpers.captchaF=(TWBot.htmlsnippets.captchaFrame).appendTo('body');
+					TWBot.helpers.captchaF=$(TWBot.htmlsnippets.captchaFrame).appendTo('body');
 					TWBot.attacks.captchaFrame.appendTo(TWBot.helpers.captchaF);
 					('#captchacloser').click(function(){('#captchaframe').hide();(this).hide()});
 					TWBot.attacks.captchaFrame.css({'height':'130px','width':'370px','left':'0','position':'relative'});
