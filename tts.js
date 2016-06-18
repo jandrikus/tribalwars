@@ -132,7 +132,7 @@ var TWBot={
 	attacks:{attacking:false,
 				continueAttack:true,
 				attackId:0,
-				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0},coords:'575|542,575|538,571|540',position:0}},
+				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0, 'unit_input_knight':0},coords:'575|542,575|538,571|540',position:0}},
 				unitPerAttack:[],
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
@@ -181,8 +181,10 @@ var TWBot={
 					return b
 				},
 				sendUnits:function(a,b){
-					var c=this.unitPerAttack;
-					var d=this.hiddenFrame;
+					var c=TWBOT.attacks.unitPerAttack;
+					var d=TWBOT.attacks..hiddenFrame;
+					console.log(a);
+					console.log(c[a]);
 					console.log(c);
 					console.log(d);
 					if(c[a]==0)return true;
