@@ -145,7 +145,7 @@ var TWBot={
 	attacks:{attacking:false,
 				continueAttack:true,
 				attackId:0,
-				attackTemplates:{'Prueba': {name:'Prueba',unitsPerAttack:{spear:1, sword:0, axe: 0, spy: 0, light: 0, knight: 0, ram: 0, catapult: 0, snob:0},coords:'575|542,575|538,571|540',position:1}},
+				attackTemplates:{'Prueba2': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0},coords:'575|542,575|538,571|540',position:1}},
 				unitPerAttack:[],
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
@@ -153,7 +153,6 @@ var TWBot={
 					console.log(this.attackTemplates);
 				},
 				frameLoaded:function(){
-					TWBot.helpers.spinner.fadeOut();
 					var a=TWBot.attacks.hiddenFrame.contents().find('#troop_confirm_go');
 					var b=TWBot.attacks.hiddenFrame.contents().find('#bot_check');
 					var c=TWBot.attacks.hiddenFrame.contents().find('img[src="/human.png"]');
@@ -203,7 +202,6 @@ var TWBot={
 							}
 						}
 						TWBot.data.store('attacks_attacktemplates',TWBot.attacks.attackTemplates,true);
-						TWBot.helpers.spinner.show();
 						a.click()
 					}
 				},
@@ -279,7 +277,6 @@ var TWBot={
 						TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
 						TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
 						TWBot.attacks.attacking=true;
-						TWBot.helpers.spinner.show();
 						console.log('Attacking: ['+coordData+']',TWBot.helpers.MESSAGETYPE_NOTE);
 						return
 					}
@@ -313,7 +310,6 @@ var TWBot={
 						c.frame.contents().find('#inputy').val(a[1]);
 						c.frame.contents().find('#target_attack').click();
 						TWBot.attacks.attacking=true;
-						TWBot.helpers.spinner.show();
 						console.log('Attacking: ['+coordData+']',TWBot.helpers.MESSAGETYPE_NORMAL);
 						return;
 					}
@@ -437,8 +433,6 @@ var TWBot={
 			MESSAGETYPE_NORMAL:'nor',
 			MESSAGETYPE_NOTE:'note',
 			messages:null,
-			spinner:null,
-			splash:null,
 			stickyPanel:false,
 			panelInTransit:false,
 			panelOut:false,
