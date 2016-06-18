@@ -181,8 +181,10 @@ var TWBot={
 					return b
 				},
 				sendUnits:function(a,b){
-					var c=this.unitPerAttack;
-					var d=this.hiddenFrame;
+					var c=TWBOT.attacks.unitPerAttack;
+					var d=TWBOT.attacks..hiddenFrame;
+					console.log(a);
+					console.log(c[a]);
 					console.log(c);
 					console.log(d);
 					if(c[a]==0)return true;
