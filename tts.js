@@ -189,6 +189,7 @@ var TWBot={
 					}
 					if(c[a]==0)return true;
 					var e=d.contents().find('#'+a).siblings().last().html();
+					console.log(e);
 					if(parseInt(e.substr(1,e.length-2))>=parseInt(c[a])){
 						d.contents().find('#'+a).val(c[a]);
 						return true;
