@@ -3,7 +3,6 @@ var TWBot={
 		this.helpers.init();
 		this.data.init();
 		this.attacks.init();
-		this.remote.init();
 		TWBot.attacks.loadAttack('Prueba');
 	},
 	htmlsnippets:{
