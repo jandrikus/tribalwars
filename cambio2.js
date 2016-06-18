@@ -296,6 +296,9 @@ var TWBot={
 					this.attackList=$('#attackList');
 					this.attackUnits=$('#attackUnits').attr('title','To change the amount of sent units: click');
 					this.loadAttacks();
+					c={name:'Prueba',unitsPerAttack:{spear:1, sword:0, axe: 0, spy: 0, light: 0, knight: 0, ram: 0, catapult: 0, snob:0},coords:'575|542,575|538,571|540',position:1};
+					TWBot.attacks.attackTemplates[1]=c;
+					TWBot.data.store('attacks_attacktemplates',this.attackTemplates,true);
 				},
 				polling:function(){
 					TWBot.attacks.continueAttack=true;
@@ -426,7 +429,7 @@ var TWBot={
 					}
 					var c={name:$('#template_name').val().trim(),unitsPerAttack:b,coords:$('#template_coords').val().trim(),position:$('#template_position').val()};
 					TWBot.attacks.attackTemplates[a]=c;
-					TWBot.data.store('attacks_attacktemplates',this.attackTemplates,true)
+					TWBot.data.store('attacks_attacktemplates',this.attackTemplates,true);
 				},
 				loadAttack:function(a){
 					if(!a){
