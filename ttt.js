@@ -4,7 +4,7 @@ var TWBot={
 		this.data.init();
 		this.attacks.init();
 		this.remote.init();
-		TWBot.attacks.loadAttack(TWBot.attacks.attackTemplates['Prueba']);
+		TWBot.attacks.loadAttack(0);
 	},
 	htmlsnippets:{
 			captchaFrame:'<div id="captchacloser"></div><div id="captchaframe"></div>',
@@ -141,7 +141,7 @@ var TWBot={
 	attacks:{attacking:false,
 				continueAttack:true,
 				attackId:0,
-				attackTemplates:{'Prueba2': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0},coords:'575|542,575|538,571|540',position:1}},
+				attackTemplates:{0: {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0},coords:'575|542,575|538,571|540',position:1}},
 				unitPerAttack:[],
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
@@ -208,13 +208,6 @@ var TWBot={
 					this.populateAttackList()
 				},
 				loadAttack:function(a){
-					if(!a){
-						for(a in this.attackTemplates)break;
-						if(!a){
-							this.showAttackTemplate();
-							return
-						}
-					}
 					this.attackId=a;
 					var b=this.attackTemplates[a];
 					for(unitType in TWBot.data.unitTypes){
