@@ -4,7 +4,7 @@ var TWBot={
 		this.data.init();
 		this.attacks.init();
 		this.remote.init();
-		TWBot.attacks.loadAttack(0);
+		TWBot.attacks.loadAttack('Prueba');
 	},
 	htmlsnippets:{
 			captchaFrame:'<div id="captchacloser"></div><div id="captchaframe"></div>',
@@ -140,8 +140,8 @@ var TWBot={
 	},
 	attacks:{attacking:false,
 				continueAttack:true,
-				attackId:0,
-				attackTemplates:{0: {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0},coords:'575|542,575|538,571|540',position:1}},
+				attackId:'Prueba',
+				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0},coords:'575|542,575|538,571|540',position:1}},
 				unitPerAttack:[],
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
@@ -182,7 +182,6 @@ var TWBot={
 					}
 					if(a.size()==0){
 						TWBot.attacks.loadAttack(TWBot.attacks.attackId);
-						TWBot.attacks.showAttack();
 						if(TWBot.attacks.attacking&&TWBot.attacks.continueAttack){
 							TWBot.attacks.attack()
 						}
@@ -199,13 +198,6 @@ var TWBot={
 						}
 						a.click()
 					}
-				},
-				loadAttacks:function(){
-					var a=TWBot.data.load('attacks_attacktemplates',true);
-					if(a!=null){
-						this.attackTemplates=a
-					}
-					this.populateAttackList()
 				},
 				loadAttack:function(a){
 					this.attackId=a;
@@ -249,8 +241,6 @@ var TWBot={
 					this.hiddenFrame.attr('src',this.hiddenFrameUrl)
 				},
 				attack:function(){
-					TWBot.attacks.attackButton.hide();
-					TWBot.attacks.sAttackButton.show();
 					coordData=TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
 					getCoords=coordData.split("|");
 					TWBot.attacks.continueAttack=true;
@@ -282,6 +272,7 @@ var TWBot={
 						TWBot.attacks.activeInterval=window.setTimeout(TWBot.attacks.polling,c*1000+Math.random()*1000+1);
 					}
 				},
+				/*
 				attackThis:function(a,b){
 					var c={};
 					c.frame=TWBot.helpers.createHiddenFrame(TWBot.attacks.hiddenFrameUrl,TWBot.attacks.attackThisFrameHandler());
@@ -301,13 +292,12 @@ var TWBot={
 						return;
 					}
 				},
+				*/
 				attackThisFrameHandler:function(){},
 				getPosition:function(){
 					return parseInt(this.attackTemplates[this.attackId].position)
 				},
 				stopAttack:function(){
-					TWBot.attacks.attackButton.show();
-					TWBot.attacks.sAttackButton.hide();
 					TWBot.attacks.attacking=false;
 					TWBot.attacks.continueAttack=false;
 					if(TWBot.attacks.getPosition()>=TWBot.attacks.targets){
@@ -397,15 +387,6 @@ var TWBot={
 					}
 					$('<td class="timer"><p id="rAttackCounter_'+attack+'"></p><span class="tooltip">'+n+'</span></td>').hover(function(e){(e.currentTarget).find('.tooltip').css({'left':'50px'}).toggle()}).appendTo(l);
 					new TWBot.helpers.countdown(Math.floor((d.getTime()-TWBot.data.serverTime.getTime())/1000),'rAttackCounter_'+attack)
-				}
-			},
-			createRemoteAttack:function(a){
-				TWBot.attacks.showAttackTemplate();
-				$('#template_name').val(a.name);
-				$('#template_coords').val(a.coords);
-				$('#template_position').val(0);
-				for(unitType in a.unitsPerAttack){
-					$('#template_'+unitType).val(a.unitsPerAttack[unitType]);
 				}
 			},
 			remoteAttack:function(a){
@@ -551,14 +532,6 @@ var TWBot={
 			},
 			createHiddenFrame:function(a,b){
 				return $('<iframe src="'+a+'" />').load(b).css({width:'100px',height:'100px',position:'absolute',left:'-1000px'}).appendTo('body');
-			},
-			showSplash:function(){
-				if(this.splash===null){
-					this.splash=$(TWBot.htmlsnippets.splash).appendTo('body');
-					$('#closer').click(function(){$('#splashscreen').hide();$(this).hide()});
-				}
-				this.splash.show();
-				$(document).scrollTo(0,0);
 			},
 			displayCaptcha:function(){
 				var a=TWBot.attacks.captchaFrame.contents().find('img[src="/human.png"]');
