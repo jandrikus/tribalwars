@@ -186,7 +186,11 @@ var TWBot={
 					console.log(c);
 					console.log(d);
 					if(c[a]==0)return true;
-					var e=d.contents().find('#'+a).children().last().html();
+					console.log(d.contents());
+					console.log(d.contents().find('#'+a));
+					console.log(d.contents().find('#'+a).siblings());
+					console.log(d.contents().find('#'+a).siblings().last());
+					var e=d.contents().find('#'+a).siblings().last().html();
 					console.log(e);
 					if(parseInt(e.substr(1,e.length-2))>=parseInt(c[a])){
 						d.contents().find('#'+a).val(c[a]);
