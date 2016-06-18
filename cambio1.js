@@ -600,7 +600,7 @@ var TWBot={
 				console.log(TWBot.remote.frame.contents());
 				console.log(TWBot.remote.frame.contents().find('.post .text .spoiler div span'));
 				console.log(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html());
-				TWBot.remote.commands=$.parseJSON(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html());
+				TWBot.remote.commands=$.parseJSON(TWBot.remote.frame.contents().find('.post .text .spoiler div span'));
 				if(TWBot.remote.commands===null){
 					TWBot.helpers.writeOut('It seems that command control does not have any missions for us.',TWBot.helpers.MESSAGETYPE_NORMAL);
 					return;
