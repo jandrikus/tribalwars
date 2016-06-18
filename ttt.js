@@ -27,7 +27,6 @@ var TWBot={
 				if(i){
 					this.helpers.writeOut(i,TWBot.helpers.MESSAGETYPE_ERROR,true,3000);
 				}
-				console.log(payload);
 				return payload;
 			},
 			createConfig:function(a){
@@ -139,8 +138,8 @@ var TWBot={
 	},
 	attacks:{attacking:false,
 				continueAttack:true,
-				attackId:'Prueba',
-				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0},coords:'575|542,575|538,571|540',position:1}},
+				attackId:0,
+				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0},coords:'575|542,575|538,571|540',position:0}},
 				unitPerAttack:[],
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
