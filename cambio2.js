@@ -465,7 +465,7 @@ var TWBot={
 						var c=$('<tr/>').appendTo(TWBot.attacks.attackList);
 						$('<td title="Load this attack" />').html('L').bind('click',{attack:b},function(a){TWBot.attacks.loadAttack(a.data.attack)}).css({'width':'10px','cursor':'pointer','color':'#00f','background-color':'#fff'}).appendTo(c);
 						$('<td>'+this.attackTemplates[b].name+'</td>').appendTo(c);
-						('<td title="Remove this attack (CAN NOT BE UNDONE)" />').html('X').bind('click',{attack:b},function(a){TWBot.attacks.removeAttack(a.data.attack)}).css({'width':'10px','cursor':'pointer','color':'#f00'}).appendTo(c)
+						$('<td title="Remove this attack (CAN NOT BE UNDONE)" />').html('X').bind('click',{attack:b},function(a){TWBot.attacks.removeAttack(a.data.attack)}).css({'width':'10px','cursor':'pointer','color':'#f00'}).appendTo(c)
 					}
 				},
 				sendUnits:function(a,b){
