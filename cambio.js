@@ -270,7 +270,7 @@ var TWBot={
 	attacks:{attacking:false,
 				continueAttack:true,
 				attackId:0,
-				attackTemplates:{Prueba: {name:'Prueba',unitsPerAttack:{spear:1, sword:0, axe: 0, spy: 0, light: 0, knight: 0, ram: 0, catapult: 0, snob:0},coords:'575|542,575|538,571|540',position:0}},
+				attackTemplates:{'Prueba': {name:'Prueba',unitsPerAttack:{spear:1, sword:0, axe: 0, spy: 0, light: 0, knight: 0, ram: 0, catapult: 0, snob:0},coords:'575|542,575|538,571|540',position:0}},
 				unitPerAttack:[],
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
