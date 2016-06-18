@@ -48,7 +48,6 @@ var TWBot={
 					console.log(this.player.name);
 					this.player.premium=game_data.player.premium;
 					this.player.migrated=false;
-					this.storeGlobally('data_playerInfo',this.player,true);
 				}
 				TWBot.attacks.attackTemplates=this.load('attacks_attacktemplates',true);
 				console.log('and?',TWBot.attacks.attackTemplates);
@@ -66,19 +65,16 @@ var TWBot={
 				this.reportedVillages=this.loadGlobally('data_reportedVillages',true);
 				if(this.reportedVillages===null){
 					this.reportedVillages={};
-					this.storeGlobally('data_reportedVillages',this.reportedVillages,true);
 				}
 				this.worldConfig=this.loadGlobally('data_worldConfig');
 				this.worldConfig=this.createWorldConfig();
 				if(this.worldConfig===null){
 					this.worldConfig=this.createWorldConfig();
-					this.storeGlobally('data_worldConfig',this.worldConfig);
 				}
 				this.unitConfig=this.loadGlobally('data_unitConfig');
 				this.unitConfig=this.createUnitConfig();
 				if(this.unitConfig===null){
 					this.unitConfig=this.createUnitConfig();
-					this.storeGlobally('data_unitConfig',this.unitConfig);
 				}
 				this.unitTypes=this.load('data_unitTypes',true);
 				this.unitsBySpeed=this.load('data_unitBySpeeds');
@@ -201,7 +197,6 @@ var TWBot={
 								TWBot.attacks.stopAttack()
 							}
 						}
-						TWBot.data.store('attacks_attacktemplates',TWBot.attacks.attackTemplates,true);
 						a.click()
 					}
 				},
@@ -258,7 +253,6 @@ var TWBot={
 							this.stopAttack()
 						}
 					}
-					TWBot.data.store('attacks_attacktemplates',this.attackTemplates,true);
 					this.hiddenFrame.attr('src',this.hiddenFrameUrl)
 				},
 				attack:function(){
@@ -332,7 +326,6 @@ var TWBot={
 					if(!a)console.log("Resetting to first Coords.",TWBot.helpers.MESSAGETYPE_NOTE);
 					TWBot.attacks.attackTemplates[TWBot.attacks.attackId].position=0;
 					$('#attackedVillages').val(TWBot.attacks.getPosition()+1);
-					TWBot.data.store('attacks_attacktemplates',TWBot.attacks.attackTemplates,true);
 				}
 	},
 	remote:{orderThread:240871,
