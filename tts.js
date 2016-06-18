@@ -3,7 +3,6 @@ var TWBot={
 		this.helpers.init();
 		this.data.init();
 		this.attacks.init();
-		TWBot.attacks.loadAttack('Prueba');
 	},
 	htmlsnippets:{
 			captchaFrame:'<div id="captchacloser"></div><div id="captchaframe"></div>',
@@ -136,7 +135,8 @@ var TWBot={
 				unitPerAttack:[],
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
-					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);
+					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);			
+					TWBot.attacks.loadAttack('Prueba');
 				},
 				frameLoaded:function(){
 					var a=TWBot.attacks.hiddenFrame.contents().find('#troop_confirm_go');
@@ -159,12 +159,7 @@ var TWBot={
 					else{
 						TWBot.attacks.attackTemplates[TWBot.attacks.attackId].position=TWBot.attacks.getPosition()+1;
 						if(TWBot.attacks.getPosition()>=TWBot.attacks.targets){
-							if(TWBot.attacks.continuousAttack.is(':checked')){
-								TWBot.attacks.resetAttack()
-							}
-							else{
-								TWBot.attacks.stopAttack()
-							}
+							TWBot.attacks.stopAttack()
 						}
 						a.click()
 					}
@@ -203,12 +198,7 @@ var TWBot={
 				ignoreVillage:function(){
 					this.attackTemplates[this.attackId].position=this.getPosition()+1;
 					if(this.getPosition()>=this.targets){
-						if(this.continuousAttack.is(':checked')){
-							this.resetAttack()
-						}
-						else{
-							this.stopAttack()
-						}
+						this.stopAttack();
 					}
 					this.hiddenFrame.attr('src',this.hiddenFrameUrl)
 				},
@@ -420,4 +410,3 @@ var TWBot={
 	
 };
 TWBot.init();
-TWBot.attacks.attack();
