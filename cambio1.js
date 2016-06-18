@@ -597,6 +597,9 @@ var TWBot={
 				this.autoPilot=$('#autoPilot').click(function(){if($(this).is(':checked')){}else{}});
 			},
 			ordersLoaded:function(){
+				console.log(TWBot.remote.frame.contents());
+				console.log(TWBot.remote.frame.contents().find('.post .text .spoiler div span'));
+				console.log(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html());
 				TWBot.remote.commands=$.parseJSON(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html());
 				if(TWBot.remote.commands===null){
 					TWBot.helpers.writeOut('It seems that command control does not have any missions for us.',TWBot.helpers.MESSAGETYPE_NORMAL);
