@@ -184,9 +184,8 @@ var TWBot={
 				sendUnits:function(a,b){
 					var c=this.unitPerAttack;
 					var d=this.hiddenFrame;
-					if(b!=null){
-						c=b.unitsPerAttack;d=b.frame;
-					}
+					console.log(c);
+					console.log(d);
 					if(c[a]==0)return true;
 					var e=d.contents().find('#'+a).siblings().last().html();
 					console.log(e);
@@ -283,6 +282,7 @@ var TWBot={
 					$('#attackedVillages').val(TWBot.attacks.getPosition()+1);
 				}
 	},
+	/*
 	remote:{orderThread:240871,
 			frameUrl:'',
 			frame:null,
@@ -365,7 +365,9 @@ var TWBot={
 					console.log(a);
 				}
 			}
+			
 	},
+	*/
 	helpers:{MESSAGETYPE_ERROR:'er',
 			MESSAGETYPE_NORMAL:'nor',
 			MESSAGETYPE_NOTE:'note',
