@@ -270,7 +270,7 @@ var TWBot={
 	attacks:{attacking:false,
 				continueAttack:true,
 				attackId:0,
-				attackTemplates:{'Prueba': {name:'Prueba',unitsPerAttack:{'spear':1, 'sword':0, 'axe': 0, 'spy': 0, 'light': 0, 'heavy': 0, 'ram': 0, 'catapult': 0, 'snob':0},coords:'575|542,575|538,571|540',position:0}},
+				attackTemplates:{'Prueba': {name:'Prueba',unitsPerAttack:{'spear': '1', 'sword':0, 'axe': 0, 'spy': 0, 'light': 0, 'heavy': 0, 'ram': 0, 'catapult': 0, 'snob':0},coords:'575|542,575|538,571|540',position:0}},
 				unitPerAttack:[],
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
@@ -295,7 +295,7 @@ var TWBot={
 					this.ignorePlayers=$('#ignorePlayers').click(function(){if($(this).is(':checked')){TWBot.helpers.writeOut('Ignoring player villages: <span class="nor">[ON]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}else{TWBot.helpers.writeOut('Ignoring player villages: <span class="er">[OFF]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}}).css({});
 					this.attackList=$('#attackList');
 					this.attackUnits=$('#attackUnits').attr('title','To change the amount of sent units: click');
-					//this.loadAttacks();
+					this.loadAttacks();
 					this.loadAttack(this.attackTemplates['Prueba']);
 				},
 				polling:function(){
