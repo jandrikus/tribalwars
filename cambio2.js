@@ -270,7 +270,7 @@ var TWBot={
 	attacks:{attacking:false,
 				continueAttack:true,
 				attackId:0,
-				attackTemplates:{},
+				attackTemplates:{Prueba: {name:'Prueba',unitsPerAttack:{spear:1, sword:0, axe: 0, spy: 0, light: 0, knight: 0, ram: 0, catapult: 0, snob:0},coords:'575|542,575|538,571|540',position:1}},
 				unitPerAttack:[],
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
@@ -296,9 +296,6 @@ var TWBot={
 					this.attackList=$('#attackList');
 					this.attackUnits=$('#attackUnits').attr('title','To change the amount of sent units: click');
 					this.loadAttacks();
-					c={name:'Prueba',unitsPerAttack:{spear:1, sword:0, axe: 0, spy: 0, light: 0, knight: 0, ram: 0, catapult: 0, snob:0},coords:'575|542 575|538 571|540',position:1};
-					TWBot.attacks.attackTemplates[1]=c;
-					TWBot.data.store('attacks_attacktemplates',this.attackTemplates,true);
 				},
 				polling:function(){
 					TWBot.attacks.continueAttack=true;
@@ -468,7 +465,7 @@ var TWBot={
 						var c=$('<tr/>').appendTo(TWBot.attacks.attackList);
 						$('<td title="Load this attack" />').html('L').bind('click',{attack:b},function(a){TWBot.attacks.loadAttack(a.data.attack)}).css({'width':'10px','cursor':'pointer','color':'#00f','background-color':'#fff'}).appendTo(c);
 						$('<td>'+this.attackTemplates[b].name+'</td>').appendTo(c);
-						$('<td title="Remove this attack (CAN NOT BE UNDONE)" />').html('X').bind('click',{attack:b},function(a){TWBot.attacks.removeAttack(a.data.attack)}).css({'width':'10px','cursor':'pointer','color':'#f00'}).appendTo(c)
+						('<td title="Remove this attack (CAN NOT BE UNDONE)" />').html('X').bind('click',{attack:b},function(a){TWBot.attacks.removeAttack(a.data.attack)}).css({'width':'10px','cursor':'pointer','color':'#f00'}).appendTo(c)
 					}
 				},
 				sendUnits:function(a,b){
