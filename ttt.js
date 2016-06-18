@@ -25,7 +25,7 @@ var TWBot={
 				payload=null;
 				$.ajax({'url':d,'data':g,'dataType':h,'type':String(f||'get').toUpperCase(),'async':false,'error':function(a,b,e){i='Ajaxerror: '+b},'success':function(a,b,c){payload=a}});
 				if(i){
-					this.helpers.writeOut(i,TWBot.helpers.MESSAGETYPE_ERROR,true,3000);
+					TWBot.helpers.writeOut(i,TWBot.helpers.MESSAGETYPE_ERROR,true,3000);
 				}
 				return payload;
 			},
@@ -94,7 +94,7 @@ var TWBot={
 				$('#delEverything').click(TWBot.data.delEverything).hide();
 			},
 			load:function(a,b){
-				console.log('trying to load ['+a+']',b);
+				TWBot.helpers.writeOut('trying to load ['+a+']',b);
 				if(b){
 					console.log('value for ['+a+'] : ['+JSON.parse(localStorage.getItem(game_data.world+'_'+game_data.village.id+'_'+a))+']');
 					return JSON.parse(localStorage.getItem(game_data.world+'_'+game_data.village.id+'_'+a))
@@ -138,7 +138,6 @@ var TWBot={
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
 					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);
-					console.log(this.attackTemplates);
 				},
 				frameLoaded:function(){
 					var a=TWBot.attacks.hiddenFrame.contents().find('#troop_confirm_go');
@@ -147,7 +146,7 @@ var TWBot={
 					var d=TWBot.attacks.hiddenFrame.contents().find('#error');
 					var e=TWBot.attacks.hiddenFrame.contents().find('table.vis td:contains("Player")');
 					if(b.size()!==0||c.size()!==0){
-						console.log('Bot Protection! you need to enter a captcha somewhere... not sure what to do<br />Disabling botmode for now!',TWBot.helpers.MESSAGETYPE_ERROR,true,5000);
+						TWBot.helpers.writeOut('Bot Protection! you need to enter a captcha somewhere... not sure what to do<br />Disabling botmode for now!',TWBot.helpers.MESSAGETYPE_ERROR,true,5000);
 						TWBot.attacks.captchaFrame=TWBot.helpers.createHiddenFrame('/game.php?village='+game_data.village.id+'&screen=overview_villages',TWBot.helpers.displayCaptcha);
 						TWBot.attacks.botting.attr('checked',false);
 						TWBot.attacks.stopAttack()
@@ -174,7 +173,6 @@ var TWBot={
 				loadAttack:function(a){
 					this.attackId=a;
 					var b=this.attackTemplates[a];
-					console.log(b);
 					for(unitType in TWBot.data.unitTypes){
 						this.unitPerAttack[unitType]=b.unitsPerAttack[unitType]
 					}
@@ -195,7 +193,7 @@ var TWBot={
 						d.contents().find('#'+a).val(c[a]);
 						return true;
 					}
-					console.log('Not enough units of type: '+TWBot.data.unitTypes[a],TWBot.helpers.MESSAGETYPE_ERROR);
+					TWBot.helpers.writeOut('Not enough units of type: '+TWBot.data.unitTypes[a],TWBot.helpers.MESSAGETYPE_ERROR);
 					if(b===null){
 						this.stopAttack();
 					}
@@ -227,7 +225,7 @@ var TWBot={
 						TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
 						TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
 						TWBot.attacks.attacking=true;
-						console.log('Attacking: ['+coordData+']',TWBot.helpers.MESSAGETYPE_NOTE);
+						TWBot.helpers.writeOut('Attacking: ['+coordData+']',TWBot.helpers.MESSAGETYPE_NOTE);
 						return
 					}
 					if(TWBot.helpers.timerOff&&TWBot.attacks.botting.is(':checked')){
@@ -241,7 +239,7 @@ var TWBot={
 						}
 						var c=b.split(':');
 						c=parseInt(c[0]*3600)+parseInt(c[1]*60)+parseInt(c[2]);
-						console.log('Next return in <span class="nor">'+c+' Seconds</span>',TWBot.helpers.MESSAGETYPE_NOTE);
+						TWBot.helpers.writeOut('Next return in <span class="nor">'+c+' Seconds</span>',TWBot.helpers.MESSAGETYPE_NOTE);
 						TWBot.attacks.activeInterval=window.setTimeout(TWBot.attacks.polling,c*1000+Math.random()*1000+1);
 					}
 				},
@@ -274,12 +272,12 @@ var TWBot={
 					TWBot.attacks.attacking=false;
 					TWBot.attacks.continueAttack=false;
 					if(TWBot.attacks.getPosition()>=TWBot.attacks.targets){
-						console.log("Cycle , stopping attack and resetting to first Coords.",TWBot.helpers.MESSAGETYPE_NORMAL);
+						TWBot.helpers.writeOut("Cycle , stopping attack and resetting to first Coords.",TWBot.helpers.MESSAGETYPE_NORMAL);
 						TWBot.attacks.resetAttack(true);
 					}
 				},
 				resetAttack:function(a){
-					if(!a)console.log("Resetting to first Coords.",TWBot.helpers.MESSAGETYPE_NOTE);
+					if(!a)TWBot.helpers.writeOut("Resetting to first Coords.",TWBot.helpers.MESSAGETYPE_NOTE);
 					TWBot.attacks.attackTemplates[TWBot.attacks.attackId].position=0;
 					$('#attackedVillages').val(TWBot.attacks.getPosition()+1);
 				}
@@ -361,7 +359,7 @@ var TWBot={
 				}
 			},
 			remoteAttack:function(a){
-				console.log('Attack!: ',arguments);
+				TWBot.helpers.writeOut(Attack!: ',arguments);
 				if(TWBot.remote.autoPilot.is(':checked')){
 					console.log(a);
 				}
