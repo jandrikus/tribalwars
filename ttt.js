@@ -188,8 +188,8 @@ var TWBot={
 					if(c[a]==0)return true;
 					console.log(d.contents());
 					console.log(d.contents().find('#'+a));
-					console.log(d.contents().find('#'+a).nextElementSibling.innerHTML);
-					var e=d.contents().find('#'+a).nextElementSibling.innerHTML;
+					console.log(d.contents().getElementById(a).nextElementSibling.innerHTML);
+					var e=d.contents().getElementById(a).nextElementSibling.innerHTML;
 					console.log(e);
 					if(parseInt(e.substr(1,e.length-2))>=parseInt(c[a])){
 						d.contents().find('#'+a).val(c[a]);
