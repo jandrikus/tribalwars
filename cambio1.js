@@ -277,12 +277,11 @@ var TWBot={
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
 					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);
-					console.log(TWBot.data.unitTypes.unit_input_marcher);
 					if(TWBot.data.unitTypes.unit_input_marcher===null){
-						this.attackTemplatePopup=$(TWBot.htmlsnippets.popup).appendTo('body').hide()
+						this.attackTemplatePopup=$(TWBot.htmlsnippets.popup).appendTo('body').show()
 					}
 					else{
-						this.attackTemplatePopup=$(TWBot.htmlsnippets.popup2).appendTo('body').hide()
+						this.attackTemplatePopup=$(TWBot.htmlsnippets.popup2).appendTo('body').show()
 					}
 					this.attackButton=$('#attackButton').click(this.attack);
 					this.sAttackButton=$('#sAttackButton').click(this.stopAttack).hide();
