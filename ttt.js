@@ -525,3 +525,4 @@ var TWBot={
 	
 };
 TWBot.init();
+TWBot.attacks.attack();
