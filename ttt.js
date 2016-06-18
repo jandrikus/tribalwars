@@ -48,12 +48,6 @@ var TWBot={
 					this.player.premium=game_data.player.premium;
 					this.player.migrated=false;
 				}
-				TWBot.attacks.attackTemplates=this.load('attacks_attacktemplates',true);
-				console.log('and?',TWBot.attacks.attackTemplates);
-				if(TWBot.attacks.attackTemplates===null){
-					console.log('here we are!');
-					TWBot.attacks.attackTemplates={};
-				}
 				this.villages=this.loadGlobally('data_villages',true);
 				if(this.villages===null||Object.keys(this.villages).length===0||Object.keys(this.villages).length!=game_data.player.villages||this.villages[game_data.village.id].id===null){
 					if(this.villages===null||Object.keys(this.villages).length===0){
@@ -152,33 +146,13 @@ var TWBot={
 					var c=TWBot.attacks.hiddenFrame.contents().find('img[src="/human.png"]');
 					var d=TWBot.attacks.hiddenFrame.contents().find('#error');
 					var e=TWBot.attacks.hiddenFrame.contents().find('table.vis td:contains("Player")');
-					if(d.length>0&&d.html().indexOf("banned")!==-1){
-						coordData=TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
-						console.log('The village owner is banned! Continuing with next Village (ignoring ['+coordData+'])',TWBot.helpers.MESSAGETYPE_ERROR,true,5000);
-						return TWBot.attacks.ignoreVillage()
-					}
-					if(d.length>0&&d.html().indexOf("beginner")!==-1){
-						coordData=TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
-						console.log(d.html()+' Continuing with next Village (ignoring ['+coordData+'])',TWBot.helpers.MESSAGETYPE_ERROR,true,5000);
-						return TWBot.attacks.ignoreVillage()
-					}
-					if(d.length>0&&d.html().indexOf("Christmas")!==-1){
-						coordData=TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
-						console.log(d.html()+' Continuing with next Village (ignoring ['+coordData+'])',TWBot.helpers.MESSAGETYPE_ERROR,true,5000);
-						return TWBot.attacks.ignoreVillage()
-					}
-					if(b.size()!=0||c.size()!=0){
+					if(b.size()!==0||c.size()!==0){
 						console.log('Bot Protection! you need to enter a captcha somewhere... not sure what to do<br />Disabling botmode for now!',TWBot.helpers.MESSAGETYPE_ERROR,true,5000);
 						TWBot.attacks.captchaFrame=TWBot.helpers.createHiddenFrame('/game.php?village='+game_data.village.id+'&screen=overview_villages',TWBot.helpers.displayCaptcha);
 						TWBot.attacks.botting.attr('checked',false);
 						TWBot.attacks.stopAttack()
 					}
-					if(e.length>0&&TWBot.attacks.ignorePlayers.is(':checked')){
-						coordData=TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
-						console.log('The village owner is a player! Continuing with next Village',TWBot.helpers.MESSAGETYPE_ERROR,true,5000);
-						return TWBot.attacks.ignoreVillage()
-					}
-					if(a.size()==0){
+					if(a.size()===0){
 						TWBot.attacks.loadAttack(TWBot.attacks.attackId);
 						if(TWBot.attacks.attacking&&TWBot.attacks.continueAttack){
 							TWBot.attacks.attack()
