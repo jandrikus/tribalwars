@@ -114,9 +114,7 @@ var TWBot={
 					this.storeGlobally('data_unitConfig',this.unitConfig);
 				}
 				this.unitTypes=this.load('data_unitTypes',true);
-				for (var key in localStorage){
-					console.log(key)
-				}
+				console.log(game_data);
 				this.unitsBySpeed=this.load('data_unitBySpeeds');
 				if(this.unitsBySpeed!==null){
 					this.unitsBySpeed=this.unitsBySpeed.split(' ');
