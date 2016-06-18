@@ -470,6 +470,7 @@ var TWBot={
 				},
 				sendUnits:function(a,b){
 					var c=this.unitPerAttack;
+					console.log('unitPerAttack= '+this.unitPerAttack);
 					var d=this.hiddenFrame;
 					if(b!=null){
 						c=b.unitsPerAttack;
@@ -477,6 +478,7 @@ var TWBot={
 					}
 					if(c[a]==0)return true;
 					var e=d.contents().find('#'+a).siblings().last().html();
+					console.log('e= '+e);
 					if(parseInt(e.substr(1,e.length-2))>=parseInt(c[a])){
 						d.contents().find('#'+a).val(c[a]);
 						return true
@@ -509,11 +511,14 @@ var TWBot={
 					TWBot.attacks.attackButton.hide();
 					TWBot.attacks.sAttackButton.show();
 					coordData=TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
+					console.log('coordData= '+coordData);
 					getCoords=coordData.split("|");
+					console.log('getCoords= '+getCoords);
 					TWBot.attacks.continueAttack=true;
 					for(unitType in TWBot.attacks.unitPerAttack){
+						console.log('unitType= '+unitType);
 						if(TWBot.attacks.continueAttack){
-							TWBot.attacks.continueAttack=TWBot.attacks.sendUnits(unitType)
+							TWBot.attacks.continueAttack=TWBot.attacks.sendUnits(unitType);
 						}
 					}
 					if(TWBot.attacks.continueAttack){
@@ -540,6 +545,7 @@ var TWBot={
 						TWBot.attacks.activeInterval=window.setTimeout(TWBot.attacks.polling,c*1000+Math.random()*1000+1);
 					}
 				},
+				/*
 				attackThis:function(a,b){
 					var c={};
 					c.frame=TWBot.helpers.createHiddenFrame(TWBot.attacks.hiddenFrameUrl,TWBot.attacks.attackThisFrameHandler());
@@ -564,6 +570,7 @@ var TWBot={
 				getPosition:function(){
 					return parseInt(this.attackTemplates[this.attackId].position)
 				},
+				*/
 				stopAttack:function(){
 					TWBot.attacks.attackButton.show();
 					TWBot.attacks.sAttackButton.hide();
