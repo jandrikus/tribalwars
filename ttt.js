@@ -359,7 +359,7 @@ var TWBot={
 				}
 			},
 			remoteAttack:function(a){
-				TWBot.helpers.writeOut(Attack!: ',arguments);
+				TWBot.helpers.writeOut('Attack!: ',arguments);
 				if(TWBot.remote.autoPilot.is(':checked')){
 					console.log(a);
 				}
