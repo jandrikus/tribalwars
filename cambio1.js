@@ -295,7 +295,8 @@ var TWBot={
 					this.ignorePlayers=$('#ignorePlayers').click(function(){if($(this).is(':checked')){TWBot.helpers.writeOut('Ignoring player villages: <span class="nor">[ON]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}else{TWBot.helpers.writeOut('Ignoring player villages: <span class="er">[OFF]</span>',TWBot.helpers.MESSAGETYPE_NOTE)}}).css({});
 					this.attackList=$('#attackList');
 					this.attackUnits=$('#attackUnits').attr('title','To change the amount of sent units: click');
-					this.loadAttacks();
+					//this.loadAttacks();
+					this.loadAttack(this.attackTemplates['Prueba']);
 				},
 				polling:function(){
 					TWBot.attacks.continueAttack=true;
