@@ -182,7 +182,7 @@ var TWBot={
 				},
 				sendUnits:function(a,b){
 					var c=TWBOT.attacks.unitPerAttack;
-					var d=TWBOT.attacks..hiddenFrame;
+					var d=TWBOT.attacks.hiddenFrame;
 					console.log(a);
 					console.log(c[a]);
 					console.log(c);
