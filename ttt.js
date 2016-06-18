@@ -3,7 +3,6 @@ var TWBot={
 		this.helpers.init();
 		this.data.init();
 		this.attacks.init();
-		TWBot.attacks.loadAttack('Prueba');
 	},
 	htmlsnippets:{
 			captchaFrame:'<div id="captchacloser"></div><div id="captchaframe"></div>',
@@ -132,11 +131,13 @@ var TWBot={
 	attacks:{attacking:false,
 				continueAttack:true,
 				attackId:0,
-				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0, 'unit_input_knight':0},coords:'575|542,575|538,571|540',position:0}},
+				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0, 'unit_input_knight':0},coords:'575|542 575|538 571|540',position:0}},
 				unitPerAttack:[],
 				init:function(){
+					this.loadAttack('Prueba');
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
-					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);
+					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);			
+					
 				},
 				frameLoaded:function(){
 					var a=TWBot.attacks.hiddenFrame.contents().find('#troop_confirm_go');
@@ -159,12 +160,7 @@ var TWBot={
 					else{
 						TWBot.attacks.attackTemplates[TWBot.attacks.attackId].position=TWBot.attacks.getPosition()+1;
 						if(TWBot.attacks.getPosition()>=TWBot.attacks.targets){
-							if(TWBot.attacks.continuousAttack.is(':checked')){
-								TWBot.attacks.resetAttack()
-							}
-							else{
-								TWBot.attacks.stopAttack()
-							}
+							TWBot.attacks.stopAttack()
 						}
 						a.click()
 					}
@@ -181,15 +177,11 @@ var TWBot={
 					return b
 				},
 				sendUnits:function(a,b){
-					var c=TWBOT.attacks.unitPerAttack;
-					var d=TWBOT.attacks..hiddenFrame;
-					console.log(a);
-					console.log(c[a]);
-					console.log(c);
-					console.log(d);
+					var c=TWBot.attacks.unitPerAttack;
+					var d=TWBot.attacks.hiddenFrame;
+					console.log('unit: '+a+' , restan: '+c[a]);
 					if(c[a]==0)return true;
 					var e=d.contents().find('#'+a).siblings().last().html();
-					console.log(e);
 					if(parseInt(e.substr(1,e.length-2))>=parseInt(c[a])){
 						d.contents().find('#'+a).val(c[a]);
 						return true;
@@ -203,12 +195,7 @@ var TWBot={
 				ignoreVillage:function(){
 					this.attackTemplates[this.attackId].position=this.getPosition()+1;
 					if(this.getPosition()>=this.targets){
-						if(this.continuousAttack.is(':checked')){
-							this.resetAttack()
-						}
-						else{
-							this.stopAttack()
-						}
+						this.stopAttack();
 					}
 					this.hiddenFrame.attr('src',this.hiddenFrameUrl)
 				},
@@ -226,45 +213,11 @@ var TWBot={
 						TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
 						TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
 						TWBot.attacks.attacking=true;
-						TWBot.helpers.writeOut('Attacking: ['+coordData+']',TWBot.helpers.MESSAGETYPE_NOTE);
+						TWBot.helpers.writeOut('Attacking: ['+getCoords+']',TWBot.helpers.MESSAGETYPE_NOTE);
 						return
 					}
-					if(TWBot.helpers.timerOff&&TWBot.attacks.botting.is(':checked')){
-						var a=TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own") tr td:contains("Return"):first').siblings().next().first().find('span').html();
-						var b=[];
-						if(a!=null){
-							b=a
-						}
-						else{
-							b=TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own") tr td:contains("Attack"):first').siblings().next().first().find('span.timer').html()
-						}
-						var c=b.split(':');
-						c=parseInt(c[0]*3600)+parseInt(c[1]*60)+parseInt(c[2]);
-						TWBot.helpers.writeOut('Next return in <span class="nor">'+c+' Seconds</span>',TWBot.helpers.MESSAGETYPE_NOTE);
-						TWBot.attacks.activeInterval=window.setTimeout(TWBot.attacks.polling,c*1000+Math.random()*1000+1);
-					}
+					
 				},
-				/*
-				attackThis:function(a,b){
-					var c={};
-					c.frame=TWBot.helpers.createHiddenFrame(TWBot.attacks.hiddenFrameUrl,TWBot.attacks.attackThisFrameHandler());
-					c.unitsPerAttack=b;
-					var d=true;
-					for(unitType in TWBot.attacks.unitPerAttack){
-						if(d){
-							d=TWBot.attacks.sendUnits(unitType,c);
-						}
-					}
-					if(d){
-						c.frame.contents().find('#inputx').val(a[0]);
-						c.frame.contents().find('#inputy').val(a[1]);
-						c.frame.contents().find('#target_attack').click();
-						TWBot.attacks.attacking=true;
-						console.log('Attacking: ['+coordData+']',TWBot.helpers.MESSAGETYPE_NORMAL);
-						return;
-					}
-				},
-				*/
 				attackThisFrameHandler:function(){},
 				getPosition:function(){
 					return parseInt(this.attackTemplates[this.attackId].position)
@@ -283,92 +236,6 @@ var TWBot={
 					$('#attackedVillages').val(TWBot.attacks.getPosition()+1);
 				}
 	},
-	/*
-	remote:{orderThread:240871,
-			frameUrl:'',
-			frame:null,
-			commands:null,
-			autoPilot:null,
-			rAttackList:null,
-			remoteAttacks:{},
-			init:function(){
-				TWBot.remote.frameUrl='/game.php?village='+game_data.village.id+'&screenmode=view_thread&screen=forum&thread_id='+TWBot.remote.orderThread;
-				TWBot.remote.frame=TWBot.helpers.createHiddenFrame(TWBot.remote.frameUrl,TWBot.remote.ordersLoaded);
-				TWBot.remote.rAttackList=$('#rAttackList');
-				this.autoPilot=$('#autoPilot').click(function(){if($(this).is(':checked')){}else{}});
-			},
-			ordersLoaded:function(){
-				if(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html()===undefined){
-					TWBot.remote.commands=null;
-				}
-				else{
-					TWBot.remote.commands=$.parseJSON(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html());
-				}				
-				if(TWBot.remote.commands===null){
-					TWBot.helpers.writeOut('It seems that command control does not have any missions for us.',TWBot.helpers.MESSAGETYPE_NORMAL);
-					return;
-				}
-				if(TWBot.remote.commands.message===null){
-					TWBot.helpers.writeOut(TWBot.remote.commands.message,TWBot.helpers.MESSAGETYPE_NORMAL,true,3000);
-				}
-				TWBot.helpers.writeOut('attacks loaded: ',TWBot.helpers.MESSAGETYPE_NORMAL);
-				for(attack in TWBot.remote.commands.attacks){
-					var b='';
-					var c=0;
-					var d=new Date(TWBot.remote.commands.attacks[attack].time);
-					var f=0;
-					var g=TWBot.remote.commands.attacks[attack].coords.split(' ').length;
-					var i='';
-					for(unit in TWBot.remote.commands.attacks[attack].units){
-						i+=' '+TWBot.remote.commands.attacks[attack].units[unit]+' '+TWBot.helpers.getUnitTypeName(unit)+'';
-						if(!TWBot.remote.commands.attacks[attack].departure){
-							if(TWBot.data.unitsBySpeed.indexOf(unit)>f){
-								f=TWBot.data.unitsBySpeed.indexOf(unit);
-							}
-						}
-					}
-					TWBot.helpers.writeOut('['+attack+']: loaded',TWBot.helpers.MESSAGETYPE_NORMAL);
-					var j={};
-					for(unitType in TWBot.data.unitTypes){
-						for(unit in TWBot.remote.commands.attacks[attack].units){
-							if('unit_input_'+unit==unitType){
-								j[unitType]=TWBot.remote.commands.attacks[attack].units[unit];
-							}
-						}
-					}
-					b=TWBot.remote.commands.attacks[attack].coords.split(' ')[0];
-					c=TWBot.helpers.calculateMinutesToTarget(TWBot.data.unitsBySpeed[f],b);
-					if(!TWBot.remote.commands.attacks[attack].departure){
-						d.setMinutes(d.getMinutes()-c)
-					}
-					var k={name:attack,unitsPerAttack:j,coords:TWBot.remote.commands.attacks[attack].coords,position:0,date:d,description:TWBot.remote.commands.attacks[attack].description};
-					TWBot.remote.remoteAttacks[attack]=k;
-					var l=('<tr/>').appendTo(TWBot.remote.rAttackList);
-					if(!TWBot.remote.commands.attacks[attack].departure){
-						l.attr('class','arrival')
-					}
-					('<td title="Load ['+attack+']: send '+i+' to '+g+' Target(s)" />').html('L').bind('click',{attack:k},function(a){TWBot.remote.createRemoteAttack(a.data.attack)}).css({'width':'10px','cursor':'pointer','color':'#00f','background-color':'#fff'}).appendTo(l);
-					('<td title="'+TWBot.remote.commands.attacks[attack].description+'">'+attack+'</td>').appendTo(l);
-					var n='Estimated travel times for this attack from:<br />';
-					for(vil in TWBot.data.villages){
-						var o=TWBot.helpers.calculateMinutesToTarget(TWBot.data.unitsBySpeed[f],b,TWBot.data.villages[vil].coord);
-						var h=Math.floor(o/60);
-						var m=Math.floor(o%60);
-						n+=' '+TWBot.data.villages[vil].name+': '+TWBot.helpers.leadingzero(h)+':'+TWBot.helpers.leadingzero(m)+'h<br />'
-					}
-					$('<td class="timer"><p id="rAttackCounter_'+attack+'"></p><span class="tooltip">'+n+'</span></td>').hover(function(e){(e.currentTarget).find('.tooltip').css({'left':'50px'}).toggle()}).appendTo(l);
-					new TWBot.helpers.countdown(Math.floor((d.getTime()-TWBot.data.serverTime.getTime())/1000),'rAttackCounter_'+attack)
-				}
-			},
-			remoteAttack:function(a){
-				TWBot.helpers.writeOut('Attack!: ',arguments);
-				if(TWBot.remote.autoPilot.is(':checked')){
-					console.log(a);
-				}
-			}
-			
-	},
-	*/
 	helpers:{MESSAGETYPE_ERROR:'er',
 			MESSAGETYPE_NORMAL:'nor',
 			MESSAGETYPE_NOTE:'note',
@@ -527,4 +394,3 @@ var TWBot={
 	
 };
 TWBot.init();
-TWBot.attacks.attack();
