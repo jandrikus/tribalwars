@@ -3,7 +3,6 @@ var TWBot={
 		this.helpers.init();
 		this.data.init();
 		this.attacks.init();
-		this.remote.init();
 		TWBot.attacks.loadAttack('Prueba');
 	},
 	htmlsnippets:{
@@ -133,7 +132,7 @@ var TWBot={
 	attacks:{attacking:false,
 				continueAttack:true,
 				attackId:0,
-				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0},coords:'575|542,575|538,571|540',position:0}},
+				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0, 'unit_input_knight':0},coords:'575|542,575|538,571|540',position:0}},
 				unitPerAttack:[],
 				init:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
@@ -184,11 +183,15 @@ var TWBot={
 				sendUnits:function(a,b){
 					var c=this.unitPerAttack;
 					var d=this.hiddenFrame;
-					if(b!=null){
-						c=b.unitsPerAttack;d=b.frame;
-					}
+					console.log(c);
+					console.log(d);
 					if(c[a]==0)return true;
+					console.log(d.contents());
+					console.log(d.contents().find('#'+a));
+					console.log(d.contents().find('#'+a).siblings());
+					console.log(d.contents().find('#'+a).siblings().last());
 					var e=d.contents().find('#'+a).siblings().last().html();
+					console.log(e);
 					if(parseInt(e.substr(1,e.length-2))>=parseInt(c[a])){
 						d.contents().find('#'+a).val(c[a]);
 						return true;
@@ -282,6 +285,7 @@ var TWBot={
 					$('#attackedVillages').val(TWBot.attacks.getPosition()+1);
 				}
 	},
+	/*
 	remote:{orderThread:240871,
 			frameUrl:'',
 			frame:null,
@@ -364,7 +368,9 @@ var TWBot={
 					console.log(a);
 				}
 			}
+			
 	},
+	*/
 	helpers:{MESSAGETYPE_ERROR:'er',
 			MESSAGETYPE_NORMAL:'nor',
 			MESSAGETYPE_NOTE:'note',
