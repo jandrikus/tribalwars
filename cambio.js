@@ -60,10 +60,11 @@ var TWBot={
 				if(i){
 					this.helpers.writeOut(i,TWBot.helpers.MESSAGETYPE_ERROR,true,3000);
 				}
+				console.log(payload);
 				return payload;
 			},
 			createConfig:function(a){
-				return $(this.request('/interface.php','get',{'func':a},'xml')).find('config');
+				return $(this.request('/stat.php?mode=settings','get',{'func':a},'xml')).find('config');
 			},
 			createUnitConfig:function(){
 				return this.createConfig('get_unit_info');
@@ -77,8 +78,10 @@ var TWBot={
 					this.player={};
 					this.player.id=parseInt(game_data.player.id);
 					this.player.name=game_data.player.name;
+					console.log(this.player.name);
 					this.player.premium=game_data.player.premium;
-					this.player.migrated=false;this.storeGlobally('data_playerInfo',this.player,true);
+					this.player.migrated=false;
+					this.storeGlobally('data_playerInfo',this.player,true);
 				}
 				if(!this.player.migrated){
 					this.migrateOldData();
@@ -114,7 +117,6 @@ var TWBot={
 					this.storeGlobally('data_unitConfig',this.unitConfig);
 				}
 				this.unitTypes=this.load('data_unitTypes',true);
-				console.log(game_data);
 				this.unitsBySpeed=this.load('data_unitBySpeeds');
 				if(this.unitsBySpeed!==null){
 					this.unitsBySpeed=this.unitsBySpeed.split(' ');
