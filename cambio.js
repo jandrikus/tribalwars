@@ -566,11 +566,11 @@ var TWBot={
 						return;
 					}
 				},
+				*/
 				attackThisFrameHandler:function(){},
 				getPosition:function(){
 					return parseInt(this.attackTemplates[this.attackId].position)
 				},
-				*/
 				stopAttack:function(){
 					TWBot.attacks.attackButton.show();
 					TWBot.attacks.sAttackButton.hide();
