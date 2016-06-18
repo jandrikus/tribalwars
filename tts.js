@@ -134,9 +134,10 @@ var TWBot={
 				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0, 'unit_input_knight':0},coords:'575|542,575|538,571|540',position:0}},
 				unitPerAttack:[],
 				init:function(){
+					TWBot.attacks.loadAttack('Prueba');
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
 					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);			
-					TWBot.attacks.loadAttack('Prueba');
+					
 				},
 				frameLoaded:function(){
 					var a=TWBot.attacks.hiddenFrame.contents().find('#troop_confirm_go');
@@ -178,13 +179,9 @@ var TWBot={
 				sendUnits:function(a,b){
 					var c=TWBot.attacks.unitPerAttack;
 					var d=TWBot.attacks.hiddenFrame;
-					console.log(a);
-					console.log(c[a]);
-					console.log(c);
-					console.log(d);
+					console.log('unit: '+a+' , restan: '+c[a]);
 					if(c[a]==0)return true;
 					var e=d.contents().find('#'+a).siblings().last().html();
-					console.log(e);
 					if(parseInt(e.substr(1,e.length-2))>=parseInt(c[a])){
 						d.contents().find('#'+a).val(c[a]);
 						return true;
@@ -218,20 +215,6 @@ var TWBot={
 						TWBot.attacks.attacking=true;
 						TWBot.helpers.writeOut('Attacking: ['+coordData+']',TWBot.helpers.MESSAGETYPE_NOTE);
 						return
-					}
-					if(TWBot.helpers.timerOff&&TWBot.attacks.botting.is(':checked')){
-						var a=TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own") tr td:contains("Return"):first').siblings().next().first().find('span').html();
-						var b=[];
-						if(a!=null){
-							b=a
-						}
-						else{
-							b=TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own") tr td:contains("Attack"):first').siblings().next().first().find('span.timer').html()
-						}
-						var c=b.split(':');
-						c=parseInt(c[0]*3600)+parseInt(c[1]*60)+parseInt(c[2]);
-						TWBot.helpers.writeOut('Next return in <span class="nor">'+c+' Seconds</span>',TWBot.helpers.MESSAGETYPE_NOTE);
-						TWBot.attacks.activeInterval=window.setTimeout(TWBot.attacks.polling,c*1000+Math.random()*1000+1);
 					}
 				},
 				attackThisFrameHandler:function(){},
