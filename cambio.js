@@ -72,7 +72,7 @@ var TWBot={
 				return this.createConfig('get_config');
 			},
 			init:function(){
-				this.player=this.loadGlobally('data_playerInfo',true);
+				this.player=this.loadGlobally('es37_data_playerInfo',true);
 				if(this.player===null||this.player.id===0){
 					this.player={};
 					this.player.id=parseInt(game_data.player.id);
@@ -96,7 +96,7 @@ var TWBot={
 					}
 					this.retrieveVillagesData();
 				}
-				this.reportedVillages=this.loadGlobally('data_reportedVillages',true);
+				this.reportedVillages=this.loadGlobally('es37_data_reportedVillages',true);
 				if(this.reportedVillages===null){
 					this.reportedVillages={};
 					this.storeGlobally('data_reportedVillages',this.reportedVillages,true);
@@ -113,8 +113,9 @@ var TWBot={
 					this.unitConfig=this.createUnitConfig();
 					this.storeGlobally('data_unitConfig',this.unitConfig);
 				}
-				this.unitTypes=this.load('data_unitTypes',true);
-				this.unitsBySpeed=this.load('data_unitBySpeeds');
+				this.unitTypes=this.load('es37_8432_data_unitTypes',true);
+				console.log(this.unitTypes);
+				this.unitsBySpeed=this.load('es37_8432_data_unitBySpeeds');
 				if(this.unitsBySpeed!==null){
 					this.unitsBySpeed=this.unitsBySpeed.split(' ');
 				}
@@ -593,7 +594,6 @@ var TWBot={
 				this.autoPilot=$('#autoPilot').click(function(){if($(this).is(':checked')){}else{}});
 			},
 			ordersLoaded:function(){
-				console.log($.parseJSON(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html()));
 				TWBot.remote.commands=$.parseJSON(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html());
 				if(TWBot.remote.commands===null){
 					TWBot.helpers.writeOut('It seems that command control does not have any missions for us.',TWBot.helpers.MESSAGETYPE_NORMAL);
