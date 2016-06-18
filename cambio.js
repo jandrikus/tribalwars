@@ -64,7 +64,7 @@ var TWBot={
 				return payload;
 			},
 			createConfig:function(a){
-				return $(this.request('/stat.php?mode=settings','get',{'func':a},'xml')).find('config');
+				return $(this.request('/stat.php','get',{'func':a},'xml')).find('config');
 			},
 			createUnitConfig:function(){
 				return this.createConfig('get_unit_info');
