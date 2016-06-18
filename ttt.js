@@ -106,7 +106,6 @@ var TWBot={
 					console.log('value for ['+a+'] : ['+JSON.parse(localStorage.getItem(game_data.world+'_'+game_data.village.id+'_'+a))+']');
 					return JSON.parse(localStorage.getItem(game_data.world+'_'+game_data.village.id+'_'+a))
 				}
-				console.log('value for ['+a+'] : ['+localStorage.getItem(game_data.world+'_'+game_data.village.id+'_'+a)+']');
 				return localStorage.getItem(game_data.world+'_'+game_data.village.id+'_'+a)
 			},
 			loadGlobally:function(a,b){
@@ -202,6 +201,7 @@ var TWBot={
 				loadAttack:function(a){
 					this.attackId=a;
 					var b=this.attackTemplates[a];
+					console.log(b);
 					for(unitType in TWBot.data.unitTypes){
 						this.unitPerAttack[unitType]=b.unitsPerAttack[unitType]
 					}
@@ -325,8 +325,6 @@ var TWBot={
 				this.autoPilot=$('#autoPilot').click(function(){if($(this).is(':checked')){}else{}});
 			},
 			ordersLoaded:function(){
-				console.log(TWBot.remote.frame.contents());
-				console.log(TWBot.remote.frame.contents().find('.post .text .spoiler div span'));
 				if(TWBot.remote.frame.contents().find('.post .text .spoiler div span').html()===undefined){
 					TWBot.remote.commands=null;
 				}
