@@ -131,7 +131,7 @@ var TWBot={
 	attacks:{attacking:false,
 				continueAttack:true,
 				attackId:0,
-				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 0, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 1, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0, 'unit_input_knight':0},coords:'575|542 575|538 571|540',position:0}},
+				attackTemplates:{'Prueba': {name:'Prueba2',unitsPerAttack:{'unit_input_spear': 1, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 0, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0, 'unit_input_knight':0},coords:'575|542 575|538 571|540',position:0}},
 				unitPerAttack:[],
 				init:function(){
 					this.loadAttack('Prueba');
@@ -179,7 +179,7 @@ var TWBot={
 				sendUnits:function(a,b){
 					var c=TWBot.attacks.unitPerAttack;
 					var d=TWBot.attacks.hiddenFrame;
-					console.log('unit: '+a+' , restan: '+c[a]);
+					//console.log('unit: '+a+' , se envia: '+c[a]);
 					if(c[a]==0)return true;
 					var e=d.contents().find('#'+a).siblings().last().html();
 					if(parseInt(e.substr(1,e.length-2))>=parseInt(c[a])){
@@ -213,7 +213,7 @@ var TWBot={
 						TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
 						TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
 						TWBot.attacks.attacking=true;
-						TWBot.helpers.writeOut('Attacking: ['+getCoords+']',TWBot.helpers.MESSAGETYPE_NOTE);
+						TWBot.helpers.writeOut('Attacking: ['+getCoords+'] with '+this.unitPerAttack,TWBot.helpers.MESSAGETYPE_NOTE);
 						return
 					}
 					
