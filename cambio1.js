@@ -448,7 +448,7 @@ var TWBot={
 					this.attackId=a;
 					console.log('a= '+a);
 					var b=this.attackTemplates[a];
-					console.log('b= '+b);
+					console.log(b);
 					$('#attackName').html(b.name);
 					for(unitType in TWBot.data.unitTypes){
 						this.unitPerAttack[unitType]=b.unitsPerAttack[unitType]
