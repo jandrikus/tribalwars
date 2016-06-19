@@ -71,7 +71,7 @@ var TWBot={
 					this.unitsBySpeed=[];
 					this.unitConfig.children().each(function(a,b){
 						if(b.tagName=='militia')return;
-						this.unitTypes['unit_input_'+b.tagName]=TWBot.helpers.getUnitTypeName(b.tagName);
+						TWBot.data.unitTypes['unit_input_'+b.tagName]=TWBot.helpers.getUnitTypeName(b.tagName);
 						c[c.length]={unit:b.tagName,speed:$(b).find('speed').text()};
 					});
 					c.sort(function(a,b){return parseFloat(a.speed,10)-parseFloat(b.speed,10)});
@@ -106,7 +106,7 @@ var TWBot={
 						}
 					}
 					var attacTemplateCords=prompt("Please enter the coordenates of the villages you want to attack separated by space", "");
-					this.dataAttackTemplates={'attack':{name:attacTemplateName, unitsPerAttack:attacTemplateUnits, coords:attacTemplateCords, position:0}};
+					TWBot.data.dataAttackTemplates={'attack':{name:attacTemplateName, unitsPerAttack:attacTemplateUnits, coords:attacTemplateCords, position:0}};
 					this.store('data_attackTemplates', this.dataAttackTemplates, true);
 				}
 				this.servertime=$('#serverTime').html().match(/\d+/g);
