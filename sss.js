@@ -242,25 +242,23 @@ var TWBot={
 					this.hiddenFrame.attr('src',this.hiddenFrameUrl)
 				},
 				attack:function(){
-					$(window).load(function(){
-						coordData=TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
-						getCoords=coordData.split("|");
-						TWBot.attacks.continueAttack=true;
-						for(unitType in TWBot.attacks.unitPerAttack){
-							if(TWBot.attacks.continueAttack){
-								TWBot.attacks.continueAttack=TWBot.attacks.sendUnits(unitType)
-							}
-						}
+					coordData=TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
+					getCoords=coordData.split("|");
+					TWBot.attacks.continueAttack=true;
+					for(unitType in TWBot.attacks.unitPerAttack){
 						if(TWBot.attacks.continueAttack){
-							TWBot.attacks.hiddenFrame.contents().find('#inputx').val(getCoords[0]);
-							TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
-							TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
-							TWBot.attacks.attacking=true;
-							TWBot.helpers.writeOut('Attacking: ['+getCoords+'] with '+JSON.stringify(TWBot.attacks.unitPerAttack),TWBot.helpers.MESSAGETYPE_NOTE);
-							return
+							TWBot.attacks.continueAttack=TWBot.attacks.sendUnits(unitType)
 						}
-						this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);					
-					});				
+					}
+					if(TWBot.attacks.continueAttack){
+						TWBot.attacks.hiddenFrame.contents().find('#inputx').val(getCoords[0]);
+						TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
+						TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
+						TWBot.attacks.attacking=true;
+						TWBot.helpers.writeOut('Attacking: ['+getCoords+'] with '+JSON.stringify(TWBot.attacks.unitPerAttack),TWBot.helpers.MESSAGETYPE_NOTE);
+						return
+					}
+					
 				},
 				attackThisFrameHandler:function(){},
 				getPosition:function(){
@@ -437,7 +435,3 @@ var TWBot={
 	
 };
 TWBot.init();
-var attack = confirm('Do you want to start attacking?');
-if (attack==true){
-	TWBot.attacks.attack();
-};
