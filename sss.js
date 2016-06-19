@@ -37,17 +37,17 @@ var TWBot={
 			},
 			init:function(){
 				this.player=this.loadGlobally('data_playerInfo',true);
-				if(this.player!=null||this.player.id!=0){
-					console.log('Loading player info of '+this.player.name);					
-				}
-				else{
+				if(this.player==null||this.player.id==0){
 					this.player={};
 					this.player.id=parseInt(game_data.player.id);
 					this.player.name=game_data.player.name;
 					console.log('Storing new player info of '+this.player.name);
 					this.player.premium=game_data.player.premium;
 					this.player.migrated=false;
-					this.storeGlobally('data_playerInfo',this.player,true);
+					this.storeGlobally('data_playerInfo',this.player,true);					
+				}
+				else{
+					console.log('Loading player info of '+this.player.name);
 				}
 				this.worldConfig=this.loadGlobally('data_worldConfig');
 				if(this.worldConfig===null){
