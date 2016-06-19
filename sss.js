@@ -229,7 +229,7 @@ var TWBot={
 						return true;
 					}
 					TWBot.helpers.writeOut('Not enough units of type: '+TWBot.data.unitTypes[a],TWBot.helpers.MESSAGETYPE_ERROR);
-					if(b===null){
+					if(b==null){
 						this.stopAttack();
 					}
 					return false
@@ -242,23 +242,25 @@ var TWBot={
 					this.hiddenFrame.attr('src',this.hiddenFrameUrl)
 				},
 				attack:function(){
-					coordData=TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
-					getCoords=coordData.split("|");
-					TWBot.attacks.continueAttack=true;
-					for(unitType in TWBot.attacks.unitPerAttack){
-						if(TWBot.attacks.continueAttack){
-							TWBot.attacks.continueAttack=TWBot.attacks.sendUnits(unitType)
+					$(window).load(function(){
+						coordData=TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
+						getCoords=coordData.split("|");
+						TWBot.attacks.continueAttack=true;
+						for(unitType in TWBot.attacks.unitPerAttack){
+							if(TWBot.attacks.continueAttack){
+								TWBot.attacks.continueAttack=TWBot.attacks.sendUnits(unitType)
+							}
 						}
-					}
-					if(TWBot.attacks.continueAttack){
-						TWBot.attacks.hiddenFrame.contents().find('#inputx').val(getCoords[0]);
-						TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
-						TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
-						TWBot.attacks.attacking=true;
-						TWBot.helpers.writeOut('Attacking: ['+getCoords+'] with '+JSON.stringify(TWBot.attacks.unitPerAttack),TWBot.helpers.MESSAGETYPE_NOTE);
-						return
-					}
-					
+						if(TWBot.attacks.continueAttack){
+							TWBot.attacks.hiddenFrame.contents().find('#inputx').val(getCoords[0]);
+							TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
+							TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
+							TWBot.attacks.attacking=true;
+							TWBot.helpers.writeOut('Attacking: ['+getCoords+'] with '+JSON.stringify(TWBot.attacks.unitPerAttack),TWBot.helpers.MESSAGETYPE_NOTE);
+							return
+						}
+						this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);					
+					});				
 				},
 				attackThisFrameHandler:function(){},
 				getPosition:function(){
@@ -275,7 +277,6 @@ var TWBot={
 				resetAttack:function(a){
 					if(!a)TWBot.helpers.writeOut("Resetting to first Coords.",TWBot.helpers.MESSAGETYPE_NOTE);
 					TWBot.attacks.attackTemplates[TWBot.attacks.attackId].position=0;
-					$('#attackedVillages').val(TWBot.attacks.getPosition()+1);
 				}
 	},
 	helpers:{MESSAGETYPE_ERROR:'er',
