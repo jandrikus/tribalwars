@@ -41,7 +41,7 @@ var TWBot={
 			},
 			init:function(){
 				this.player=this.loadGlobally('data_playerInfo',true);
-				if(this.player!==null||this.player.id!==0){
+				if(this.player!=null||this.player.id!=0){
 					console.log('Loading player info of '+this.player.name);					
 				}
 				else{
@@ -60,7 +60,7 @@ var TWBot={
 				}
 				this.unitConfig=this.loadGlobally('data_unitConfig');
 				this.unitConfig=this.createUnitConfig();
-				if(this.unitConfig===null){
+				if(this.unitConfig==null){
 					this.unitConfig=this.createUnitConfig();
 					this.storeGlobally('data_unitConfig',this.unitConfig);
 				}
@@ -69,7 +69,7 @@ var TWBot={
 				if(this.unitsBySpeed!==null){
 					this.unitsBySpeed=this.unitsBySpeed.split(' ');
 				}
-				if(this.unitTypes===null||this.unitsBySpeed===null){
+				if(this.unitTypes==null||this.unitsBySpeed==null){
 					this.unitTypes={};
 					var c=[];
 					this.unitsBySpeed=[];
