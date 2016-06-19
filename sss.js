@@ -85,14 +85,14 @@ var TWBot={
 				if(this.dataAttackTemplates==null){
 					var attacTemplateName=prompt('Please enter a name for your attack template', 'Farming');
 					var attacTemplateUnits={};
-					var units=prompt("Please enter the units you want to attack with separated by commas in the following format\nspear 0,sword 0,axe 0,spy 0,archer 0,marcher 0,light 0,heavy 0,ram 0,catapult 0,knight 0,snob 0\nIf you only want a spy, then write spy:1 .You don't need to set all to 0", '');
+					var units=prompt("Please enter the units you want to attack with separated by commas in the following format\nspear:0,sword:0,axe:0,spy:0,archer:0,marcher:0,light:0,heavy:0,ram.0,catapult:0,knight:0,snob 0\nIf you only want a spy, then write spy:1 .You don't need to set all to 0", '');
 					if(units!=null){
 						var unitsDict ={};
 						console.log(units);
 						units=units.split(',');
 						console.log(units);
-						for(unit in units){
-							unit = unit.split(' ');
+						for(var i in units){
+							var unit = units[i].split(':');
 							console.log(unit[0]);
 							console.log(parseInt(unit[1]));
 							unitsDict['unit_input_'+unit[0]]=parseInt(unit[1]);
