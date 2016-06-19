@@ -3,6 +3,10 @@ var TWBot={
 		this.helpers.init();
 		this.data.init();
 		this.attacks.init();
+		var attack = confirm('Do you want to start attacking?');
+		if (attack==true){
+			TWBot.attacks.attack();
+		}
 	},
 	htmlsnippets:{
 			captchaFrame:'<div id="captchacloser"></div><div id="captchaframe"></div>',
@@ -37,7 +41,7 @@ var TWBot={
 			},
 			init:function(){
 				this.player=this.loadGlobally('data_playerInfo',true);
-				if(this.player!==null||this.player.id!==0){
+				if(this.player!=null||this.player.id!=0){
 					console.log('Loading player info of '+this.player.name);					
 				}
 				else{
@@ -56,7 +60,7 @@ var TWBot={
 				}
 				this.unitConfig=this.loadGlobally('data_unitConfig');
 				this.unitConfig=this.createUnitConfig();
-				if(this.unitConfig===null){
+				if(this.unitConfig==null){
 					this.unitConfig=this.createUnitConfig();
 					this.storeGlobally('data_unitConfig',this.unitConfig);
 				}
@@ -65,7 +69,7 @@ var TWBot={
 				if(this.unitsBySpeed!==null){
 					this.unitsBySpeed=this.unitsBySpeed.split(' ');
 				}
-				if(this.unitTypes===null||this.unitsBySpeed===null){
+				if(this.unitTypes==null||this.unitsBySpeed==null){
 					this.unitTypes={};
 					var c=[];
 					this.unitsBySpeed=[];
@@ -88,14 +92,17 @@ var TWBot={
 					var units=prompt("Please enter the units you want to attack with separated by commas in the following format\nspear:0,sword:0,axe:0,spy:0,archer:0,marcher:0,light:0,heavy:0,ram:0,catapult:0,knight:0,snob:0\nIf you only want a spy, then write spy:1 .You don't need to set all to 0", '');
 					if(units!=null){
 						var unitsDict ={};
+						console.log(units);
 						units=units.split(',');
+						console.log(units);
 						for(unit in units){
 							unit = unit.split(':');
-							unitsDict['unit_input'+unit[0]]=unit[1];
+							console.log(unit);
+							unitsDict['unit_input_'+unit[0]]=unit[1];
 						}
 						for(unitType in this.unitTypes){
 							if(unitType in unitsDict){
-								attacTemplateUnits[unitType]=unisDict[unitType];
+								attacTemplateUnits[unitType]=unitsDict[unitType];
 							}
 							else{
 								attacTemplateUnits[unitType]=0;
@@ -433,8 +440,3 @@ var TWBot={
 	}
 	
 };
-TWBot.init();
-var attack = confirm('Do you want to start attacking?');
-if (attack==true){
-	TWBot.attacks.attack();
-}
