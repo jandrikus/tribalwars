@@ -435,3 +435,4 @@ var TWBot={
 	
 };
 TWBot.init();
+alert('Finished Loading');
