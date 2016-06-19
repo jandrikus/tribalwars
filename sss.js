@@ -37,20 +37,31 @@ var TWBot={
 			},
 			init:function(){
 				this.player=this.loadGlobally('data_playerInfo',true);
-				if(this.player==null||this.player.id==0){
+				try{
+					if(this.player==null||this.player.id==0){
+						this.player={};
+						this.player.id=parseInt(game_data.player.id);
+						this.player.name=game_data.player.name;
+						console.log('Storing new player info of '+this.player.name);
+						this.player.premium=game_data.player.premium;
+						this.player.migrated=false;
+						this.storeGlobally('data_playerInfo',this.player,true);					
+					}
+					else{
+						console.log('Loading player info of '+this.player.name);
+					}
+				}
+				catch(err){
 					this.player={};
 					this.player.id=parseInt(game_data.player.id);
 					this.player.name=game_data.player.name;
 					console.log('Storing new player info of '+this.player.name);
 					this.player.premium=game_data.player.premium;
 					this.player.migrated=false;
-					this.storeGlobally('data_playerInfo',this.player,true);					
-				}
-				else{
-					console.log('Loading player info of '+this.player.name);
+					this.storeGlobally('data_playerInfo',this.player,true);
 				}
 				this.worldConfig=this.loadGlobally('data_worldConfig');
-				if(this.worldConfig===null){
+				if(this.worldConfig==null){
 					this.worldConfig=this.createWorldConfig();
 					this.storeGlobally('data_worldConfig',this.worldConfig);					
 				}
@@ -62,7 +73,7 @@ var TWBot={
 				}
 				this.unitTypes=this.load('data_unitTypes',true);
 				this.unitsBySpeed=this.load('data_unitBySpeeds');
-				if(this.unitsBySpeed!==null){
+				if(this.unitsBySpeed!=null){
 					this.unitsBySpeed=this.unitsBySpeed.split(' ');
 				}
 				if(this.unitTypes==null||this.unitsBySpeed==null){
@@ -106,7 +117,7 @@ var TWBot={
 						}
 					}
 					var attacTemplateCords=prompt("Please enter the coordenates of the villages you want to attack separated by space", "");
-					this.dataAttackTemplates={attacTemplateName:{name:attacTemplateName, unitsPerAttack:attacTemplateUnits, coords:attacTemplateCords, position:0}};
+					this.dataAttackTemplates={'attack':{name:attacTemplateName, unitsPerAttack:attacTemplateUnits, coords:attacTemplateCords, position:0}};
 					this.store('data_attackTemplates', this.dataAttackTemplates, true);
 				}
 				this.servertime=$('#serverTime').html().match(/\d+/g);
@@ -172,8 +183,7 @@ var TWBot={
 					this.loadAttacks();
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
 					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);
-					this.loadAttack(0);
-					
+					this.loadAttack('attack');					
 				},
 				frameLoaded:function(){
 					var a=TWBot.attacks.hiddenFrame.contents().find('#troop_confirm_go');
@@ -203,7 +213,7 @@ var TWBot={
 				},
 				loadAttacks:function(){
 					var a=TWBot.data.load('data_attackTemplates',true);
-					console.log('a= '+a);
+					console.log('data_attackTemplates= '+a);
 					if(a!=null){
 						this.attackTemplates=a
 					}
