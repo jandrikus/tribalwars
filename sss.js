@@ -3,10 +3,6 @@ var TWBot={
 		this.helpers.init();
 		this.data.init();
 		this.attacks.init();
-		var attack = confirm('Do you want to start attacking?');
-		if (attack==true){
-			TWBot.attacks.attack();
-		}
 	},
 	htmlsnippets:{
 			captchaFrame:'<div id="captchacloser"></div><div id="captchaframe"></div>',
@@ -439,4 +435,9 @@ var TWBot={
 			}
 	}
 	
+};
+TWBot.init();
+var attack = confirm('Do you want to start attacking?');
+if (attack==true){
+	TWBot.attacks.attack();
 };
