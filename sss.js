@@ -37,39 +37,28 @@ var TWBot={
 			},
 			init:function(){
 				this.player=this.loadGlobally('data_playerInfo',true);
-				try{
-					if(this.player==null||this.player.id==0){
-						this.player={};
-						this.player.id=parseInt(game_data.player.id);
-						this.player.name=game_data.player.name;
-						console.log('Storing new player info of '+this.player.name);
-						this.player.premium=game_data.player.premium;
-						this.player.migrated=false;
-						this.storeGlobally('data_playerInfo',this.player,true);					
-					}
-					else{
-						console.log('Loading player info of '+this.player.name);
-					}
-				}
-				catch(err){
+				if(this.player==null){
 					this.player={};
 					this.player.id=parseInt(game_data.player.id);
 					this.player.name=game_data.player.name;
 					console.log('Storing new player info of '+this.player.name);
 					this.player.premium=game_data.player.premium;
 					this.player.migrated=false;
-					this.storeGlobally('data_playerInfo',this.player,true);
+					this.storeGlobally('data_playerInfo',this.player,true);					
 				}
-				this.worldConfig=this.loadGlobally('data_worldConfig');
+				else{
+					console.log('Loading player info of '+this.player.name);
+				}
+				this.worldConfig=this.loadGlobally('data_worldConfig',true);
 				if(this.worldConfig==null){
 					this.worldConfig=this.createWorldConfig();
-					this.storeGlobally('data_worldConfig',this.worldConfig);					
+					this.storeGlobally('data_worldConfig',this.worldConfig, true);					
 				}
-				this.unitConfig=this.loadGlobally('data_unitConfig');
+				this.unitConfig=this.loadGlobally('data_unitConfig',true);
 				this.unitConfig=this.createUnitConfig();
 				if(this.unitConfig==null){
 					this.unitConfig=this.createUnitConfig();
-					this.storeGlobally('data_unitConfig',this.unitConfig);
+					this.storeGlobally('data_unitConfig',this.unitConfig,true);
 				}
 				this.unitTypes=this.load('data_unitTypes',true);
 				this.unitsBySpeed=this.load('data_unitBySpeeds');
