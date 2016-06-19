@@ -93,8 +93,9 @@ var TWBot={
 						console.log(units);
 						for(unit in units){
 							unit = unit.split(':');
-							console.log(unit);
-							unitsDict['unit_input_'+unit[0]]=unit[1];
+							console.log(unit[0]);
+							console.log(parseInt(unit[1]));
+							unitsDict['unit_input_'+unit[0]]=parseInt(unit[1]);
 						}
 						for(unitType in this.unitTypes){
 							if(unitType in unitsDict){
