@@ -15,8 +15,6 @@ var TWBot={
 			unitTypes:{},
 			unitsBySpeed:[],
 			player:{id:0,name:'',premium:false,migrated:false},
-			villages:{},
-			reportedVillages:{},
 			reportsInfoFrameUrl:'',
 			request:function(d,f,g,h){
 				var i=null,
@@ -38,29 +36,22 @@ var TWBot={
 			},
 			init:function(){
 				this.player=this.loadGlobally('data_playerInfo',true);
-				if(this.player===null||this.player.id===0){
+				if(this.player!==null||this.player.id!==0){
+					console.log('Loading player info of '+this.player.name);					
+				}
+				else{
 					this.player={};
 					this.player.id=parseInt(game_data.player.id);
 					this.player.name=game_data.player.name;
-					console.log(this.player.name);
+					console.log('Storing new player info of '+this.player.name);
 					this.player.premium=game_data.player.premium;
 					this.player.migrated=false;
-				}
-				this.villages=this.loadGlobally('data_villages',true);
-				if(this.villages===null||Object.keys(this.villages).length===0||Object.keys(this.villages).length!=game_data.player.villages||this.villages[game_data.village.id].id===null){
-					if(this.villages===null||Object.keys(this.villages).length===0){
-						this.villages={};
-					}
-					this.retrieveVillagesData();
-				}
-				this.reportedVillages=this.loadGlobally('data_reportedVillages',true);
-				if(this.reportedVillages===null){
-					this.reportedVillages={};
+					this.storeGlobally('data_playerInfo',this.player,true);
 				}
 				this.worldConfig=this.loadGlobally('data_worldConfig');
-				this.worldConfig=this.createWorldConfig();
 				if(this.worldConfig===null){
 					this.worldConfig=this.createWorldConfig();
+					this.storeGlobally('data_worldConfig',this.worldConfig);					
 				}
 				this.unitConfig=this.loadGlobally('data_unitConfig');
 				this.unitConfig=this.createUnitConfig();
@@ -90,6 +81,23 @@ var TWBot={
 				this.serverDate=$('#serverDate').html().match(/\d+/g);
 				this.serverTime=new Date(this.serverDate[1]+'/'+this.serverDate[0]+'/'+this.serverDate[2]+' '+this.servertime.join(':'));
 				$('#delEverything').click(TWBot.data.delEverything).hide();
+			},
+			store:function(a,b,c){
+				console.log('trying to store ['+a+']: ['+b+']',c);
+				if(c){
+					localStorage.setItem(game_data.world+'_'+game_data.village.id+'_'+a,JSON.stringify(b))
+				}
+				else{
+					localStorage.setItem(game_data.world+'_'+game_data.village.id+'_'+a,b)
+				}
+			},
+			storeGlobally:function(a,b,c){
+				if(c){
+					localStorage.setItem(game_data.world+'_'+a,JSON.stringify(b))
+				}
+				else{
+					localStorage.setItem(game_data.world+'_'+a,b)
+				}
 			},
 			load:function(a,b){
 				TWBot.helpers.writeOut('trying to load ['+a+']',b);

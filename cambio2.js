@@ -72,11 +72,14 @@ var TWBot={
 			},
 			init:function(){
 				this.player=this.loadGlobally('data_playerInfo',true);
-				if(this.player===null||this.player.id===0){
+				if(this.player!==null||this.player.id!==0){
+					console.log('Loading player info of '+this.player.name);					
+				}
+				else{
 					this.player={};
 					this.player.id=parseInt(game_data.player.id);
 					this.player.name=game_data.player.name;
-					console.log(this.player.name);
+					console.log('Storing new player info of '+this.player.name);
 					this.player.premium=game_data.player.premium;
 					this.player.migrated=false;
 					this.storeGlobally('data_playerInfo',this.player,true);
@@ -103,13 +106,11 @@ var TWBot={
 					this.storeGlobally('data_reportedVillages',this.reportedVillages,true);
 				}
 				this.worldConfig=this.loadGlobally('data_worldConfig');
-				this.worldConfig=this.createWorldConfig();
 				if(this.worldConfig===null){
 					this.worldConfig=this.createWorldConfig();
 					this.storeGlobally('data_worldConfig',this.worldConfig);
 				}
 				this.unitConfig=this.loadGlobally('data_unitConfig');
-				this.unitConfig=this.createUnitConfig();
 				if(this.unitConfig===null){
 					this.unitConfig=this.createUnitConfig();
 					this.storeGlobally('data_unitConfig',this.unitConfig);
@@ -146,7 +147,8 @@ var TWBot={
 				if(a!==null){
 					this.store('attacks_attacktemplates',a)
 				}
-				this.player.migrated=true;this.storeGlobally('data_playerInfo',this.player,true)
+				this.player.migrated=true;
+				this.storeGlobally('data_playerInfo',this.player,true)
 			},
 			store:function(a,b,c){
 				console.log('trying to store ['+a+']: ['+b+']',c);
