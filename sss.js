@@ -221,7 +221,7 @@ var TWBot={
 				sendUnits:function(a,b){
 					var c=TWBot.attacks.unitPerAttack;
 					var d=TWBot.attacks.hiddenFrame;
-					//console.log('unit: '+a+' , se envia: '+c[a]);
+					console.log('unit: '+a+' , se envia: '+c[a]);
 					if(c[a]==0)return true;
 					var e=d.contents().find('#'+a).siblings().last().html();
 					if(parseInt(e.substr(1,e.length-2))>=parseInt(c[a])){
@@ -255,7 +255,7 @@ var TWBot={
 						TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
 						TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
 						TWBot.attacks.attacking=true;
-						TWBot.helpers.writeOut('Attacking: ['+getCoords+'] with '+TWBot.attacks.unitPerAttack,TWBot.helpers.MESSAGETYPE_NOTE);
+						TWBot.helpers.writeOut('Attacking: ['+getCoords+'] with '+JSON.stringify(TWBot.attacks.unitPerAttack),TWBot.helpers.MESSAGETYPE_NOTE);
 						return
 					}
 					
