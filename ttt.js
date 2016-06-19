@@ -3,6 +3,10 @@ var TWBot={
 		this.helpers.init();
 		this.data.init();
 		this.attacks.init();
+		var attack = confirm('Do you want to start attacking?');
+		if (attack==true){
+			TWBot.attacks.attack();
+		}
 	},
 	htmlsnippets:{
 			captchaFrame:'<div id="captchacloser"></div><div id="captchaframe"></div>',
@@ -88,9 +92,12 @@ var TWBot={
 					var units=prompt("Please enter the units you want to attack with separated by commas in the following format\nspear:0,sword:0,axe:0,spy:0,archer:0,marcher:0,light:0,heavy:0,ram:0,catapult:0,knight:0,snob:0\nIf you only want a spy, then write spy:1 .You don't need to set all to 0", '');
 					if(units!=null){
 						var unitsDict ={};
+						console.log(units);
 						units=units.split(',');
+						console.log(units);
 						for(unit in units){
 							unit = unit.split(':');
+							console.log(unit);
 							unitsDict['unit_input_'+unit[0]]=unit[1];
 						}
 						for(unitType in this.unitTypes){
@@ -433,8 +440,3 @@ var TWBot={
 	}
 	
 };
-TWBot.init();
-var attack = confirm('Do you want to start attacking?');
-if (attack==true){
-	TWBot.attacks.attack();
-}
