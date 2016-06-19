@@ -91,7 +91,7 @@ var TWBot={
 						units=units.split(',');
 						for(unit in units){
 							unit = unit.split(':');
-							unisDict['unit_input'+unit[0]]=unit[1];
+							unitsDict['unit_input'+unit[0]]=unit[1];
 						}
 						for(unitType in this.unitTypes){
 							if(unitType in unitsDict){
