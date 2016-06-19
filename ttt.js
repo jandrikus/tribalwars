@@ -91,11 +91,11 @@ var TWBot={
 						units=units.split(',');
 						for(unit in units){
 							unit = unit.split(':');
-							unitsDict['unit_input'+unit[0]]=unit[1];
+							unitsDict['unit_input_'+unit[0]]=unit[1];
 						}
 						for(unitType in this.unitTypes){
 							if(unitType in unitsDict){
-								attacTemplateUnits[unitType]=unisDict[unitType];
+								attacTemplateUnits[unitType]=unitsDict[unitType];
 							}
 							else{
 								attacTemplateUnits[unitType]=0;
