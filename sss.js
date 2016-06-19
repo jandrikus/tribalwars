@@ -14,6 +14,7 @@ var TWBot={
 			unitConfig:null,
 			unitTypes:{},
 			unitsBySpeed:[],
+			attackTemplates:{},
 			player:{id:0,name:'',premium:false,migrated:false},
 			reportsInfoFrameUrl:'',
 			request:function(d,f,g,h){
@@ -57,6 +58,7 @@ var TWBot={
 				this.unitConfig=this.createUnitConfig();
 				if(this.unitConfig===null){
 					this.unitConfig=this.createUnitConfig();
+					this.storeGlobally('data_unitConfig',this.unitConfig);
 				}
 				this.unitTypes=this.load('data_unitTypes',true);
 				this.unitsBySpeed=this.load('data_unitBySpeeds');
@@ -69,18 +71,44 @@ var TWBot={
 					this.unitsBySpeed=[];
 					this.unitConfig.children().each(function(a,b){
 						if(b.tagName=='militia')return;
-						TWBot.data.unitTypes['unit_input_'+b.tagName]=TWBot.helpers.getUnitTypeName(b.tagName);
+						this.unitTypes['unit_input_'+b.tagName]=TWBot.helpers.getUnitTypeName(b.tagName);
 						c[c.length]={unit:b.tagName,speed:$(b).find('speed').text()};
 					});
 					c.sort(function(a,b){return parseFloat(a.speed,10)-parseFloat(b.speed,10)});
 					for(var s in c){
 						this.unitsBySpeed[this.unitsBySpeed.length]=c[s].unit;
 					}
+					this.store('data_unitTypes',this.unitTypes,true);
+					this.store('data_unitBySpeeds',this.unitsBySpeed.join(' '));
+				}
+				this.dataAttackTemplates=this.load('data_attackTemplates',true);
+				if(this.dataAttackTemplates==null){
+					var attacTemplateName=prompt('Please enter a name for your attack template', 'Farming');
+					var attacTemplateUnits={};
+					var units=prompt("Please enter the units you want to attack with separated by commas in the following format\nspear:0,sword:0,axe:0,spy:0,archer:0,marcher:0,light:0,heavy:0,ram:0,catapult:0,knight:0,snob:0\nIf you only want a spy, then write spy:1 .You don't need to set all to 0", '');
+					if(units!=null){
+						var unitsDict ={};
+						units=units.split(',');
+						for(unit in units){
+							unit = unit.split(':');
+							unisDict['unit_input'+unit[0]]=unit[1];
+						}
+						for(unitType in this.unitTypes){
+							if(unitType in unitsDict){
+								attacTemplateUnits[unitType]=unisDict[unitType];
+							}
+							else{
+								attacTemplateUnits[unitType]=0;
+							}
+						}
+					}
+					var attacTemplateCords=prompt("Please enter the coordenates of the villages you want to attack separated by space", "");
+					this.dataAttackTemplates={attacTemplateName:{name:attacTemplateName, unitsPerAttack:attacTemplateUnits, coords:attacTemplateCords, position:0}};
+					this.store('data_attackTemplates', this.dataAttackTemplates, true);
 				}
 				this.servertime=$('#serverTime').html().match(/\d+/g);
 				this.serverDate=$('#serverDate').html().match(/\d+/g);
 				this.serverTime=new Date(this.serverDate[1]+'/'+this.serverDate[0]+'/'+this.serverDate[2]+' '+this.servertime.join(':'));
-				$('#delEverything').click(TWBot.data.delEverything).hide();
 			},
 			store:function(a,b,c){
 				console.log('trying to store ['+a+']: ['+b+']',c);
@@ -116,10 +144,6 @@ var TWBot={
 			removeGlobally:function(a){
 				localStorage.removeItem(game_data.world+'_'+a)
 			},
-			retrieveVillagesData:function(){
-				TWBot.data.villageInfoFrameUrl='/game.php?village='+game_data.village.id+'&screen=overview_villages&rnd='+Math.random();
-				TWBot.data.villageInfoHiddenFrame=$('<iframe src="'+TWBot.data.villageInfoFrameUrl+'" />').load(TWBot.data.infosLoaded).css({width:'100px',height:'100px',position:'absolute',left:'-1000px'}).appendTo('body')
-			},
 			delEverything:function(){
 				TWBot.helpers.writeOut('Removing all stored data!',TWBot.helpers.MESSAGETYPE_ERROR,true,3000);
 				TWBot.data.removeGlobally('init_seensplashscreen');
@@ -139,15 +163,13 @@ var TWBot={
 	attacks:{attacking:false,
 				continueAttack:true,
 				attackId:0,
-				attackTemplates:{'Prueba': {name:'Prueba2',
-											unitsPerAttack:{'unit_input_spear': 1, 'unit_input_sword':0, 'unit_input_axe': 0, 'unit_input_spy': 0, 'unit_input_light': 0, 'unit_input_heavy': 0, 'unit_input_ram': 0, 'unit_input_catapult': 0, 'unit_input_snob':0, 'unit_input_knight':0},
-											coords:'548|547 548|547 548|547 548|547 548|547 548|547 548|547 548|547 548|547 548|547 548|547 548|547 548|547 548|547 548|547 548|547 548|547',
-											position:0}},
+				attackTemplates:{},
 				unitPerAttack:[],
 				init:function(){
-					this.loadAttack('Prueba');
+					this.loadAttacks();
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=place';
-					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);			
+					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);
+					this.loadAttack(0);
 					
 				},
 				frameLoaded:function(){
@@ -174,6 +196,13 @@ var TWBot={
 							TWBot.attacks.stopAttack()
 						}
 						a.click()
+					}
+				},
+				loadAttacks:function(){
+					var a=TWBot.data.load('data_attackTemplates',true);
+					console.log('a= '+a);
+					if(a!=null){
+						this.attackTemplates=a
 					}
 				},
 				loadAttack:function(a){
@@ -405,3 +434,7 @@ var TWBot={
 	
 };
 TWBot.init();
+var attack = confirm('Do you want to start attacking?');
+if (attack==true){
+	TWBot.attacks.attack();
+}
