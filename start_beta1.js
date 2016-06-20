@@ -7,7 +7,7 @@ var TWBot = {
 		var j = this.data.load('init_seensplashscreen');
 		if (j == null) {
 			this.helpers.showSplash();
-			this.data.store('init_seensplashscreen', true);
+			this.data.store('init_seensplashscreen', true, false);
 			console.log(this.data.load('init_seensplashscreen'));
 		};
 		Function.prototype.Timer = function (a, b, c) {
@@ -148,11 +148,13 @@ var TWBot = {
 			this.serverDate = $('#serverDate').html().match(/\d+/g);
 			this.serverTime = new Date(this.serverDate[1] + '/' + this.serverDate[0] + '/' + this.serverDate[2] + ' ' + this.servertime.join(':'))
 		},
+		/*
 		migrateOldData : function () {
 			this.store('attacks_attacktemplates', localStorage.getItem(game_data.village.id + '_attacktemplates'));
 			this.player.migrated = true;
 			this.store('data_playerInfo', this.player, true)
 		},
+		*/
 		store : function (a, b, c) {
 			if (c) {
 				localStorage.setItem(game_data.world + '_' + game_data.village.id + '_' + a, JSON.stringify(b))
