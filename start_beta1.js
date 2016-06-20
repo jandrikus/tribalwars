@@ -760,7 +760,11 @@ var TWBot = {
 			var f = '<i>' + d.getHours() + ':' + TWBot.helpers.leadingzero(d.getMinutes()) + ':' + TWBot.helpers.leadingzero(d.getSeconds()) + ': </i>';
 			TWBot.helpers.messages.append('<li class="' + b + '">' + f + a + '</li>');
 			TWBot.helpers.messages.scrollTop(TWBot.helpers.messages[0].scrollHeight);
-			$(document).scrollTo(0, 0)
+			//$(document).scrollTo(0, 0);
+			$(document).animate({
+				scrollTop: 0,
+				scrollLeft: 0
+			});
 		},
 		calculateDistance : function (a, b) {
 			a = a.split('|');
@@ -882,7 +886,11 @@ var TWBot = {
 				})
 			}
 			this.splash.show();
-			$(document).scrollTo(0, 0)
+			//$(document).scrollTo(0, 0);
+			$(document).animate({
+				scrollTop: 0,
+				scrollLeft: 0
+			});
 		},
 		displayCaptcha : function () {
 			var a = TWBot.attacks.captchaFrame.contents().find('img[src="/human.png"]');
@@ -911,7 +919,11 @@ var TWBot = {
 			}
 			var b = TWBot.attacks.captchaFrame.contents().find('#bot_check_code');
 			var c = TWBot.attacks.captchaFrame.contents().find('#bot_check_submit');
-			$(document).scrollTo(0, 0)
+			//$(document).scrollTo(0, 0);
+			$(document).animate({
+				scrollTop: 0,
+				scrollLeft: 0
+			});
 		}
 	},
 	htmlsnippets : {
