@@ -529,7 +529,7 @@ var TWBot = {
 				TWBot.attacks.attacking = true;
 				TWBot.helpers.spinner.show();
 				TWBot.helpers.writeOut('Attacking: [' + coordData + ']', TWBot.helpers.MESSAGETYPE_NOTE);
-				return
+				
 			}
 			if (TWBot.helpers.timerOff && TWBot.attacks.botting.is(':checked')) {
 				var a = TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own") tr td:contains("Return"):first').siblings().next().first().find('span').html();
