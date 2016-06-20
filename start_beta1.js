@@ -90,9 +90,11 @@ var TWBot = {
 				this.player.migrated = false;
 				this.storeGlobally('data_playerInfo', this.player, true);
 			}
+			/*
 			if (!this.player.migrated) {
 				this.migrateOldData();
 			}
+			*/
 			this.villages = this.loadGlobally('data_villages', true);
 			if (this.villages == null || Object.keys(this.villages).length == 0 || Object.keys(this.villages).length != game_data.player.villages || this.villages[game_data.village.id].id == null) {
 				if (this.villages == null || Object.keys(this.villages).length == 0) {
