@@ -531,7 +531,7 @@ var TWBot = {
 				TWBot.helpers.writeOut('Attacking: [' + coordData + ']', TWBot.helpers.MESSAGETYPE_NOTE);
 				
 			}
-			if (TWBot.helpers.timerOff && TWBot.attacks.botting.is(':checked')) {
+			if (TWBot.attacks.botting.is(':checked')) {
 				var a = TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own") tr td:contains("Return"):first').siblings().next().first().find('span').html();
 				var b = [];
 				if (a != null) {
