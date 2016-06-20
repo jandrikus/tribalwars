@@ -262,7 +262,7 @@ var TWBot = {
 			this.continuousAttack = $('#continuousAttack').click(function () {
 					if (!$(this).is(':checked') && $('#botting').is(':checked')) {
 						$('#botting').attr('checked', false);
-						TWBot.helpers.toggleTimer()
+						//TWBot.helpers.toggleTimer()
 					}
 				}).css({});
 			this.botting = $('#botting').click(function () {
@@ -270,7 +270,7 @@ var TWBot = {
 						$('#continuousAttack').attr('checked', true)
 					} else {}
 
-					TWBot.helpers.toggleTimer()
+					//TWBot.helpers.toggleTimer()
 				}).css({});
 			this.ignorePlayers = $('#ignorePlayers').click(function () {
 					if ($(this).is(':checked')) {
@@ -834,6 +834,7 @@ var TWBot = {
 			};
 			return b[a]
 		},
+		/*
 		toggleTimer : function () {
 			if (timers.length <= 0) {
 				TWBot.helpers.timerOff = true;
@@ -848,6 +849,7 @@ var TWBot = {
 				TWBot.helpers.timerOff = false
 			}
 		},
+		*/
 		leadingzero : function (a) {
 			return (a < 10) ? '0' + a : a
 		},
