@@ -247,6 +247,7 @@ var TWBot = {
 		attackId : 0,
 		attackTemplates : {},
 		unitPerAttack : [],
+		activeInterval : null,
 		init : function () {
 			this.hiddenFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=place';
 			this.hiddenFrame = TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl, TWBot.attacks.frameLoaded);
@@ -287,7 +288,7 @@ var TWBot = {
 			TWBot.attacks.continueAttack = true;
 			TWBot.attacks.attacking = true;
 			TWBot.attacks.hiddenFrame.attr('src', TWBot.attacks.hiddenFrame.attr('src'));
-			$('#show_outgoing_units .vis').replaceWith(TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own")'))
+			//$('#show_outgoing_units .vis').replaceWith(TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own")'))
 		},
 		frameLoaded : function () {
 			TWBot.helpers.spinner.fadeOut();
@@ -531,7 +532,7 @@ var TWBot = {
 				TWBot.helpers.writeOut('Attacking: [' + coordData + ']', TWBot.helpers.MESSAGETYPE_NOTE);
 				
 			}
-			if (TWBot.attacks.botting.is(':checked')) {
+			if (!TWBot.attacks.continueAttack && TWBot.attacks.botting.is(':checked')) {
 				var a = $('span[data-command-type="return"]').first().parent().parent().find('td').last().find('span').html();
 				var b = [];
 				if (a != null) {
@@ -542,7 +543,7 @@ var TWBot = {
 				var c = b.split(':');
 				c = parseInt(c[0] * 3600) + parseInt(c[1] * 60) + parseInt(c[2]);
 				TWBot.helpers.writeOut('Next return in <span class="nor">' + c + ' Seconds</span>', TWBot.helpers.MESSAGETYPE_NOTE);
-				TWBot.attacks.activeInterval = window.setTimeout(TWBot.attacks.polling, c * 1000 + Math.random() * 1000 + 1)
+				TWBot.attacks.activeInterval = window.setTimeout(TWBot.attacks.polling, c * 1000 + Math.random() * 1000 + 1000)
 			}
 		},
 		attackThis : function (a, b) {
