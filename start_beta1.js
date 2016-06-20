@@ -532,12 +532,12 @@ var TWBot = {
 				
 			}
 			if (TWBot.attacks.botting.is(':checked')) {
-				var a = TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own") tr td:contains("Return"):first').siblings().next().first().find('span').html();
+				var a = $('span[data-command-type="return"]').first().parent().parent().find('td').last().find('span').html();
 				var b = [];
 				if (a != null) {
 					b = a
 				} else {
-					b = TWBot.attacks.hiddenFrame.contents().find('table.vis:contains("Own") tr td:contains("Attack"):first').siblings().next().first().find('span.timer').html()
+					b = $('span[data-command-type="attack"]').first().parent().parent().find('td').last().find('span').html();
 				}
 				var c = b.split(':');
 				c = parseInt(c[0] * 3600) + parseInt(c[1] * 60) + parseInt(c[2]);
