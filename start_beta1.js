@@ -6,8 +6,8 @@ var TWBot = {
 		this.remote.init();
 		var j = this.data.load('init_seensplashscreen');
 		if (j == null) {
-			this.helpers.showSplash();
-			this.data.store('init_seensplashscreen', 'seen', false);
+			TWBot.data.store('init_seensplashscreen', true);
+			this.helpers.showSplash();			
 			console.log(this.data.load('init_seensplashscreen'));
 		};
 		Function.prototype.Timer = function (a, b, c) {
