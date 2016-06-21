@@ -543,7 +543,7 @@ var TWBot = {
 				var c = b.split(':');
 				c = parseInt(c[0] * 3600) + parseInt(c[1] * 60) + parseInt(c[2]);
 				TWBot.helpers.writeOut('Next return in <span class="nor">' + c + ' Seconds</span>', TWBot.helpers.MESSAGETYPE_NOTE);
-				TWBot.attacks.activeInterval = window.setTimeout(TWBot.attacks.polling, c * 1000 + Math.random() * 1000 + 3000);
+				TWBot.attacks.activeInterval = window.setTimeout(TWBot.attacks.polling, c * 1000 + Math.random() * 1000 + 5000);
 			}
 		},
 		attackThis : function (a, b) {
