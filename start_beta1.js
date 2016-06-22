@@ -234,10 +234,10 @@ var TWBot = {
 			TWBot.data.storeGlobally('data_reportedVillages', JSON.stringify(TWBot.data.reportedVillages));
 		},
 		reportLoaded: function () {
-			var e = d.contents().find('span[title="Madera"]').parent().text().split(" ");
-			var f = d.contents().find('span[title="Barro"]').parent().text().split(" ");
-			var g = d.contents().find('span[title="Hierro"]').parent().text().split(" ");
-			village = d.contents().find('#attack_info_def').find('.village_anchor.contexted').text().split(' ').reverse()[1].substr(1,7).split('|');
+			var e = $('span[title="Madera"]').parent().text().split(" ");
+			var f = $('span[title="Barro"]').parent().text().split(" ");
+			var g = $('span[title="Hierro"]').parent().text().split(" ");
+			village = $('#attack_info_def').find('.village_anchor.contexted').text().split(' ').reverse()[1].substr(1,7).split('|');
 			if (e.length>1||f.length>1||g.length>1){
 				var madera = e[1];
 				var barro = f[1];
