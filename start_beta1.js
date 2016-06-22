@@ -226,7 +226,7 @@ var TWBot = {
 		},
 		reportsLoaded : function () {			
 			console.log('beginning to load');
-			$('#report_list input[type=checkbox]:not(.selectAll)').each(function (a, e) {
+			TWBot.data.reportsInfoFrame.find('#report_list input[type=checkbox]:not(.selectAll)').each(function (a, e) {
 				TWBot.data.reportsId= e.name.substr(3);
 				TWBot.data.reportInfoFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack&view=' + TWBot.data.reportsId;
 				TWBot.data.reportInfoFrame = TWBot.helpers.createHiddenFrame(TWBot.data.reportInfoFrameUrl, TWBot.data.reportLoaded);
@@ -234,23 +234,25 @@ var TWBot = {
 			TWBot.data.storeGlobally('data_reportedVillages', JSON.stringify(TWBot.data.reportedVillages));
 		},
 		reportLoaded: function () {
-			$(document).ready(function(){
-				var e = TWBot.data.reportInfoFrame.contents().find('span[title="Madera"]').parent().text().split(" ");
-				console.log(e);
-				var f = TWBot.data.reportInfoFrame.contents().find('span[title="Barro"]').parent().text().split(" ");
-				var g = TWBot.data.reportInfoFrame.contents().find('span[title="Hierro"]').parent().text().split(" ");
-				var village = TWBot.data.reportInfoFrame.contents().find('#attack_info_def').find('.village_anchor.contexted').text().split(' ').reverse()[1].substr(1,7).split('|');
-				console.log(village);
-				if (e.length>1||f.length>1||g.length>1){
-					var madera = e[1];
-					var barro = f[1];
-					var hierro = g[1];
-					console.log(village+': '+madera+' '+barro+' '+hierro);
-					TWBot.data.reportedVillages[village] = {};
-					TWBot.data.reportedVillages[village] = {'madera':parseInt(madera), 'barro':parseInt(barro), 'hierro':parseInt(hierro)};
-				}
-				else{}
-			})
+			var e = TWBot.data.reportInfoFrame.contents().find('span[title="Madera"]');
+			var f = TWBot.data.reportInfoFrame.contents().find('span[title="Barro"]');
+			var g = TWBot.data.reportInfoFrame.contents().find('span[title="Hierro"]');
+			var village = TWBot.data.reportInfoFrame.contents().find('#attack_info_def');
+			console.log(TWBot.data.reportInfoFrame);
+			console.log(e);
+			e=e.parent().text().split(" ");
+			f=f.parent().text().split(" ");
+			g=g.parent().text().split(" ");
+			village=village.find('.village_anchor.contexted').text().split(' ').reverse()[1].substr(1,7).split('|');			
+			console.log(village);
+			if (e.length>1||f.length>1||g.length>1){
+				var madera = e[1];
+				var barro = f[1];
+				var hierro = g[1];
+				console.log(village+': '+madera+' '+barro+' '+hierro);
+				TWBot.data.reportedVillages[village] = {};
+				TWBot.data.reportedVillages[village] = {'madera':parseInt(madera), 'barro':parseInt(barro), 'hierro':parseInt(hierro)};
+			}
 		}
 	},
 	attacks : {
