@@ -40,6 +40,7 @@ var TWBot = {
 		unitConfig : null,
 		unitTypes : {},
 		unitsBySpeed : [],
+		reportsId : 0,
 		player : {
 			id : 0,
 			name : '',
@@ -241,12 +242,13 @@ var TWBot = {
 					var madera = e[1];
 					var barro = f[1];
 					var hierro = g[1];
-					TWBot.data.reportsDict[village] = {};
-					TWBot.data.reportsDict[village] = {'madera':madera, 'barro':barro, 'hierro':hierro}
+					console.log(village+': 'madera+' '+barro+' '+hierro);
+					TWBot.data.reportedVillages[village] = {};
+					TWBot.data.reportedVillages[village] = {'madera':madera, 'barro':barro, 'hierro':hierro}
 				}
 				else{}
 			});
-			TWBot.data.store('reportsHistory', JSON.parse(TWBot.data.reportsDict));
+			TWBot.data.storeGlobally('data_reportedVillages', JSON.stringify(TWBot.data.reportedVillages));
 			/*
 			var b = /\s*(.+) \((.+)\) .+ \((.+)\) .;
 			var c = b.exec($('#labelText').text());
