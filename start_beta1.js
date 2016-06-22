@@ -228,26 +228,23 @@ var TWBot = {
 			console.log('beginning to load');
 			$('#report_list input[type=checkbox]:not(.selectAll)').each(function (a, e) {
 				TWBot.data.reportsId= e.name.substr(3)
-				var d = $('<iframe src="' + '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack' + TWBot.data.reportsId + '" />').load(function(){
-					var e = d.contents().find('span[title="Madera"]').parent().text().split(" ");
-					var f = d.contents().find('span[title="Barro"]').parent().text().split(" ");
-					var g = d.contents().find('span[title="Hierro"]').parent().text().split(" ");
-					village = d.contents().find('#attack_info_def').find('.village_anchor.contexted').text().split(' ').reverse()[1].substr(1,7).split('|');
-					if (e.length>1){
-						var madera = e[1];
-						var barro = f[1];
-						var hierro = g[1];
-						TWBot.data.reportsDict[village] = {};
-						TWBot.data.reportsDict[village] = {'madera':madera, 'barro':barro, 'hierro':hierro}
-					}
-					else{
-						
-					}
-				}).css({width : '100px',
-				height : '100px',
-				position : 'absolute',
-				left : '-1000px'
-			}).appendTo('body')
+				var d = $('<iframe src="' + '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack' + TWBot.data.reportsId + '" />').load().css({width : '100px',
+					height : '100px',
+					position : 'absolute',
+					left : '-1000px'
+				}).appendTo('body');
+				var e = d.contents().find('span[title="Madera"]').parent().text().split(" ");
+				var f = d.contents().find('span[title="Barro"]').parent().text().split(" ");
+				var g = d.contents().find('span[title="Hierro"]').parent().text().split(" ");
+				village = d.contents().find('#attack_info_def').find('.village_anchor.contexted').text().split(' ').reverse()[1].substr(1,7).split('|');
+				if (e.length>1){
+					var madera = e[1];
+					var barro = f[1];
+					var hierro = g[1];
+					TWBot.data.reportsDict[village] = {};
+					TWBot.data.reportsDict[village] = {'madera':madera, 'barro':barro, 'hierro':hierro}
+				}
+				else{}
 			});
 			TWBot.data.store('reportsHistory', JSON.parse(TWBot.data.reportsDict));
 			/*
