@@ -221,7 +221,7 @@ var TWBot = {
 		},
 		retrieveReport : function () {
 			TWBot.data.reportsInfoFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack';
-			TWBot.data.reportsInfoFrameUrl = TWBot.helpers.createHiddenFrame(TWBot.data.reportsInfoFrameUrl, TWBot.data.reportsLoaded)
+			TWBot.data.reportsInfoFrame = TWBot.helpers.createHiddenFrame(TWBot.data.reportsInfoFrameUrl, TWBot.data.reportsLoaded)
 						
 		},
 		reportsLoaded : function () {			
@@ -246,6 +246,7 @@ var TWBot = {
 					TWBot.data.reportedVillages[village] = {'madera':madera, 'barro':barro, 'hierro':hierro}
 				}
 				else{}
+				setTimeout(function(){}, 100);
 			});
 			TWBot.data.storeGlobally('data_reportedVillages', JSON.stringify(TWBot.data.reportedVillages));
 			/*
