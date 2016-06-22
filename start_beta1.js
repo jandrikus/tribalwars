@@ -235,18 +235,19 @@ var TWBot = {
 		},
 		reportLoaded: function () {
 			$(document).ready(function(){
-				var e = $('span[title="Madera"]').parent().text().split(" ");
-				var f = $('span[title="Barro"]').parent().text().split(" ");
-				var g = $('span[title="Hierro"]').parent().text().split(" ");
-				village = $('#attack_info_def').find('.village_anchor.contexted').text().split(' ').reverse()[1].substr(1,7).split('|');
+				var e = TWBot.data.reportInfoFrame.contents().find('span[title="Madera"]').parent().text().split(" ");
 				console.log(e);
+				var f = TWBot.data.reportInfoFrame.contents().find('span[title="Barro"]').parent().text().split(" ");
+				var g = TWBot.data.reportInfoFrame.contents().find('span[title="Hierro"]').parent().text().split(" ");
+				var village = TWBot.data.reportInfoFrame.contents().find('#attack_info_def').find('.village_anchor.contexted').text().split(' ').reverse()[1].substr(1,7).split('|');
+				console.log(village);
 				if (e.length>1||f.length>1||g.length>1){
 					var madera = e[1];
 					var barro = f[1];
 					var hierro = g[1];
 					console.log(village+': '+madera+' '+barro+' '+hierro);
 					TWBot.data.reportedVillages[village] = {};
-					TWBot.data.reportedVillages[village] = {'madera':madera, 'barro':barro, 'hierro':hierro};
+					TWBot.data.reportedVillages[village] = {'madera':parseInt(madera), 'barro':parseInt(barro), 'hierro':parseInt(hierro)};
 				}
 				else{}
 			})
