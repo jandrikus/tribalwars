@@ -249,7 +249,7 @@ var TWBot = {
 					TWBot.data.reportedVillages[village] = {'madera':madera, 'barro':barro, 'hierro':hierro};
 				}
 				else{}
-			}
+			})
 		}
 	},
 	attacks : {
