@@ -221,48 +221,32 @@ var TWBot = {
 		},
 		retrieveReport : function () {
 			TWBot.data.reportsInfoFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack';
-			TWBot.data.reportsInfoFrame = TWBot.helpers.createHiddenFrame(TWBot.data.reportsInfoFrameUrl, TWBot.data.reportsLoaded)
+			TWBot.data.reportsInfoFrame = TWBot.helpers.createHiddenFrame(TWBot.data.reportsInfoFrameUrl, TWBot.data.reportsLoaded);
 						
 		},
 		reportsLoaded : function () {			
 			console.log('beginning to load');
 			$('#report_list input[type=checkbox]:not(.selectAll)').each(function (a, e) {
 				TWBot.data.reportsId= e.name.substr(3);
-				var d = $('<iframe src="' + '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack' + TWBot.data.reportsId + '" />').load().css({width : '100px',
-					height : '100px',
-					position : 'absolute',
-					left : '-1000px'
-				}).appendTo('body');
-				var e = d.contents().find('span[title="Madera"]').parent().text().split(" ");
-				var f = d.contents().find('span[title="Barro"]').parent().text().split(" ");
-				var g = d.contents().find('span[title="Hierro"]').parent().text().split(" ");
-				village = d.contents().find('#attack_info_def').find('.village_anchor.contexted').text().split(' ').reverse()[1].substr(1,7).split('|');
-				if (e.length>1){
-					var madera = e[1];
-					var barro = f[1];
-					var hierro = g[1];
-					console.log(village+': '+madera+' '+barro+' '+hierro);
-					TWBot.data.reportedVillages[village] = {};
-					TWBot.data.reportedVillages[village] = {'madera':madera, 'barro':barro, 'hierro':hierro}
-				}
-				else{}
-				setTimeout(function(){}, 100);
+				TWBot.data.reportInfoFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack&view=' + TWBot.data.reportsId;
+				TWBot.data.reportInfoFrame = TWBot.helpers.createHiddenFrame(TWBot.data.reportInfoFrameUrl, TWBot.data.reportLoaded);
 			});
 			TWBot.data.storeGlobally('data_reportedVillages', JSON.stringify(TWBot.data.reportedVillages));
-			/*
-			var b = /\s*(.+) \((.+)\) .+ \((.+)\) .;
-			var c = b.exec($('#labelText').text());
-			if (c.length == 4) {
-				var d = c[1];
-				var f = c[2];
-				var g = c[3]
+		},
+		reportLoaded: function () {
+			var e = d.contents().find('span[title="Madera"]').parent().text().split(" ");
+			var f = d.contents().find('span[title="Barro"]').parent().text().split(" ");
+			var g = d.contents().find('span[title="Hierro"]').parent().text().split(" ");
+			village = d.contents().find('#attack_info_def').find('.village_anchor.contexted').text().split(' ').reverse()[1].substr(1,7).split('|');
+			if (e.length>1||f.length>1||g.length>1){
+				var madera = e[1];
+				var barro = f[1];
+				var hierro = g[1];
+				console.log(village+': '+madera+' '+barro+' '+hierro);
+				TWBot.data.reportedVillages[village] = {};
+				TWBot.data.reportedVillages[village] = {'madera':madera, 'barro':barro, 'hierro':hierro};
 			}
-			var h = $('#label').parent().parent().siblings();
-			var i = new Date(h.first().children().last().text());
-			var j = h.last().find('h3').text();
-			var k = $('#attack_info_att');
-			var l = $('#attack_info_def')
-			*/
+			else{}
 		}
 	},
 	attacks : {
