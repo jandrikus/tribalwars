@@ -220,16 +220,16 @@ var TWBot = {
 			TWBot.data.storeGlobally('data_villages', TWBot.data.villages, true)
 		},
 		retrieveReport : function () {
-			TWBot.data.reportsInfoFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack';
-			TWBot.data.reportsInfoFrame = TWBot.helpers.createHiddenFrame(TWBot.data.reportsInfoFrameUrl, TWBot.data.reportsLoaded);
+			this.reportsInfoFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack';
+			this.reportsInfoFrame = TWBot.helpers.createHiddenFrame(this.reportsInfoFrameUrl, TWBot.data.reportsLoaded);
 						
 		},
 		reportsLoaded : function () {			
 			console.log('beginning to load');
 			TWBot.data.reportsInfoFrame.find('#report_list input[type=checkbox]:not(.selectAll)').each(function (a, e) {
 				TWBot.data.reportsId= e.name.substr(3);
-				TWBot.data.reportInfoFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack&view=' + TWBot.data.reportsId;
-				TWBot.data.reportInfoFrame = TWBot.helpers.createHiddenFrame(TWBot.data.reportInfoFrameUrl, TWBot.data.reportLoaded);
+				this.reportInfoFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack&view=' + TWBot.data.reportsId;
+				this.reportInfoFrame = TWBot.helpers.createHiddenFrame(this.reportInfoFrameUrl, TWBot.data.reportLoaded);
 			});
 			TWBot.data.storeGlobally('data_reportedVillages', JSON.stringify(TWBot.data.reportedVillages));
 		},
