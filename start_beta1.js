@@ -224,11 +224,10 @@ var TWBot = {
 			TWBot.data.reportsInfoFrameUrl = TWBot.helpers.createHiddenFrame(TWBot.data.reportsInfoFrameUrl, TWBot.data.reportsLoaded)
 						
 		},
-		reportsLoaded : function () {
-			
+		reportsLoaded : function () {			
 			console.log('beginning to load');
 			$('#report_list input[type=checkbox]:not(.selectAll)').each(function (a, e) {
-				TWBot.data.reportsId= e.name.substr(3)
+				TWBot.data.reportsId= e.name.substr(3);
 				var d = $('<iframe src="' + '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack' + TWBot.data.reportsId + '" />').load().css({width : '100px',
 					height : '100px',
 					position : 'absolute',
