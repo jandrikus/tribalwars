@@ -221,13 +221,17 @@ var TWBot = {
 		retrieveReport : function () {
 			TWBot.data.reportsInfoFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=report&rnd=' + Math.random();
 			TWBot.data.reportsInfoFrameUrl = TWBot.helpers.createHiddenFrame(TWBot.data.reportsInfoFrameUrl, TWBot.data.reportsLoaded)
+			var madera = $('span[title="Madera"]').parent().text();
+			console.log(madera);
+			
 		},
 		reportsLoaded : function () {
 			console.log('beginning to load');
 			$('#report_list input[type=checkbox]:not(.selectAll)').each(function (a, e) {
 				console.log(e.name.substr(3))
 			});
-			var b = /\s*(.+) \((.+)\) .+ \((.+)\) .*/;
+			/*
+			var b = /\s*(.+) \((.+)\) .+ \((.+)\) .;
 			var c = b.exec($('#labelText').text());
 			if (c.length == 4) {
 				var d = c[1];
@@ -239,6 +243,7 @@ var TWBot = {
 			var j = h.last().find('h3').text();
 			var k = $('#attack_info_att');
 			var l = $('#attack_info_def')
+			*/
 		}
 	},
 	attacks : {
