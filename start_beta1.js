@@ -241,7 +241,7 @@ var TWBot = {
 					var madera = e[1];
 					var barro = f[1];
 					var hierro = g[1];
-					console.log(village+': 'madera+' '+barro+' '+hierro);
+					console.log(village+': '+madera+' '+barro+' '+hierro);
 					TWBot.data.reportedVillages[village] = {};
 					TWBot.data.reportedVillages[village] = {'madera':madera, 'barro':barro, 'hierro':hierro}
 				}
