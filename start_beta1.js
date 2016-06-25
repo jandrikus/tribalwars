@@ -441,7 +441,7 @@ var TWBot = {
 			var listaDePueblos=a.split(' ');
 			var c={}
 			for (var i in listaDePueblos) {
-				if (var listaDePueblos[i] not in c{
+				if (listaDePueblos[i] not in c{
 					c[listaDePueblos[i]]=TWBot.helpers.calculateDistance(listaDePueblos[i], b)
 				}
 			}
