@@ -309,21 +309,26 @@ var TWBot = {
 			var a = TWBot.attacks.hiddenFrame.contents().find('#troop_confirm_go');
 			var b = TWBot.attacks.hiddenFrame.contents().find('#bot_check');
 			var c = TWBot.attacks.hiddenFrame.contents().find('img[src="/human.png"]');
-			var d = TWBot.attacks.hiddenFrame.contents().find('#error');
-			var e = TWBot.attacks.hiddenFrame.contents().find('table.vis td:contains("Player")');
+			var d = TWBot.attacks.hiddenFrame.contents().find('.error_box');
+			var e = TWBot.attacks.hiddenFrame.contents().find('table.vis td:contains("Usuario")');
 			if (d.length > 0 && d.html().indexOf("banned") !== -1) {
 				coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
 				TWBot.helpers.writeOut('The village owner is banned! Continuing with next Village (ignoring [' + coordData + '])', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
 				return TWBot.attacks.ignoreVillage()
 			}
-			if (d.length > 0 && d.html().indexOf("beginner") !== -1) {
+			if (d.length > 0 && d.html().indexOf("principiantes") !== -1) {
 				coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
-				TWBot.helpers.writeOut(d.html() + ' Continuing with next Village (ignoring [' + coordData + '])', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
+				TWBot.helpers.writeOut(d.html() + ' Pasando al siguiente pueblo (ignorando [' + coordData + '])', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
+				return TWBot.attacks.ignoreVillage()
+			}
+			if (d.length > 0 && d.html().indexOf("20:1") !== -1) {
+				coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
+				TWBot.helpers.writeOut(d.html() + ' Pasando al siguiente pueblo (ignorando [' + coordData + '])', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
 				return TWBot.attacks.ignoreVillage()
 			}
 			if (d.length > 0 && d.html().indexOf("Christmas") !== -1) {
 				coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
-				TWBot.helpers.writeOut(d.html() + ' Continuing with next Village (ignoring [' + coordData + '])', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
+				TWBot.helpers.writeOut(d.html() + ' Pasando al siguiente pueblo (ignorando [' + coordData + '])', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
 				return TWBot.attacks.ignoreVillage()
 			}
 			if (b.size() != 0 || c.size() != 0) {
@@ -334,7 +339,7 @@ var TWBot = {
 			}
 			if (e.length > 0 && TWBot.attacks.ignorePlayers.is(':checked')) {
 				coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
-				TWBot.helpers.writeOut('The village owner is a player! Continuing with next Village', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
+				TWBot.helpers.writeOut('El pueblo pertenece a un jugador! Pasando al siguiente pueblo', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
 				return TWBot.attacks.ignoreVillage()
 			}
 			if (a.size() == 0) {
@@ -425,11 +430,34 @@ var TWBot = {
 			var c = {
 				name : $('#template_name').val().trim(),
 				unitsPerAttack : b,
-				coords : $('#template_coords').val().trim(),
+				coords : TWBot.attacks.orderCoords($('#template_coords').val().trim()),
 				position : $('#template_position').val()
 			};
 			this.attackTemplates[a] = c;
 			TWBot.data.store('attacks_attacktemplates', this.attackTemplates, true)
+		},
+		orderCoords : function (a){
+			var b = game_data.village.coord;
+			var listaDePueblos=a.split(' ');
+			var c={}
+			for (var i in listaDePueblos) {
+				if (var listaDePueblos[i] not in c{
+					c[listaDePueblos[i]]=TWBot.helpers.calculateDistance(listaDePueblos[i], b)
+				}
+			}
+			var d=[]
+			for (var pueblo1 in c) {
+				d.append(pueblo1,c[pueblo1])
+			}
+			var s='';
+			console.log(JSON.stringify(c));
+			d.sort(function(a,b){
+				return a[1] - b[1];
+			});
+			for (var j in d) {
+				s+=d[j][0]+' '
+			}
+			return s.slice(-1);
 		},
 		loadAttack : function (a) {
 			if (!a) {
