@@ -228,17 +228,18 @@ var TWBot = {
 			console.log('beginning to load');
 			TWBot.data.reportsInfoFrame.find('#report_list input[type=checkbox]:not(.selectAll)').each(function (a, e) {
 				TWBot.data.reportsId= e.name.substr(3);
-				this.reportInfoFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack&view=' + TWBot.data.reportsId;
-				this.reportInfoFrame = TWBot.helpers.createHiddenFrame(this.reportInfoFrameUrl, TWBot.data.reportLoaded);
+				TWBot.reportInfoFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=report&mode=attack&view=' + TWBot.data.reportsId;
+				this.reportsInfoFrame.attr('src',TWBot.reportInfoFrameUrl);
+				TWBot.data.reportLoaded();
 			});
 			TWBot.data.storeGlobally('data_reportedVillages', JSON.stringify(TWBot.data.reportedVillages));
 		},
 		reportLoaded: function () {
-			var e = TWBot.data.reportInfoFrame.contents().find('span[title="Madera"]');
-			var f = TWBot.data.reportInfoFrame.contents().find('span[title="Barro"]');
-			var g = TWBot.data.reportInfoFrame.contents().find('span[title="Hierro"]');
-			var village = TWBot.data.reportInfoFrame.contents().find('#attack_info_def');
-			console.log(TWBot.data.reportInfoFrame);
+			var e = TWBot.data.reportsInfoFrame.contents().find('span[title="Madera"]');
+			var f = TWBot.data.reportsInfoFrame.contents().find('span[title="Barro"]');
+			var g = TWBot.data.reportsInfoFrame.contents().find('span[title="Hierro"]');
+			var village = TWBot.data.reportsInfoFrame.contents().find('#attack_info_def');
+			console.log(TWBot.data.reportsInfoFrame);
 			console.log(e);
 			e=e.parent().text().split(" ");
 			f=f.parent().text().split(" ");
@@ -756,7 +757,7 @@ var TWBot = {
 			if (!TWBot.helpers.stickyPanel && !TWBot.helpers.panelInTransit && !TWBot.helpers.panelOut) {
 				TWBot.helpers.panelInTransit = true;
 				TWBot.helpers.panel.animate({
-					"right" : "+=314px"
+					"right" : "+=310px"
 				}, "slow", function () {
 					TWBot.helpers.panelInTransit = false;
 					TWBot.helpers.panelOut = true
@@ -767,7 +768,7 @@ var TWBot = {
 			if (!TWBot.helpers.stickyPanel && !TWBot.helpers.panelInTransit && TWBot.helpers.panelOut) {
 				TWBot.helpers.panelInTransit = true;
 				TWBot.helpers.panel.animate({
-					"right" : "-=314px"
+					"right" : "-=320px"
 				}, "slow", function () {
 					TWBot.helpers.panelInTransit = false;
 					TWBot.helpers.panelOut = false
