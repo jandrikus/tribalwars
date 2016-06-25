@@ -430,12 +430,13 @@ var TWBot = {
 			var c = {
 				name : $('#template_name').val().trim(),
 				unitsPerAttack : b,
-				coords : TWBot.attacks.orderCoords($('#template_coords').val().trim()),
+				coords : $('#template_coords').val().trim(),
 				position : $('#template_position').val()
 			};
 			this.attackTemplates[a] = c;
 			TWBot.data.store('attacks_attacktemplates', this.attackTemplates, true)
 		},
+		/*
 		orderCoords : function (a){
 			var b = game_data.village.coord;
 			var listaDePueblos=a.split(' ');
@@ -459,6 +460,7 @@ var TWBot = {
 			}
 			return s.slice(-1);
 		},
+		*/
 		loadAttack : function (a) {
 			if (!a) {
 				for (a in this.attackTemplates)
