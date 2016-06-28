@@ -1,0 +1,24 @@
+javascript:void(function()%7B$('<script />').attr('src', 'https://rawgit.com/jandrikus/prueba/master/start_beta2.js').appendTo('body')%7D());
+
+Como instalar:
+
+0. No hablar a nadie sobre este Bot.
+IMPORTANTE: QUEDA PROHIBIDO NOMBRAR NADA PARECIDO A UN BOT, NI MUCHO MENOS ESTE, EN CUALQUIER PARTE DEL JUEGO.
+
+1. Crear un marcador en el navegador(acceso directo de navegador), a poder ser dentro de una carpeta, para disumularlo.
+La url del marcador ha der ser el codigo escrito arriba de todo.
+IMPORTANTE: NO PONER EL SCRIPT EN LA BARRA DE VELOCIDAD DE LA CUENTA PREMIUM!!!!!
+
+2. En cualquier sitio del juego, clicais en el marcador y una aplicacion emergente aparecera.
+
+3. En primer lugar, hay que crear una nueva plantilla. En la pantalla de creacion de plantilla, primero ponemos el nombre, las unidades que queremos que vayan al ataque, y las coordenadas.
+
+4. Una vez hecho eso, se clica en 'Complete', para completar la pantilla.
+
+NOTA: el script envia ataques con un delay de 2-3 segundos, para que asi el bot no sea detectado... esta comprobado que no lo detectan :D asi que nadie se vaya de la lengua :P
+
+ACLARACION: Para crear mas plantillas, simplemente clica en 'New Attack'
+EL bot distingue entre pueblos, es decir, las plantillas que crees para el pueblo 1 no apareceran en el pueblo 2.
+EL bot es 'inteligente'. Si saltase el captcha, el bot se para y no continua hasta que tu manualmente lo rellenes.(Me lo han dicho, aunque nunca ha saltado el captcha...)
+
+Gracias por leer y espero que lo disfruteis!!! :)
