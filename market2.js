@@ -120,7 +120,6 @@ var TWBot={
 				attackTemplates:{},
 				unitPerAttack:[],
 				init:function(){
-					this.loadAttacks();
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=market&mode=exchange';
 					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);
 				},
