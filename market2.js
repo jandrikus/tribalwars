@@ -124,6 +124,7 @@ var TWBot={
 				},
 				frameLoaded:function(){
 					var b=TWBot.attacks.hiddenFrame.contents().find('#bot_check');
+					var c = TWBot.attacks.hiddenFrame.contents().find('img[src="/human.png"]');
 					var wood = TWBot.attacks.hiddenFrame.contents().find('#premium_exchange_rate_wood').find('.premium-exchange-sep').first().text().substr(1);
 					var stone = TWBot.attacks.hiddenFrame.contents().find('#premium_exchange_rate_stone').find('.premium-exchange-sep').first().text().substr(1);
 					var iron = TWBot.attacks.hiddenFrame.contents().find('#premium_exchange_rate_iron').find('.premium-exchange-sep').first().text().substr(1);
