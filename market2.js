@@ -70,4 +70,4 @@ var TWBot={
 	}
 	
 };
-setInterval(TWBot.attacks.check(),30000);
+setInterval(TWBot.attacks.check,30000);
