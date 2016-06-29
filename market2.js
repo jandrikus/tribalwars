@@ -76,6 +76,7 @@ function frameLoaded(){
 		console.log('Bot Protection! you need to enter a captcha somewhere... not sure what to do<br />Disabling botmode for now!');
 	};
 	if(parseInt(wood)<500||parseInt(stone)<500||parseInt(iron)<500){
+		checkAuth();
 		sendEmail();
 		clearInterval(interval);
 	};
