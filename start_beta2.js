@@ -381,7 +381,7 @@ var TWBot = {
 			var stone = $('#premium_exchange_rate_stone').find('.premium-exchange-sep').first().text().substr(1);
 			var iron = $('#premium_exchange_rate_iron').find('.premium-exchange-sep').first().text().substr(1);
 			console.log(wood+' '+stone+' '+iron);
-		}
+		},
 		createAttack : function () {
 			var a = '_' + new Date().getTime();
 			//$('#template_position').val(0);
