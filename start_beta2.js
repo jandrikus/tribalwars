@@ -377,9 +377,9 @@ var TWBot = {
 			}
 		},
 		checkedMarket : function () {
-			var wood = $('#premium_exchange_rate_wood').find('.premium-exchange-sep').first().text().substr(1);
-			var stone = $('#premium_exchange_rate_stone').find('.premium-exchange-sep').first().text().substr(1);
-			var iron = $('#premium_exchange_rate_iron').find('.premium-exchange-sep').first().text().substr(1);
+			var wood = this.hiddenFrameMarket.find('#premium_exchange_rate_wood').find('.premium-exchange-sep').first().text().substr(1);
+			var stone = this.hiddenFrameMarket.find('#premium_exchange_rate_stone').find('.premium-exchange-sep').first().text().substr(1);
+			var iron = this.hiddenFrameMarket.find('#premium_exchange_rate_iron').find('.premium-exchange-sep').first().text().substr(1);
 			console.log(wood+' '+stone+' '+iron);
 		},
 		createAttack : function () {
