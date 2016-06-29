@@ -34,30 +34,17 @@ function sendEmail() {
 };
 
 function sendMessage(message, receiver, sender) {
-    var headers = getClientRequestHeaders();
     var path = "gmail/v1/users/me/messages/send?key=" + CLIENT_ID;
     var base64EncodedEmail = btoa(message).replace(/\+/g, '-').replace(/\//g, '_');
     gapi.client.request({
         path: path,
         method: "POST",
-        headers: headers,
         body: {
             'raw': base64EncodedEmail
         }
     }).then(function (response) {
 
     });
-};
-
-var t = null;
-function getClientRequestHeaders() {
-    if(!t) t = gapi.auth.getToken();
-    gapi.auth.setToken({token: t['access_token']});
-    var a = "Bearer " + t["access_token"];
-    return {
-        "Authorization": a,
-        "X-JavaScript-User-Agent": "Google APIs Explorer"
-    };
 };
 
 function check(){
