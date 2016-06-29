@@ -1,6 +1,6 @@
 function check(){
 	var hiddenFrameUrl = '/game.php?village='+game_data.village.id+'&screen=market&mode=exchange';
-	hiddenFrame = createHiddenFrame(hiddenFrameUrl,TWBot.attacks.frameLoaded);
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,frameLoaded);
 };
 function frameLoaded(){
 	var b=$('#bot_check');
