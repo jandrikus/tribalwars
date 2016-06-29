@@ -1,117 +1,6 @@
 var TWBot={
-	init:function(){
-		this.data.init();
-		setInterval(this.attacks.check(),30000);
-	},
 	htmlsnippets:{
 			captchaFrame:'<div id="captchacloser"></div><div id="captchaframe"></div>',
-	},
-	data:{
-			servertime:null,
-			serverDate:null,
-			worldConfig:null,
-			unitConfig:null,
-			unitTypes:{},
-			unitsBySpeed:[],
-			attackTemplates:{},
-			player:{id:0,name:'',premium:false,migrated:false},
-			reportsInfoFrameUrl:'',
-			request:function(d,f,g,h){
-				var i=null,
-				payload=null;
-				$.ajax({'url':d,'data':g,'dataType':h,'type':String(f||'get').toUpperCase(),'async':false,'error':function(a,b,e){i='Ajaxerror: '+b},'success':function(a,b,c){payload=a}});
-				if(i){
-					TWBot.helpers.writeOut(i,TWBot.helpers.MESSAGETYPE_ERROR,true,3000);
-				}
-				return payload;
-			},
-			createConfig:function(a){
-				return $(this.request('/interface.php','get',{'func':a},'xml')).find('config');
-			},
-			createUnitConfig:function(){
-				return this.createConfig('get_unit_info');
-			},
-			createWorldConfig:function(){
-				return this.createConfig('get_config');
-			},
-			init:function(){
-				this.player=this.loadGlobally('data_playerInfo',true);
-				if(this.player==null){
-					this.player={};
-					this.player.id=parseInt(game_data.player.id);
-					this.player.name=game_data.player.name;
-					console.log('Storing new player info of '+this.player.name);
-					this.player.premium=game_data.player.premium;
-					this.player.migrated=false;
-					this.storeGlobally('data_playerInfo',this.player,true);					
-				}
-				else{
-					console.log('Loading player info of '+this.player.name);
-				}
-				this.worldConfig=this.loadGlobally('data_worldConfig',true);
-				if(this.worldConfig==null){
-					this.worldConfig=this.createWorldConfig();
-					this.storeGlobally('data_worldConfig',this.worldConfig, true);					
-				}
-				this.unitConfig=this.loadGlobally('data_unitConfig',true);
-				this.unitConfig=this.createUnitConfig();
-				if(this.unitConfig==null){
-					this.unitConfig=this.createUnitConfig();
-					this.storeGlobally('data_unitConfig',this.unitConfig,true);
-				}
-				this.servertime=$('#serverTime').html().match(/\d+/g);
-				this.serverDate=$('#serverDate').html().match(/\d+/g);
-				this.serverTime=new Date(this.serverDate[1]+'/'+this.serverDate[0]+'/'+this.serverDate[2]+' '+this.servertime.join(':'));
-			},
-			store:function(a,b,c){
-				console.log('trying to store ['+a+']: ['+b+']',c);
-				if(c){
-					localStorage.setItem(game_data.world+'_'+game_data.village.id+'_'+a,JSON.stringify(b))
-				}
-				else{
-					localStorage.setItem(game_data.world+'_'+game_data.village.id+'_'+a,b)
-				}
-			},
-			storeGlobally:function(a,b,c){
-				if(c){
-					localStorage.setItem(game_data.world+'_'+a,JSON.stringify(b))
-				}
-				else{
-					localStorage.setItem(game_data.world+'_'+a,b)
-				}
-			},
-			load:function(a,b){
-				TWBot.helpers.writeOut('trying to load ['+a+']',b);
-				if(b){
-					console.log('value for ['+a+'] : ['+JSON.parse(localStorage.getItem(game_data.world+'_'+game_data.village.id+'_'+a))+']');
-					return JSON.parse(localStorage.getItem(game_data.world+'_'+game_data.village.id+'_'+a))
-				}
-				return localStorage.getItem(game_data.world+'_'+game_data.village.id+'_'+a)
-			},
-			loadGlobally:function(a,b){
-				if(b){
-					return JSON.parse(localStorage.getItem(game_data.world+'_'+a))
-				}
-				return localStorage.getItem(game_data.world+'_'+a)
-			},
-			removeGlobally:function(a){
-				localStorage.removeItem(game_data.world+'_'+a)
-			},
-			delEverything:function(){
-				TWBot.helpers.writeOut('Removing all stored data!',TWBot.helpers.MESSAGETYPE_ERROR,true,3000);
-				TWBot.data.removeGlobally('init_seensplashscreen');
-				TWBot.data.removeGlobally('data_worldConfig');
-				TWBot.helpers.writeOut('Removed wordConfig!',TWBot.helpers.MESSAGETYPE_ERROR);
-				TWBot.data.removeGlobally('data_playerInfo');
-				TWBot.helpers.writeOut('Removed playerInfo!',TWBot.helpers.MESSAGETYPE_ERROR);
-				TWBot.data.removeGlobally('data_villages');
-				TWBot.helpers.writeOut('Removed villages!',TWBot.helpers.MESSAGETYPE_ERROR);
-				TWBot.data.removeGlobally('data_reportedVillages');
-				TWBot.helpers.writeOut('Removed reportedVillages!',TWBot.helpers.MESSAGETYPE_ERROR);
-				TWBot.data.removeGlobally('data_unitConfig');
-				TWBot.helpers.writeOut('Removed unitConfig!',TWBot.helpers.MESSAGETYPE_ERROR);
-				TWBot.helpers.writeOut('Removed all stored data! Reload the page and script!',TWBot.helpers.MESSAGETYPE_ERROR,true,3000)
-			}
 	},
 	attacks:{attacking:false,
 				continueAttack:true,
@@ -121,6 +10,8 @@ var TWBot={
 				check:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=market&mode=exchange';
 					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);
+					this.hiddenFrame.attr('src', ' ');
+					this.hiddenFrame.remove();
 				},
 				frameLoaded:function(){
 					var b=TWBot.attacks.hiddenFrame.contents().find('#bot_check');
@@ -192,4 +83,4 @@ var TWBot={
 	}
 	
 };
-TWBot.init();
+setInterval(TWBot.attacks.check(),30000);
