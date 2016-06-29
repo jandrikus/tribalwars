@@ -1,8 +1,7 @@
 var TWBot={
 	init:function(){
-		this.helpers.init();
 		this.data.init();
-		this.attacks.init();
+		setInterval(this.attacks.check(),30000);
 	},
 	htmlsnippets:{
 			captchaFrame:'<div id="captchacloser"></div><div id="captchaframe"></div>',
@@ -119,7 +118,7 @@ var TWBot={
 				attackId:0,
 				attackTemplates:{},
 				unitPerAttack:[],
-				init:function(){
+				check:function(){
 					this.hiddenFrameUrl='/game.php?village='+game_data.village.id+'&screen=market&mode=exchange';
 					this.hiddenFrame=TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl,TWBot.attacks.frameLoaded);
 				},
@@ -143,29 +142,6 @@ var TWBot={
 			stickyPanel:false,
 			panelInTransit:false,
 			panelOut:false,
-			init:function(){
-				this.panel=$(TWBot.htmlsnippets.panel).appendTo('body').bind("mouseenter",function(){
-																								if(!TWBot.helpers.stickyPanel&&!TWBot.helpers.panelInTransit&&!TWBot.helpers.panelOut){
-																									TWBot.helpers.panelInTransit=true;
-																									TWBot.helpers.panel.animate({"right":"+=314px"},"slow",function(){
-																																								TWBot.helpers.panelInTransit=false;
-																																								TWBot.helpers.panelOut=true
-																																								}
-																																)
-																								}
-																						}
-				).bind("mouseleave",function(){
-					if(!TWBot.helpers.stickyPanel&&!TWBot.helpers.panelInTransit&&TWBot.helpers.panelOut){
-						TWBot.helpers.panelInTransit=true;
-						TWBot.helpers.panel.animate({"right":"-=314px"},"slow",function(){
-																					TWBot.helpers.panelInTransit=false;
-																					TWBot.helpers.panelOut=false;
-																				}
-						)
-					}
-				}
-				);
-			},
 			writeOut:function(a,b,c,e){
 				if(c){
 					switch(b){
@@ -185,90 +161,12 @@ var TWBot={
 				TWBot.helpers.messages = f+a;
 				console.log(TWBot.helpers.messages);
 			},
-			calculateDistance:function(a,b){
-				a=a.split('|');
-				b=b.split('|');
-				return Math.sqrt(Math.pow(parseInt(a[0])-parseInt(b[0]),2)+Math.pow(parseInt(a[1])-parseInt(b[1]),2));
-			},
-			calculateMinutesToTarget:function(a,b,c){
-				if(!c){
-					c=game_data.village.coord;
-				}
-				return this.calculateDistance(c,b)*TWBot.data.unitConfig.find(a+' speed').text();
-			},
-			calculateTravelTime:function(b,e,f){
-				var g=TWBot.helpers.calculateMinutesToTarget(b,e);
-				var h=(g/60).toString().split('.')[0];
-				var d=new Date();
-				d.setMinutes(d.getMinutes()+g);
-				if(f){
-					return d;
-				}
-				var c=new Date().getTime();
-				var a=new Date(d.getTime()-c);
-				return h+':'+TWBot.helpers.leadingzero(a.getMinutes())+':'+TWBot.helpers.leadingzero(a.getSeconds);
-			},
-			calculateArrivalDate:function(a,b){
-				return this.calculateTravelTime(a,b,true);
-			},
-			enrichCoords:function(){
-				var d=('body').html().match(/(\d+)\|(\d+)/g);
-				for(c in d){
-					var e=d[c];
-					if(e!=game_data.village.coord){
-						var f=('<div/>');
-						var g='';
-						TWBot.data.unitConfig.children().each(function(a,b){if(b.tagName=='militia')return;g+=' '+TWBot.helpers.getUnitTypeName(b.tagName)+': '+TWBot.helpers.calculateTravelTime(b.tagName,e)});
-						$('<b />').attr('title',g).text(e).appendTo(f);
-						document.body.innerHTML=document.body.innerHTML.replace(e,f.html());
-					}
-				}
-			},
-			cleanReports:function(){
-				selectAll($('#select_all').parents().find('form').get(0),true);
-				$('#report_list td:not(:has(img[src*=green])) input[type=checkbox]').click();
-				$('input[value="Delete"]').click();
-			},
 			getUnitTypeName:function(a){
 				var b={'spear':'Spears','sword':'Swords','axe':'Olafs','spy':'Scouts','archer':'Arrows','marcher':'Fast Arrows','light':'LC','heavy':'HC','ram':'Rams','catapult':'Catas','knight':'Palas','snob':'Nobles','militia':'Mob'};
 				return b[a];
 			},
-			toggleTimer:function(){
-				if(timers.length<=0){
-					TWBot.helpers.timerOff=true;
-					return;
-				}
-				if(timers.length>0){
-					TWBot.helpers.timerOff=true;
-					TWBot.helpers.tmptimers=timers;
-					timers=[];
-				}
-				else{
-					timers=TWBot.helpers.tmptimers;
-					TWBot.helpers.timerOff=false;
-				}
-			},
 			leadingzero:function(a){
 				return(a<10)?'0'+a:a;
-			},
-			countdown:function(a,b){
-				var c=document.getElementById(b);
-				var d=function(){
-						if(a>=0){
-							var h=Math.floor(a/3600);
-							var m=Math.floor((a%3600)/60);
-							var s=a%60;
-							c.innerHTML=TWBot.helpers.leadingzero(h)+':'+TWBot.helpers.leadingzero(m)+':'+TWBot.helpers.leadingzero(s);
-							a--;
-						}
-						else{
-							return false;
-						}
-				};
-				var e=function(){
-						c.innerHTML="<strong>Fire!<\/strong>";
-				};
-				d.Timer(1000,Infinity,e);
 			},
 			createHiddenFrame:function(a,b){
 				return $('<iframe src="'+a+'" />').load(b).css({width:'100px',height:'100px',position:'absolute',left:'-1000px'}).appendTo('body');
@@ -294,4 +192,3 @@ var TWBot={
 	
 };
 TWBot.init();
-alert('Finished Loading');
