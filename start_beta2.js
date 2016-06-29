@@ -298,13 +298,6 @@ var TWBot = {
 						TWBot.helpers.writeOut('Ignoring player villages: <span class="er">[OFF]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
 					}
 				}).css({});
-			this.marketPremium = $('#marketPremium').click(function () {
-					if ($(this).is(':checked')) {
-						TWBot.helpers.writeOut('Checking market: <span class="nor">[ON]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
-					} else {
-						TWBot.helpers.writeOut('Checking market: <span class="er">[OFF]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
-					}
-				}).css({});
 			this.attackList = $('#attackList');
 			this.attackUnits = $('#attackUnits').attr('title', 'To change the amount of sent units: click');
 			this.loadAttacks()
@@ -358,9 +351,6 @@ var TWBot = {
 				TWBot.attacks.showAttack();				
 				if (TWBot.attacks.attacking && TWBot.attacks.continueAttack) {
 					TWBot.attacks.attack();
-					if (TWBot.attacks.marketPremium) {
-						TWBot.attacks.hiddenFrameMarket = TWBot.helpers.createHiddenFrame(TWBot.attacks.hiddenFrameMarketUrl, TWBot.attacks.checkedMarket);						
-					}
 				}
 			} else {
 				TWBot.attacks.attackTemplates[TWBot.attacks.attackId].position = TWBot.attacks.getPosition() + 1;
@@ -375,12 +365,6 @@ var TWBot = {
 				TWBot.helpers.spinner.show();
 				a.click()
 			}
-		},
-		checkedMarket : function () {
-			var wood = this.hiddenFrameMarket.contents().find('#premium_exchange_rate_wood').find('.premium-exchange-sep').first().text().substr(1);
-			var stone = this.hiddenFrameMarket.contents().find('#premium_exchange_rate_stone').find('.premium-exchange-sep').first().text().substr(1);
-			var iron = this.hiddenFrameMarket.contents().find('#premium_exchange_rate_iron').find('.premium-exchange-sep').first().text().substr(1);
-			console.log(wood+' '+stone+' '+iron);
 		},
 		createAttack : function () {
 			var a = '_' + new Date().getTime();
