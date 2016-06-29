@@ -359,7 +359,7 @@ var TWBot = {
 				if (TWBot.attacks.attacking && TWBot.attacks.continueAttack) {
 					TWBot.attacks.attack();
 					if (TWBot.attacks.marketPremium) {
-						this.hiddenFrameMarket = TWBot.helpers.createHiddenFrame(this.hiddenFrameMarketUrl, TWBot.attacks.checkedMarket);						
+						TWBot.attacks.hiddenFrameMarket = TWBot.helpers.createHiddenFrame(TWBot.attacks.hiddenFrameMarketUrl, TWBot.attacks.checkedMarket);						
 					}
 				}
 			} else {
