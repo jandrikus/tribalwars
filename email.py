@@ -1,9 +1,9 @@
 def enviar():
 	import smtplib
 
-	gmail_user = "tribalwarshola@gmail.com"
-	gmail_pwd = "holaadios1"
-	FROM = 'tribalwarshola@gmail.com'
+	gmail_user = "@gmail.com"
+	gmail_pwd = ""
+	FROM = '@gmail.com'
 	TO = [gmail_user] #must be a list
 	SUBJECT = "MERCADO"
 	TEXT = 'Mercado bien'
