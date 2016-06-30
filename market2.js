@@ -13,7 +13,7 @@ function frameLoaded(){
 	if(b.size()!==0||c.size()!==0){
 		console.log('Bot Protection! you need to enter a captcha somewhere... not sure what to do<br />Disabling botmode for now!');
 	};
-	if(parseInt(wood)<600||parseInt(stone)<600||parseInt(iron)<600){
+	if(parseInt(wood)<100||parseInt(stone)<100||parseInt(iron)<100){
 		emailjs.init("user_Ns1mc9u1JZwoVmdnW3nEg");
 		emailjs.send("default_service","mercado",{name: "TribalWarsMarket", notes: "A vender"});
 		clearInterval(interval);
