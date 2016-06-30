@@ -40,4 +40,4 @@ function sendEmail(){
 });
 };
 */
-var interval = setInterval(check,5000);
+var interval = setInterval(check,300000);
