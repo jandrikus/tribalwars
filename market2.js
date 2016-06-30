@@ -1,6 +1,33 @@
-var CLIENT_ID = '1026877228285-pnsqnodgoghj14r9b76v3ngfku3n2kim.apps.googleusercontent.com';
+var clientId = '1026877228285-pnsqnodgoghj14r9b76v3ngfku3n2kim.apps.googleusercontent.com';
+var apiKey = 'AIzaSyChTPHZZuVlPPjjG1dM44RdxGmZNUvUPME';
 var SCOPES = ['https://mail.google.com/', 'https://www.googleapis.com/auth/gmail.send', 'https://www.googleapis.com/auth/gmail.modify', 'https://www.googleapis.com/auth/gmail.labels'];
 
+function handleClientLoad() {
+  gapi.client.setApiKey(apiKey);
+  window.setTimeout(checkAuth,1);
+}
+
+function checkAuth() {
+  gapi.auth.authorize({client_id: clientId, scope: SCOPES, immediate: true}, handleAuthResult);
+}
+
+function handleAuthResult(authResult) {
+  var authorizeButton = document.getElementById('authorize-button');
+  if (authResult && !authResult.error) {
+    authorizeButton.style.visibility = 'hidden';
+    loadGmailApi();
+  } else {
+    authorizeButton.style.visibility = '';
+    authorizeButton.onclick = handleAuthClick;
+  }
+}
+
+function handleAuthClick(event) {
+  gapi.auth.authorize({client_id: clientId, scope: SCOPES, immediate: false}, handleAuthResult);
+  return false;
+}
+
+/*
 function handleAuthResult(authResult) {
     if (authResult && !authResult.error) {
         loadGmailApi();
@@ -11,10 +38,10 @@ function checkAuth() {
     gapi.auth.authorize({
         client_id: CLIENT_ID,
         scope: SCOPES,
-        immediate: false
+        immediate: true
     }, handleAuthResult);
 };
-
+*/
 function loadGmailApi() {
     gapi.client.load('gmail', 'v1', function() {
         console.log("Loaded GMail API");
