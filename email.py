@@ -20,6 +20,7 @@ def enviar():
 		server.sendmail(FROM, TO, message)
 		#server.quit()
 		server.close()
-		return 'sent'
 	except:
-		return 'error'
+		pass
+		
+enviar()

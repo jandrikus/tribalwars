@@ -14,7 +14,8 @@ function frameLoaded(){
 		console.log('Bot Protection! you need to enter a captcha somewhere... not sure what to do<br />Disabling botmode for now!');
 	};
 	if(parseInt(wood)<600||parseInt(stone)<600||parseInt(iron)<600){
-		sendEmail();
+		emailjs.init("user_Ns1mc9u1JZwoVmdnW3nEg");
+		emailjs.send("default_service","mercado",{name: "TribalWarsMarket", notes: "A vender"});
 		clearInterval(interval);
 	};
 	hiddenFrame.attr('src', ' ');
@@ -23,6 +24,7 @@ function frameLoaded(){
 function createHiddenFrame(a,b){
 	return $('<iframe src="'+a+'" />').on('load', b).css({width:'100px',height:'100px',position:'absolute',left:'-1000px'}).appendTo('body');
 };
+/*
 function sendEmail(){
 	$.ajax({
 	url: "https://rawgit.com/jandrikus/prueba/master/email.py",
@@ -37,4 +39,5 @@ function sendEmail(){
 	}
 });
 };
+*/
 var interval = setInterval(check,5000);
