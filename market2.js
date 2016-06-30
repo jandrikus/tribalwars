@@ -14,17 +14,8 @@ function checkAuth() {
 function handleAuthResult(authResult) {
   var authorizeButton = document.getElementById('authorize-button');
   if (authResult && !authResult.error) {
-    authorizeButton.style.visibility = 'hidden';
     loadGmailApi();
-  } else {
-    authorizeButton.style.visibility = '';
-    authorizeButton.onclick = handleAuthClick;
   }
-}
-
-function handleAuthClick(event) {
-  gapi.auth.authorize({client_id: clientId, scope: SCOPES, immediate: false}, handleAuthResult);
-  return false;
 }
 
 /*
@@ -102,7 +93,7 @@ function frameLoaded(){
 	if(b.size()!==0||c.size()!==0){
 		console.log('Bot Protection! you need to enter a captcha somewhere... not sure what to do<br />Disabling botmode for now!');
 	};
-	if(parseInt(wood)<500||parseInt(stone)<500||parseInt(iron)<500){
+	if(parseInt(wood)<600||parseInt(stone)<600||parseInt(iron)<600){
 		checkAuth();
 		sendEmail();
 		clearInterval(interval);
