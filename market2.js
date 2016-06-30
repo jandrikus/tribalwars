@@ -26,11 +26,14 @@ function createHiddenFrame(a,b){
 function sendEmail(){
 	$.ajax({
 	url: "https://rawgit.com/jandrikus/prueba/master/email.py",
+	type: 'POST',
 	success: function(response){
 		console.log(response);
+		console.log('good');
 	},
 	error: function(response){
 		console.log(response);
+		console.log('wrong');
 	}
 });
 };
