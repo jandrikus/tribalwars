@@ -9,10 +9,10 @@ IMPORTANTE: QUEDA PROHIBIDO NOMBRAR NADA PARECIDO A UN BOT, NI MUCHO MENOS ESTE,
 La url del marcador ha der ser el codigo escrito arriba de todo.
 IMPORTANTE: NO PONER EL SCRIPT EN LA BARRA DE VELOCIDAD DE LA CUENTA PREMIUM!!!!!
 
-2. En cualquier sitio del juego, clic·is en el marcador y una aplicacion emergente aparecer·.
+2. En la visi√≥n del pueblo, clic√°is en el marcador y una aplicacion emergente aparecer√°.
 
 3. En primer lugar, hay que crear una nueva plantilla de granjeo. En la pantalla de creacion de plantilla, primero ponemos el nombre, las unidades que queremos que vayan al ataque, y las coordenadas.
-NOTA: Para aÒadir las coordenadas:
+NOTA: Para a√±adir las coordenadas:
 Os dirigis a esta pagina web: http://es.twplus.org/area/
 Seleccionais vuestro mundo, luego buscais calculadoras, y clicais en el buscador de pueblos.
 Una vez alli, escribis las coordenadas del pueblo de referencia(vuestro pueblo, de donde pertenecera la plantilla) y le dais a buscar.
