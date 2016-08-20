@@ -35,7 +35,7 @@ function farm(template){
 var interval;
 function farm2(template){
 	indexi = load('indexi', true);
-	if (indexi == null || indexi>lista.size){
+	if (indexi == null || indexi>lista.length){
 		indexi = 0
 	};
 	interval = setInterval(farm(template), 500);
