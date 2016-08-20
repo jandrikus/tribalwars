@@ -15,6 +15,7 @@ function remove(a) {
 	localStorage.removeItem(game_data.world + '_' + game_data.village.id + '_' + a)
 }
 function farm(template){
+	var c = parseInt($('.unit-item-light').html());
 	lista = load('lista', true);
 	indexi = load('indexi', true);
 	if (indexi == null){
@@ -29,7 +30,6 @@ function farm(template){
 	indexi++;
 	store('indexi', indexi, true);
 	var b = $('#bot_check');
-	var c = parseInt($('.unit-item-light').html());
 	if (b.size() != 0 || c<20) {
 		console.log('stopped now');
 		clearInterval(interval)
