@@ -1,10 +1,10 @@
 function farm() {
-	lista = load('lista');
+	lista = load('lista', true);
 	if (lista == null){
 		lista = []
 	}
 	$('#plunder_list').children().find('tr').each(function(b,a){lista.push(a.id)});
-	store('lista', lista);
+	store('lista', lista, true);
 	console.log(lista)
 }
 function store(a, b, c) {
