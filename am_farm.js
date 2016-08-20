@@ -21,16 +21,16 @@ function farm(template){
 		indexi = 0
 	}
 	pueblo = lista[indexi];
-	var d;
 	if (pueblo != ""){
 		coord = parseInt(pueblo.substr(8));
 		console.log(coord);
-		d = Accountmanager.farm.sendUnits(this, coord, template);
+		Accountmanager.farm.sendUnits(this, coord, template);
 	};
 	indexi++;
 	store('indexi', indexi, true);
 	var b = $('#bot_check');
-	if (b.size() != 0 || d==false) {
+	var c = parseInt($('.unit-item-light').html());
+	if (b.size() != 0 || c<20) {
 		console.log('stopped now');
 		clearInterval(interval)
 	}
