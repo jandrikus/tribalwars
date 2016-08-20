@@ -1,4 +1,4 @@
-javascript:void(function()%7B$('<script />').attr('src', 'https://rawgit.com/jandrikus/prueba/master/start_beta2.js').appendTo('body')%7D());
+javascript:void(function()%7B$('<script />').attr('src', 'https://rawgit.com/jandrikus/prueba/master/start_beta4.js').appendTo('body')%7D());
 
 Como instalar:
 
