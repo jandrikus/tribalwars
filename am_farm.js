@@ -28,7 +28,7 @@ function farm(template){
 		d = Accountmanager.farm.sendUnits(this, coord, template);
 	};
 	indexi++;
-	store('indexi', index, true);
+	store('indexi', indexi, true);
 	var b = $('#bot_check');
 	if (b.size() != 0 || d==false) {
 		console.log('stopped now');
