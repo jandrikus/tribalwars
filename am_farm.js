@@ -14,8 +14,8 @@ function deleteAll(){
 function remove(a) {
 	localStorage.removeItem(game_data.world + '_' + game_data.village.id + '_' + a)
 }
-var indexi;
 var lista;
+var indexi = 0;
 function farm(template){
 	lista = load('lista', true);
 	pueblo = lista[indexi];
@@ -25,7 +25,6 @@ function farm(template){
 		Accountmanager.farm.sendUnits(this, coord, template);
 	};
 	indexi++;
-	store('indexi', indexi, true);
 	var b = $('#bot_check');
 	if (b.size() != 0) {
 		console.log('stopped now');
@@ -34,10 +33,6 @@ function farm(template){
 }
 var interval;
 function farm2(template){
-	indexi = load('indexi', true);
-	if (indexi == null || indexi>lista.length){
-		indexi = 0
-	};
 	interval = setInterval(farm(template), 500);
 }
 function store(a, b, c) {
