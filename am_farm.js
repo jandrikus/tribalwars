@@ -17,7 +17,7 @@ function farm(){
 		Accountmanager.farm.sendUnits(this, coord, 7900);
 	};
 	indexi++;
-	var b = $(this).contents().find('#bot_check');
+	var b = $('#bot_check');
 	if (b.size() != 0) {
 		console.log('bot protection! stopped now');
 		clearInterval(interval)
@@ -25,7 +25,7 @@ function farm(){
 }
 var interval;
 function farm2(){
-	interval = setInterval(farm, 400);
+	interval = setInterval(farm, 2000);
 }
 function store(a, b, c) {
 	if (c) {
