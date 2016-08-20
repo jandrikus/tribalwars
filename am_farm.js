@@ -12,12 +12,12 @@ function farm(){
 	lista = load('lista', true);
 	pueblo = lista[indexi];
 	if (pueblo != ""){
-		coord = pueblo.substr(8);
+		coord = parseInt(pueblo.substr(8));
 		console.log(coord);
 		Accountmanager.farm.sendUnits(this, coord, 7900);
 	};
 	indexi++;
-	var b = this.contents().find('#bot_check');
+	var b = $(this).contents().find('#bot_check');
 	if (b.size() != 0) {
 		console.log('bot protection! stopped now');
 		clearInterval(interval)
