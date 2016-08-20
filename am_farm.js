@@ -13,7 +13,7 @@ function farm(){
 		pueblo = lista[i];
 		if (pueblo != ""){
 			coord = pueblo.substr(8);
-			AccountManager.farm.sendUnits(this, coord, 7900)
+			Accountmanager.farm.sendUnits(this, coord, 7900)
 		}
 	}
 }
