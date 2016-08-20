@@ -1,4 +1,4 @@
-function farm() {
+function prepare() {
 	lista = load('lista', true);
 	if (lista == null){
 		lista = []
@@ -6,6 +6,16 @@ function farm() {
 	$('#plunder_list').children().find('tr').each(function(b,a){lista.push(a.id)});
 	store('lista', lista, true);
 	console.log(lista)
+}
+function farm(){
+	lista = load('lista', true);
+	for (i in lista){
+		pueblo = lista[i];
+		if (pueblo != ""){
+			coord = pueblo.substr(8);
+			AccountManager.farm.sendUnits(this, coord, 7900)
+		}
+	}
 }
 function store(a, b, c) {
 	if (c) {
