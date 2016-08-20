@@ -7,16 +7,19 @@ function prepare() {
 	store('lista', lista, true);
 	console.log(lista)
 }
+var indexi = 0;
 function farm(){
 	lista = load('lista', true);
-	for (i in lista){
-		pueblo = lista[i];
-		if (pueblo != ""){
-			coord = pueblo.substr(8);
-			console.log(coord);
-			setTimeout(Accountmanager.farm.sendUnits(this, coord, 7900), 250);
-		}
-	}
+	pueblo = lista[indexi];
+	if (pueblo != ""){
+		coord = pueblo.substr(8);
+		console.log(coord);
+		Accountmanager.farm.sendUnits(this, coord, 7900);
+	};
+	indexi++;
+}
+function farm2(){
+	setInterval(farm(), 250);
 }
 function store(a, b, c) {
 	if (c) {
