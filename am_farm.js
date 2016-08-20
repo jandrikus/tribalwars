@@ -25,7 +25,7 @@ function farm(){
 }
 var interval;
 function farm2(){
-	interval = setInterval(farm, 2000);
+	interval = setInterval(farm, 500);
 }
 function store(a, b, c) {
 	if (c) {
