@@ -6,4 +6,3 @@ function farm() {
 	}
 	console.log(lista)
 }
-farm()
