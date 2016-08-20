@@ -7,25 +7,37 @@ function prepare() {
 	store('lista', lista, true);
 	console.log(lista)
 }
-var indexi = 0;
-function farm(){
+function deleteAll(){
+	remove('lista');
+	remove('indexi');
+}
+function remove(a) {
+	localStorage.removeItem(game_data.world + '_' + game_data.village.id + '_' + a)
+}
+function farm(template){
 	lista = load('lista', true);
+	indexi = load('indexi', true);
+	if (indexi == null){
+		indexi = 0
+	}
 	pueblo = lista[indexi];
+	var d;
 	if (pueblo != ""){
 		coord = parseInt(pueblo.substr(8));
 		console.log(coord);
-		Accountmanager.farm.sendUnits(this, coord, 7900);
+		d = Accountmanager.farm.sendUnits(this, coord, template);
 	};
 	indexi++;
+	store('indexi', index, true);
 	var b = $('#bot_check');
-	if (b.size() != 0) {
-		console.log('bot protection! stopped now');
+	if (b.size() != 0 || d==false) {
+		console.log('stopped now');
 		clearInterval(interval)
 	}
 }
 var interval;
-function farm2(){
-	interval = setInterval(farm, 500);
+function farm2(template){
+	interval = setInterval(farm(template), 500);
 }
 function store(a, b, c) {
 	if (c) {
