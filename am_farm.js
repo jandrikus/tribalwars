@@ -26,7 +26,8 @@ function farm(){
 	};
 	indexi++;
 	var b = $('#bot_check');
-	if (b.size() != 0) {
+	var c = parseInt($('.unit-item-light').html());
+	if (b.size() != 0 || c<20) {
 		console.log('stopped now');
 		clearInterval(interval)
 	}
