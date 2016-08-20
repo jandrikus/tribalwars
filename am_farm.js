@@ -14,7 +14,7 @@ function farm(){
 		if (pueblo != ""){
 			coord = pueblo.substr(8);
 			console.log(coord);
-			setTimeot(Accountmanager.farm.sendUnits(this, coord, 7900), 250);
+			setTimeout(Accountmanager.farm.sendUnits(this, coord, 7900), 250);
 		}
 	}
 }
