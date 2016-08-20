@@ -14,12 +14,10 @@ function deleteAll(){
 function remove(a) {
 	localStorage.removeItem(game_data.world + '_' + game_data.village.id + '_' + a)
 }
+var indexi;
+var lista;
 function farm(template){
 	lista = load('lista', true);
-	indexi = load('indexi', true);
-	if (indexi == null){
-		indexi = 0
-	}
 	pueblo = lista[indexi];
 	if (pueblo != ""){
 		coord = parseInt(pueblo.substr(8));
@@ -36,6 +34,10 @@ function farm(template){
 }
 var interval;
 function farm2(template){
+	indexi = load('indexi', true);
+	if (indexi == null or indexi>lista.size(){
+		indexi = 0
+	};
 	interval = setInterval(farm(template), 500);
 }
 function store(a, b, c) {
