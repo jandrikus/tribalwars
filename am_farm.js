@@ -9,15 +9,21 @@ function prepare() {
 }
 function deleteAll(){
 	remove('lista');
-	remove('indexi');
+	remove('index_farm');
 }
 function remove(a) {
 	localStorage.removeItem(game_data.world + '_' + game_data.village.id + '_' + a)
 }
-var indexi = 0;
 var template;
+var indexi;
 function farm(){
 	lista = load('lista', true);
+	indexalt = load('index_farm', true);
+	if (indexalt != 0 || indexalt != null){
+		indexi = indexalt;
+	}else{
+		indexi=0;
+	};
 	pueblo = lista[indexi];
 	if (pueblo != ""){
 		coord = parseInt(pueblo.substr(8));
@@ -25,6 +31,10 @@ function farm(){
 		Accountmanager.farm.sendUnits(this, coord, template);
 	};
 	indexi++;
+	if (indexi > lista.length){
+		indexi = 0;
+	};
+	store('index_farm', indexi, true);
 	var b = $('#bot_check');
 	var c = parseInt($('.unit-item-light').html());
 	if (b.size() != 0 || c<20) {
@@ -33,8 +43,9 @@ function farm(){
 	}
 }
 var interval;
-function farm2(templ){
-	template = templ;
+function farm2(templ, indexio=0){
+	template = templ
+	indexi = indexio;
 	interval = setInterval(farm, 500);
 }
 function store(a, b, c) {
