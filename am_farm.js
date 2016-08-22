@@ -19,7 +19,7 @@ var indexi;
 function farm(){
 	lista = load('lista', true);
 	indexalt = load('index_farm', true);
-	if (indexalt != 0 || indexalt != null){
+	if (indexalt != 0 && indexalt != null){
 		indexi = indexalt;
 	}else{
 		indexi=0;
