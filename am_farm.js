@@ -24,14 +24,14 @@ function farm(){
 	}else{
 		indexi=0;
 	};
+	if (indexi >= lista.length){
+		indexi = 0;
+	};
 	pueblo = lista[indexi];
 	if (pueblo != ""){
 		coord = parseInt(pueblo.substr(8));
 		console.log(coord);
 		Accountmanager.farm.sendUnits(this, coord, template);
-	};
-	if (indexi > lista.length){
-		indexi = 0;
 	};
 	indexi++;	
 	store('index_farm', indexi, true);
