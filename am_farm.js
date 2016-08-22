@@ -30,10 +30,10 @@ function farm(){
 		console.log(coord);
 		Accountmanager.farm.sendUnits(this, coord, template);
 	};
-	indexi++;
 	if (indexi > lista.length){
 		indexi = 0;
 	};
+	indexi++;	
 	store('index_farm', indexi, true);
 	var b = $('#bot_check');
 	var c = parseInt($('.unit-item-light').html());
