@@ -44,9 +44,36 @@ function farm(){
 }
 var interval;
 function farm2(templ, indexio=0){
-	template = templ
+	template = templ;
 	indexi = indexio;
 	interval = setInterval(farm, 500);
+}
+function farm3(){
+	hiddenFrameUrl = '/game.php?village=8432&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	hiddenFrameUrl = '/game.php?village=8261&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	hiddenFrameUrl = '/game.php?village=9886&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	hiddenFrameUrl = '/game.php?village=8790&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	hiddenFrameUrl = '/game.php?village=9014&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	hiddenFrameUrl = '/game.php?village=6597&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	hiddenFrameUrl = '/game.php?village=10213&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	hiddenFrameUrl = '/game.php?village=9416&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	hiddenFrameUrl = '/game.php?village=7311&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	hiddenFrameUrl = '/game.php?village=7643&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	hiddenFrameUrl = '/game.php?village=9120&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	hiddenFrameUrl = '/game.php?village=8895&screen=am_farm';
+	hiddenFrame = createHiddenFrame(hiddenFrameUrl,farm2(7900));
+	console.log('done');
 }
 function store(a, b, c) {
 	if (c) {
@@ -61,3 +88,6 @@ function load(a, b) {
 	}
 	return localStorage.getItem(game_data.world + '_' + game_data.village.id + '_' + a)
 }
+function createHiddenFrame(a,b){
+	return $('<iframe src="'+a+'" />').on('load', b).css({width:'100px',height:'100px',position:'absolute',left:'-1000px'}).appendTo('body');
+};
