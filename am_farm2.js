@@ -1,6 +1,6 @@
 function farm(){
 	pueblo = firstt.attr('id');
-	firstt.find('.farm_'pueblo).last().click();
+	firstt.find('.farm_'+pueblo).last().click();
 	var b = $('#bot_check');
 	var c = parseInt($('.unit-item-light').html());
 	var d = parseInt($('.unit-item-spy').html());
