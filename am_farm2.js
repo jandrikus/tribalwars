@@ -12,7 +12,8 @@ function farm(){
 }
 var interval;
 var firstt;
-function farm2(templ, indexio=0){
+function farm2(){
 	firstt = $('#plunder_list').children().find('tr').first().next();
 	interval = setInterval(farm, 500);
 }
+farm2();
