@@ -1,12 +1,18 @@
 function farm(){
-	pueblo = firstt.attr('id');
-	firstt.find('.farm_'+pueblo).last().click();
+	pueblo = firstt.attr('id');	
 	var b = $('#bot_check');
 	var c = parseInt($('.unit-item-light').html());
 	var d = parseInt($('.unit-item-spy').html());
-	if (b.size() != 0 || c<10 || d==0) {
+	var e = parseInt($('.unit-item-heavy').html());
+	if (b.size() != 0) {
 		console.log('stopped now');
 		clearInterval(interval)
+	}
+	if (c!=0 || d!=0 || e!=0){
+		firstt.find('.farm_'+pueblo).last().click();
+	}
+	else if (d!=0){
+		firstt.find('.farm_'+pueblo).first().click();
 	}
 	firstt = firstt.next();
 }
