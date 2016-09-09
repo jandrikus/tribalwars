@@ -8,11 +8,12 @@ function farm(){
 		console.log('stopped now');
 		clearInterval(interval)
 	}
-	if (c!=0 || d!=0 || e!=0){
+	if (d!=0 && (c!=0 || e!=0)){
 		firstt.find('.farm_'+pueblo).last().click();
 	}
-	else if (d!=0){
-		firstt.find('.farm_'+pueblo).first().click();
+	else {
+		console.log('stopped now');
+		clearInterval(interval)
 	}
 	firstt = firstt.next();
 }
