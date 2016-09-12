@@ -565,7 +565,7 @@ var TWBot = {
 			if (TWBot.attacks.continueAttack) {
 				TWBot.attacks.hiddenFrame.contents().find('#inputx').val(getCoords[0]);
 				TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
-				TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
+				TWBot.attacks.hiddenFrame.contents().find('#target_support').click();
 				TWBot.attacks.attacking = true;
 				TWBot.helpers.writeOut('Attacking: [' + coordData + ']', TWBot.helpers.MESSAGETYPE_NOTE);
 				
