@@ -621,9 +621,7 @@ var TWBot = {
 			}
 		},
 		fakeTrain : function () {
-			TWBot.attacks.attackButton.hide();
-			TWBot.attacks.sAttackButton.show();
-			if (fakeTrainIndex == 0){
+			if (this.fakeTrainIndex == 0){
 				coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
 				getCoords = coordData.split("|");
 			}
@@ -636,7 +634,7 @@ var TWBot = {
 			if (TWBot.attacks.continueAttack) {
 				TWBot.attacks.hiddenFrame.contents().find('#inputx').val(getCoords[0]);
 				TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
-				if (fakeTrainIndex < 4){
+				if (this.fakeTrainIndex < 4){
 					TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
 				}
 				else {
@@ -659,9 +657,9 @@ var TWBot = {
 				TWBot.helpers.writeOut('Next return in <span class="nor">' + c + ' Seconds</span>', TWBot.helpers.MESSAGETYPE_NOTE);
 				TWBot.attacks.activeInterval = window.setTimeout(TWBot.attacks.polling, c * 1000 + Math.random() * 1000 + 5000);
 			}
-			fakeTrainIndex++;
-			if (fakeTrainIndex>4){
-				fakeTrainIndex = 0
+			this.fakeTrainIndex++;
+			if (this.fakeTrainIndex>4){
+				this.fakeTrainIndex = 0
 			}
 		},
 		attackThis : function (a, b) {
