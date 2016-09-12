@@ -272,6 +272,7 @@ var TWBot = {
 			this.cAttackButton = $('#cAttackButton').click(function () {
 					TWBot.attacks.showAttackTemplate()
 				});
+			this.fakeTrainIndex = 0;
 			this.attackTemplateSaveLink = $('#saveTemplate').click(this.saveAttackTemplate);
 			this.templAttackId = $('#template_attackId');
 			this.continuousAttack = $('#continuousAttack').click(function () {
