@@ -621,10 +621,10 @@ var TWBot = {
 			}
 		},
 		fakeTrain : function () {
-			if (this.fakeTrainIndex == 0){
+			if (TWBot.attacks.fakeTrainIndex == 0){
 				coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
 				getCoords = coordData.split("|");
-				this.savedCoords = getCoords;
+				TWBot.attacks.savedCoords = getCoords;
 			}			
 			TWBot.attacks.continueAttack = true;
 			for (unitType in TWBot.attacks.unitPerAttack) {
@@ -633,9 +633,9 @@ var TWBot = {
 				}
 			}
 			if (TWBot.attacks.continueAttack) {
-				TWBot.attacks.hiddenFrame.contents().find('#inputx').val(this.savedCoords[0]);
-				TWBot.attacks.hiddenFrame.contents().find('#inputy').val(this.savedCoords[1]);
-				if (this.fakeTrainIndex < 4){
+				TWBot.attacks.hiddenFrame.contents().find('#inputx').val(TWBot.attacks.savedCoords[0]);
+				TWBot.attacks.hiddenFrame.contents().find('#inputy').val(TWBot.attacks.savedCoords[1]);
+				if (TWBot.attacks.fakeTrainIndex < 4){
 					TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
 				}
 				else {
@@ -658,9 +658,9 @@ var TWBot = {
 				TWBot.helpers.writeOut('Next return in <span class="nor">' + c + ' Seconds</span>', TWBot.helpers.MESSAGETYPE_NOTE);
 				TWBot.attacks.activeInterval = window.setTimeout(TWBot.attacks.polling, c * 1000 + Math.random() * 1000 + 5000);
 			}
-			this.fakeTrainIndex++;
-			if (this.fakeTrainIndex>4){
-				this.fakeTrainIndex = 0;
+			TWBot.attacks.fakeTrainIndex++;
+			if (TWBot.attacks.fakeTrainIndex>4){
+				TWBot.attacks.fakeTrainIndex = 0;
 			}
 		},
 		attackThis : function (a, b) {
