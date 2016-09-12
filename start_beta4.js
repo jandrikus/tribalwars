@@ -259,7 +259,6 @@ var TWBot = {
 		attackTemplates : {},
 		unitPerAttack : [],
 		activeInterval : null,
-		fakeTrainIndex: 0,
 		init : function () {
 			this.hiddenFrameUrl = '/game.php?village=' + game_data.village.id + '&screen=place';
 			this.hiddenFrame = TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl, TWBot.attacks.frameLoaded);
@@ -625,7 +624,8 @@ var TWBot = {
 			if (this.fakeTrainIndex == 0){
 				coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
 				getCoords = coordData.split("|");
-			}
+				this.savedCoords = getCoords;
+			}			
 			TWBot.attacks.continueAttack = true;
 			for (unitType in TWBot.attacks.unitPerAttack) {
 				if (TWBot.attacks.continueAttack) {
@@ -633,8 +633,8 @@ var TWBot = {
 				}
 			}
 			if (TWBot.attacks.continueAttack) {
-				TWBot.attacks.hiddenFrame.contents().find('#inputx').val(getCoords[0]);
-				TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
+				TWBot.attacks.hiddenFrame.contents().find('#inputx').val(this.savedCoords[0]);
+				TWBot.attacks.hiddenFrame.contents().find('#inputy').val(this.savedCoords[1]);
 				if (this.fakeTrainIndex < 4){
 					TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
 				}
@@ -660,7 +660,7 @@ var TWBot = {
 			}
 			this.fakeTrainIndex++;
 			if (this.fakeTrainIndex>4){
-				this.fakeTrainIndex = 0
+				this.fakeTrainIndex = 0;
 			}
 		},
 		attackThis : function (a, b) {
