@@ -359,6 +359,10 @@ var TWBot = {
 				TWBot.data.store('attacks_attacktemplates', TWBot.attacks.attackTemplates, true);
 				a.click()
 			}
+			TWBot.attacks.fakeTrainIndex++;
+			if (TWBot.attacks.fakeTrainIndex>4){
+				TWBot.attacks.fakeTrainIndex = 0;
+			}
 		},
 		createAttack : function () {
 			var a = '_' + new Date().getTime();
@@ -657,10 +661,6 @@ var TWBot = {
 				c = parseInt(c[0] * 3600) + parseInt(c[1] * 60) + parseInt(c[2]);
 				TWBot.helpers.writeOut('Next return in <span class="nor">' + c + ' Seconds</span>', TWBot.helpers.MESSAGETYPE_NOTE);
 				TWBot.attacks.activeInterval = window.setTimeout(TWBot.attacks.polling, c * 1000 + Math.random() * 1000 + 5000);
-			}
-			TWBot.attacks.fakeTrainIndex++;
-			if (TWBot.attacks.fakeTrainIndex>4){
-				TWBot.attacks.fakeTrainIndex = 0;
 			}
 		},
 		attackThis : function (a, b) {
