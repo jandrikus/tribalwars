@@ -361,7 +361,7 @@ var TWBot = {
 				TWBot.helpers.writeOut('El pueblo pertenece a un jugador! Pasando al siguiente pueblo', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
 				return TWBot.attacks.ignoreVillage()
 			}
-			if (TWBot.attacks.playersTribeList.indexOf(u) >= 0 && TWBot.attacks.playersSameTribe.is(':checked')){
+			if (TWBot.attacks.playersTribeList.indexOf(u) != -1 && TWBot.attacks.playersSameTribe.is(':checked')){
 				TWBot.helpers.writeOut('village : [' + coordData + '], player : [' + u +']', TWBot.helpers.MESSAGETYPE_NOTE);
 				coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
 				TWBot.helpers.writeOut('El pueblo pertenece a un jugador de la tribu! Pasando al siguiente pueblo', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
@@ -508,7 +508,7 @@ var TWBot = {
 			this.villages = b.coords;
 			this.villagearr = this.villages.split(" ");
 			this.targets = this.villagearr.length;
-			this.playersTribeList = b.playersTribe;
+			this.playersTribeList = b.playersTribe.split(';');
 			this.showAttack();
 			$('#attackedVillages').val(this.getPosition() + 1);
 			$('#amount_of_attackedVillages').html(this.targets);
