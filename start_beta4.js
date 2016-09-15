@@ -264,11 +264,14 @@ var TWBot = {
 			this.hiddenFrame = TWBot.helpers.createHiddenFrame(this.hiddenFrameUrl, TWBot.attacks.frameLoaded);
 			this.attackTemplatePopup = $(TWBot.htmlsnippets.popup).appendTo('body').hide();
 			this.attackButton = $('#attackButton').click(this.attack);
+			this.supportButton = $('#supportButton').click(this.support);
+			this.fakeTrainButton = $('#fakeTrainButton').click(this.fakeTrain);
 			this.sAttackButton = $('#sAttackButton').click(this.stopAttack).hide();
 			this.rAttackButton = $('#resetAttack').click(this.resetAttack);
 			this.cAttackButton = $('#cAttackButton').click(function () {
 					TWBot.attacks.showAttackTemplate()
 				});
+			this.fakeTrainIndex = 0;
 			this.attackTemplateSaveLink = $('#saveTemplate').click(this.saveAttackTemplate);
 			this.templAttackId = $('#template_attackId');
 			this.continuousAttack = $('#continuousAttack').click(function () {
@@ -284,27 +287,6 @@ var TWBot = {
 
 					//TWBot.helpers.toggleTimer()
 				}).css({});
-			this.attackCheck = $('#attackCheck').click(function () {
-					if ($(this).is(':checked')) {
-						TWBot.helpers.writeOut('Attack: <span class="nor">[ON]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
-					} else {
-						TWBot.helpers.writeOut('Attack: <span class="er">[OFF]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
-					}
-				}).css({});
-			this.supportCheck = $('#supportCheck').click(function () {
-					if ($(this).is(':checked')) {
-						TWBot.helpers.writeOut('Support: <span class="nor">[ON]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
-					} else {
-						TWBot.helpers.writeOut('Support: <span class="er">[OFF]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
-					}
-				}).css({});
-			this.fakeTrainCheck = $('#fakeTrainCheck').click(function () {
-					if ($(this).is(':checked')) {
-						TWBot.helpers.writeOut('FakeTrain: <span class="nor">[ON]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
-					} else {
-						TWBot.helpers.writeOut('FakeTrain: <span class="er">[OFF]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
-					}
-				}).css({});
 			this.ignorePlayers = $('#ignorePlayers').click(function () {
 					if ($(this).is(':checked')) {
 						TWBot.helpers.writeOut('Ignoring player villages: <span class="nor">[ON]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
@@ -314,7 +296,7 @@ var TWBot = {
 				}).css({});
 			this.attackList = $('#attackList');
 			this.attackUnits = $('#attackUnits').attr('title', 'To change the amount of sent units: click');
-			this.loadAttacks();
+			this.loadAttacks()
 		},
 		polling : function () {
 			TWBot.attacks.continueAttack = true;
@@ -328,8 +310,6 @@ var TWBot = {
 			var c = TWBot.attacks.hiddenFrame.contents().find('img[src="/human.png"]');
 			var d = TWBot.attacks.hiddenFrame.contents().find('.error_box');
 			var e = TWBot.attacks.hiddenFrame.contents().find('table.vis td:contains("Usuario")');
-			var u = e.next().text().trim();
-			var f = e.next().text();
 			if (d.length > 0 && d.html().indexOf("banned") !== -1) {
 				coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
 				TWBot.helpers.writeOut('The village owner is banned! Continuing with next Village (ignoring [' + coordData + '])', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
@@ -361,12 +341,6 @@ var TWBot = {
 				TWBot.helpers.writeOut('El pueblo pertenece a un jugador! Pasando al siguiente pueblo', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
 				return TWBot.attacks.ignoreVillage()
 			}
-			if (TWBot.attacks.playersTribeList.indexOf(u) != -1 && TWBot.attacks.playersSameTribe.is(':checked')){
-				TWBot.helpers.writeOut('village : [' + coordData + '], player : [' + u +']', TWBot.helpers.MESSAGETYPE_NOTE);
-				coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
-				TWBot.helpers.writeOut('El pueblo pertenece a un jugador de la tribu! Pasando al siguiente pueblo', TWBot.helpers.MESSAGETYPE_ERROR, true, 5000);
-				return TWBot.attacks.ignoreVillage()
-			}
 			if (a.size() == 0) {
 				TWBot.attacks.loadAttack(TWBot.attacks.attackId);
 				TWBot.attacks.showAttack();				
@@ -385,6 +359,10 @@ var TWBot = {
 				TWBot.data.store('attacks_attacktemplates', TWBot.attacks.attackTemplates, true);
 				a.click()
 			}
+			TWBot.attacks.fakeTrainIndex++;
+			if (TWBot.attacks.fakeTrainIndex>4){
+				TWBot.attacks.fakeTrainIndex = 0;
+			}
 		},
 		createAttack : function () {
 			var a = '_' + new Date().getTime();
@@ -400,14 +378,12 @@ var TWBot = {
 				for (unitType in TWBot.data.unitTypes) {
 					$('#template_' + unitType).val(this.attackTemplates[a].unitsPerAttack[unitType])
 				}
-				$('#template_position').val(this.attackTemplates[a].position);
-				$('#players_tribe').val(this.attackTemplates[a].playersTribe)
+				$('#template_position').val(this.attackTemplates[a].position)
 			} else {
 				this.templAttackId.val('');
 				$('#template_name').val('');
 				$('#template_coords').val('');
 				$('#template_position').val(0);
-				$('#players_tribe').val('');
 				for (unitType in TWBot.data.unitTypes) {
 					$('#template_' + unitType).val(0)
 				}
@@ -457,8 +433,7 @@ var TWBot = {
 				name : $('#template_name').val().trim(),
 				unitsPerAttack : b,
 				coords : $('#template_coords').val().trim(),
-				position : $('#template_position').val(),
-				playersTribe : $('#players_tribe').val().trim()
+				position : $('#template_position').val()
 			};
 			this.attackTemplates[a] = c;
 			TWBot.data.store('attacks_attacktemplates', this.attackTemplates, true)
@@ -508,7 +483,6 @@ var TWBot = {
 			this.villages = b.coords;
 			this.villagearr = this.villages.split(" ");
 			this.targets = this.villagearr.length;
-			this.playersTribeList = b.playersTribe.split(';');
 			this.showAttack();
 			$('#attackedVillages').val(this.getPosition() + 1);
 			$('#amount_of_attackedVillages').html(this.targets);
@@ -595,7 +569,7 @@ var TWBot = {
 					TWBot.attacks.continueAttack = TWBot.attacks.sendUnits(unitType)
 				}
 			}
-			if (TWBot.attacks.continueAttack && TWBot.attacks.attackCheck.is(':checked')) {
+			if (TWBot.attacks.continueAttack) {
 				TWBot.attacks.hiddenFrame.contents().find('#inputx').val(getCoords[0]);
 				TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
 				TWBot.attacks.hiddenFrame.contents().find('#target_attack').click();
@@ -603,12 +577,37 @@ var TWBot = {
 				TWBot.helpers.writeOut('Attacking: [' + coordData + ']', TWBot.helpers.MESSAGETYPE_NOTE);
 				
 			}
-			if (TWBot.attacks.continueAttack && TWBot.attacks.supportCheck.is(':checked')) {
+			if (!TWBot.attacks.continueAttack && TWBot.attacks.botting.is(':checked')) {
+				var a = $('span[data-command-type="return"]').first().parent().parent().find('td').last().find('span').html();
+				var b = [];
+				if (a != null) {
+					b = a
+				} else {
+					b = $('span[data-command-type="attack"]').first().parent().parent().find('td').last().find('span').html();
+				}
+				var c = b.split(':');
+				c = parseInt(c[0] * 3600) + parseInt(c[1] * 60) + parseInt(c[2]);
+				TWBot.helpers.writeOut('Next return in <span class="nor">' + c + ' Seconds</span>', TWBot.helpers.MESSAGETYPE_NOTE);
+				TWBot.attacks.activeInterval = window.setTimeout(TWBot.attacks.polling, c * 1000 + Math.random() * 1000 + 5000);
+			}
+		},
+		support : function () {
+			TWBot.attacks.attackButton.hide();
+			TWBot.attacks.sAttackButton.show();
+			coordData = TWBot.attacks.villagearr[TWBot.attacks.getPosition()];
+			getCoords = coordData.split("|");
+			TWBot.attacks.continueAttack = true;
+			for (unitType in TWBot.attacks.unitPerAttack) {
+				if (TWBot.attacks.continueAttack) {
+					TWBot.attacks.continueAttack = TWBot.attacks.sendUnits(unitType)
+				}
+			}
+			if (TWBot.attacks.continueAttack) {
 				TWBot.attacks.hiddenFrame.contents().find('#inputx').val(getCoords[0]);
 				TWBot.attacks.hiddenFrame.contents().find('#inputy').val(getCoords[1]);
 				TWBot.attacks.hiddenFrame.contents().find('#target_support').click();
 				TWBot.attacks.attacking = true;
-				TWBot.helpers.writeOut('Supporting: [' + coordData + ']', TWBot.helpers.MESSAGETYPE_NOTE);
+				TWBot.helpers.writeOut('Attacking: [' + coordData + ']', TWBot.helpers.MESSAGETYPE_NOTE);
 				
 			}
 			if (!TWBot.attacks.continueAttack && TWBot.attacks.botting.is(':checked')) {
@@ -689,8 +688,6 @@ var TWBot = {
 		},
 		stopAttack : function () {
 			TWBot.attacks.attackButton.show();
-			TWBot.attacks.supportButton.show();
-			TWBot.attacks.fakeTrainButton.show();
 			TWBot.attacks.sAttackButton.hide();
 			TWBot.attacks.attacking = false;
 			TWBot.attacks.continueAttack = false;
@@ -1003,8 +1000,8 @@ var TWBot = {
 	},
 	htmlsnippets : {
 		captchaFrame : '<div id="captchacloser"></div><div id="captchaframe"></div>',
-		panel : '<div id="panel"><span id="tack">TWBot</span><div id="newContent"><ul id="messages"><li>Initialized layout</li><li>Loading available troops</li></ul><div id="attackListWrapper"><table id="attackList"></table></div><div id="rAttackListWrapper"><table id="rAttackList"></table></div><h3 id="attackName"></h3><table id="unitTable"><tbody><tr><td valign="top"><table class="vis" width="100%"><tbody><tr><td id="attackUnits" class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/command/attack.png?0019c" title="Attacked villages" alt="Attacked villages" class="" /><input id="attackedVillages" name="attackedVillages" type="text" style="width: 40px" tabindex="10" value="" class="unitsInput" disabled="disabled" /><i id="amount_of_attackedVillages">fetching...</i>&nbsp;</td></tr></tbody></table></td></tr><tr><td valign="top"><table class="vis" width="100%"><tbody><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/command/attack.png?0019c" title="Attacked villages" alt="Attacked villages" class="" /><input id="attackedVillages" name="attackedVillages" type="text" style="width: 40px" tabindex="10" value="" class="unitsInput" disabled="disabled" /><i id="amount_of_attackedVillages">fetching...</i>&nbsp;</td></tr></tbody></table></td></tr></tbody></table><div id="buttons"><button id="attackButton">Attack</button><button id="sAttackButton">Stop attacking</button><label for="continuousAttack">Don\'t stop</label> <input type="checkbox" id="continuousAttack" title="if checked the pause at the end of a cycle is omitted" checked="checked"/><label for="botting" title="This may get you banned! but so may using the rest of the script..">BotMode</label> <input type="checkbox" id="botting" title="if checked the page will be prevented from reloading and upon arrival of enough troops the attacks continue automagically" checked="checked"/><label for="ignorePlayers">Users?</label> <input type="checkbox" id="ignorePlayers" title="if checked no user village will be attacked, only Barbs get to fear you" checked="checked"/><label for="playersSameTribe">Tribe?</label> <input type="checkbox" id="playersSameTribe" title="if checked no friendly user village will be attacked, only enemies get to fear you" checked="checked"/><label for="attackCheck">attack?</label> <input type="checkbox" id="attackCheck" title="if checked attack will be sent" checked="checked"/><label for="supportCheck">support?</label> <input type="checkbox" id="supportCheck" title="if checked support will be sent" /><label for="fakeTrainCheck">fakeTrain?</label> <input type="checkbox" id="fakeTrainCheck" title="if checked fakes train&support will be sent" /><button id="cAttackButton">New Attack</button><button id="resetAttack" title="Reset attackcounter to the first village">reset</button><label for="autoPilot" title="NOT WORKING YET!!! This will try to attack the villages determined by our glorious leaders.">AutoPilot</label> <input type="checkbox" id="autoPilot" title="if checked the swarm takes over the control for some attacks!"/></div></div></div>',
-		popup : '<div id="popup_container"><div id="popup_box_bg"></div><table style="width: 700px; margin-left: 0px; margin-top:50px; margin-bottom:30px" id="popup_box" cellspacing="0"><tr><td class="popup_box_top_left"></td><td class="popup_box_top"></td><td class="popup_box_top_right"></td></tr><tr><td class="popup_box_left"></td><td class="popup_box_content"><a id="popup_box_close" href="#" onclick="$(\'#popup_container\').hide(); return false;">&nbsp;</a><div style="background: no-repeat url(\'/graphic/paladin_new.png\');"><h3 style="margin: 0 3px 5px 120px;">Create new attack plan</h3><table align="right" style="margin-bottom: 5px;"><tr><td class="quest-summary" width="200"><h5>Give it a name:</h5><p style="padding: 5px"><input type="text" id="template_name" /></p></td><td class="quest-summary" width="310">Enter here the new coordinates for this attack<p style="padding: 5px"><input type="text" id="template_coords" /></p></td></tr><tr><td class="quest-summary" width="200"><h5>Exceptions, separated by dot-comma:</h5><p style="padding: 5px"><input type="text" id="players_tribe" /></p></td></tr></table><div class="quest-goal"><table id="unitTableTemplate"><tbody><tr><td valign="top"><table class="vis" width="100%"><tbody><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_spear.png?48b3b" title="Spear fighter" alt="Spear fighter" class="" /><input id="template_unit_input_spear" name="spear" type="text" style="width: 40px" tabindex="1" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_sword.png?b389d" title="Swordsman" alt="Swordsman" class="" /><input id="template_unit_input_sword" name="sword" type="text" style="width: 40px" tabindex="2" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_axe.png?51d94" title="Axeman" alt="Axeman" class="" /><input id="template_unit_input_axe" name="axe" type="text" style="width: 40px" tabindex="3" value="" class="unitsInput" /></td></tr></tbody></table></td><td valign="top"><table class="vis" width="100%"><tbody><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_spy.png?eb866" title="Scout" alt="Scout" class="" /><input id="template_unit_input_spy" name="spy" type="text" style="width: 40px" tabindex="4" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_light.png?2d86d" title="Light cavalry" alt="Light cavalry" class="" /><input id="template_unit_input_light" name="light" type="text" style="width: 40px" tabindex="5" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_heavy.png?a83c9" title="Heavy cavalry" alt="Heavy cavalry" class="" /><input id="template_unit_input_heavy" name="heavy" type="text" style="width: 40px" tabindex="6" value="" class="unitsInput" /></td></tr></tbody></table></td><td valign="top"><table class="vis" width="100%"><tbody><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_ram.png?2003e" title="Ram" alt="Ram" class="" /><input id="template_unit_input_ram" name="ram" type="text" style="width: 40px" tabindex="7" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_catapult.png?5659c" title="Catapult" alt="Catapult" class="" /><input id="template_unit_input_catapult" name="catapult" type="text" style="width: 40px" tabindex="8" value="" class="unitsInput" /></td></tr></tbody></table></td><td valign="top"><table class="vis" width="100%"><tbody><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_knight.png?58dd0" title="Paladin" alt="Paladin" class="" /><input id="template_unit_input_knight" name="knight" type="text" style="width: 40px" tabindex="9" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_snob.png?0019c" title="Nobleman" alt="Nobleman" class="" /><input id="template_unit_input_snob" name="snob" type="text" style="width: 40px" tabindex="10" value="" class="unitsInput" /></td></tr></tbody></table></td></tr></tbody></table></div><div align="center" style="padding: 10px;"><b class="red" id="saveTemplate">Complete &raquo; </b><input type="hidden" id="template_attackId" value="" /><input type="text" id="template_position" value="" /></div></td><td class="popup_box_right"></td></tr><tr><td class="popup_box_bottom_left"></td><td class="popup_box_bottom"></td><td class="popup_box_bottom_right"></td></tr></table></div>'
+		panel : '<div id="panel"><span id="tack">TWBot</span><div id="newContent"><ul id="messages"><li>Initialized layout</li><li>Loading available troops</li></ul><div id="attackListWrapper"><table id="attackList"></table></div><div id="rAttackListWrapper"><table id="rAttackList"></table></div><h3 id="attackName"></h3><table id="unitTable"><tbody><tr><td valign="top"><table class="vis" width="100%"><tbody><tr><td id="attackUnits" class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/command/attack.png?0019c" title="Attacked villages" alt="Attacked villages" class="" /><input id="attackedVillages" name="attackedVillages" type="text" style="width: 40px" tabindex="10" value="" class="unitsInput" disabled="disabled" /><i id="amount_of_attackedVillages">fetching...</i>&nbsp;</td></tr></tbody></table></td></tr><tr><td valign="top"><table class="vis" width="100%"><tbody><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/command/attack.png?0019c" title="Attacked villages" alt="Attacked villages" class="" /><input id="attackedVillages" name="attackedVillages" type="text" style="width: 40px" tabindex="10" value="" class="unitsInput" disabled="disabled" /><i id="amount_of_attackedVillages">fetching...</i>&nbsp;</td></tr></tbody></table></td></tr></tbody></table><div id="buttons"><button id="attackButton">Attack</button><button id="supportButton">Support</button><button id="fakeTrainButton">FakeTrain</button><button id="sAttackButton">Stop attacking</button><label for="continuousAttack">Don\'t stop</label> <input type="checkbox" id="continuousAttack" title="if checked the pause at the end of a cycle is omitted" checked="checked"/><label for="botting" title="This may get you banned! but so may using the rest of the script..">BotMode</label> <input type="checkbox" id="botting" title="if checked the page will be prevented from reloading and upon arrival of enough troops the attacks continue automagically" checked="checked"/><label for="ignorePlayers">Users?</label> <input type="checkbox" id="ignorePlayers" title="if checked no user village will be attacked, only Barbs get to fear you" checked="checked"/><button id="cAttackButton">New Attack</button><button id="resetAttack" title="Reset attackcounter to the first village">reset</button><label for="autoPilot" title="NOT WORKING YET!!! This will try to attack the villages determined by our glorious leaders.">AutoPilot</label> <input type="checkbox" id="autoPilot" title="if checked the swarm takes over the control for some attacks!"/></div></div></div>',
+		popup : '<div id="popup_container"><div id="popup_box_bg"></div><table style="width: 700px; margin-left: 0px; margin-top:50px; margin-bottom:30px" id="popup_box" cellspacing="0"><tr><td class="popup_box_top_left"></td><td class="popup_box_top"></td><td class="popup_box_top_right"></td></tr><tr><td class="popup_box_left"></td><td class="popup_box_content"><a id="popup_box_close" href="#" onclick="$(\'#popup_container\').hide(); return false;">&nbsp;</a><div style="background: no-repeat url(\'/graphic/paladin_new.png\');"><h3 style="margin: 0 3px 5px 120px;">Create new attack plan</h3><table align="right" style="margin-bottom: 5px;"><tr><td class="quest-summary" width="200"><h5>Give it a name:</h5><p style="padding: 5px"><input type="text" id="template_name" /></p></td><td class="quest-summary" width="310">Enter here the new coordinates for this attack<p style="padding: 5px"><input type="text" id="template_coords" /></p></td></tr></table><div class="quest-goal"><table id="unitTableTemplate"><tbody><tr><td valign="top"><table class="vis" width="100%"><tbody><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_spear.png?48b3b" title="Spear fighter" alt="Spear fighter" class="" /><input id="template_unit_input_spear" name="spear" type="text" style="width: 40px" tabindex="1" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_sword.png?b389d" title="Swordsman" alt="Swordsman" class="" /><input id="template_unit_input_sword" name="sword" type="text" style="width: 40px" tabindex="2" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_axe.png?51d94" title="Axeman" alt="Axeman" class="" /><input id="template_unit_input_axe" name="axe" type="text" style="width: 40px" tabindex="3" value="" class="unitsInput" /></td></tr></tbody></table></td><td valign="top"><table class="vis" width="100%"><tbody><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_spy.png?eb866" title="Scout" alt="Scout" class="" /><input id="template_unit_input_spy" name="spy" type="text" style="width: 40px" tabindex="4" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_light.png?2d86d" title="Light cavalry" alt="Light cavalry" class="" /><input id="template_unit_input_light" name="light" type="text" style="width: 40px" tabindex="5" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_heavy.png?a83c9" title="Heavy cavalry" alt="Heavy cavalry" class="" /><input id="template_unit_input_heavy" name="heavy" type="text" style="width: 40px" tabindex="6" value="" class="unitsInput" /></td></tr></tbody></table></td><td valign="top"><table class="vis" width="100%"><tbody><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_ram.png?2003e" title="Ram" alt="Ram" class="" /><input id="template_unit_input_ram" name="ram" type="text" style="width: 40px" tabindex="7" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_catapult.png?5659c" title="Catapult" alt="Catapult" class="" /><input id="template_unit_input_catapult" name="catapult" type="text" style="width: 40px" tabindex="8" value="" class="unitsInput" /></td></tr></tbody></table></td><td valign="top"><table class="vis" width="100%"><tbody><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_knight.png?58dd0" title="Paladin" alt="Paladin" class="" /><input id="template_unit_input_knight" name="knight" type="text" style="width: 40px" tabindex="9" value="" class="unitsInput" /></td></tr><tr><td class="nowrap"><img src="https://cdn2.tribalwars.net/graphic/unit/unit_snob.png?0019c" title="Nobleman" alt="Nobleman" class="" /><input id="template_unit_input_snob" name="snob" type="text" style="width: 40px" tabindex="10" value="" class="unitsInput" /></td></tr></tbody></table></td></tr></tbody></table></div><div align="center" style="padding: 10px;"><b class="red" id="saveTemplate">Complete &raquo; </b><input type="hidden" id="template_attackId" value="" /><input type="text" id="template_position" value="" /></div></td><td class="popup_box_right"></td></tr><tr><td class="popup_box_bottom_left"></td><td class="popup_box_bottom"></td><td class="popup_box_bottom_right"></td></tr></table></div>'
 	}
 };
 TWBot.init();
