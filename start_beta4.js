@@ -284,11 +284,25 @@ var TWBot = {
 
 					//TWBot.helpers.toggleTimer()
 				}).css({});
-			this.playersSameTribe = $('#playersSameTribe').click(function () {
+			this.attackCheck = $('#attackCheck').click(function () {
 					if ($(this).is(':checked')) {
-						TWBot.helpers.writeOut('Ignoring tribe villages: <span class="nor">[ON]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
+						TWBot.helpers.writeOut('Attack: <span class="nor">[ON]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
 					} else {
-						TWBot.helpers.writeOut('Ignoring tribe villages: <span class="er">[OFF]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
+						TWBot.helpers.writeOut('Attack: <span class="er">[OFF]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
+					}
+				}).css({});
+			this.supportCheck = $('#supportCheck').click(function () {
+					if ($(this).is(':checked')) {
+						TWBot.helpers.writeOut('Support: <span class="nor">[ON]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
+					} else {
+						TWBot.helpers.writeOut('Support: <span class="er">[OFF]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
+					}
+				}).css({});
+			this.fakeTrainCheck = $('#fakeTrainCheck').click(function () {
+					if ($(this).is(':checked')) {
+						TWBot.helpers.writeOut('FakeTrain: <span class="nor">[ON]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
+					} else {
+						TWBot.helpers.writeOut('FakeTrain: <span class="er">[OFF]</span>', TWBot.helpers.MESSAGETYPE_NOTE)
 					}
 				}).css({});
 			this.ignorePlayers = $('#ignorePlayers').click(function () {
