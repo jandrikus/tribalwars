@@ -502,7 +502,7 @@ var TWBot = {
 			this.villages = b.coords;
 			this.villagearr = this.villages.split(" ");
 			this.targets = this.villagearr.length;
-			this.playersTribeList = b.playersTribe.split(';');
+			this.playersTribeList = b.playersTribe;
 			this.showAttack();
 			$('#attackedVillages').val(this.getPosition() + 1);
 			$('#amount_of_attackedVillages').html(this.targets);
