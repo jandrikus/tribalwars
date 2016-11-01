@@ -24,3 +24,4 @@ function farm2(){
 	interval = setInterval(farm, 500);
 }
 farm2();
+farm2();
